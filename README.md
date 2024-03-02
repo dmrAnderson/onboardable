@@ -1,6 +1,9 @@
 # Onboardable
 
+[![Gem Version](https://badge.fury.io/rb/onboardable.svg)](https://badge.fury.io/rb/onboardable)
 ![CI](https://github.com/dmrAnderson/onboardable/actions/workflows/ci.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/dmrAnderson/onboardable/badge.svg?branch=main)](https://coveralls.io/github/dmrAnderson/onboardable?branch=main)
+![Downloads total](https://img.shields.io/gem/dt/onboardable)
 
 TODO: Delete this and the text below, and describe your gem
 
