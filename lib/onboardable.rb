@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'onboardable/version'
+require_relative 'onboardable/errors'
 
 module Onboardable
-  class Error < StandardError; end
+  # TODO
 end
