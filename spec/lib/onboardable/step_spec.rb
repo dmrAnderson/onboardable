@@ -1,13 +1,67 @@
 # frozen_string_literal: true
 
 RSpec.describe Onboardable::Step do
-  subject(:step) { described_class.new(name, allow_logs: true) }
+  subject(:step) do |ex|
+    described_class.new(name, **ex.metadata.fetch(:options, {}))
+  end
 
   let(:name) { 'Intro' }
 
   describe '#name' do
     it 'returns the name of the step' do
       expect(step.name).to eq(name)
+    end
+
+    it 'returns a string representation including the name and default status' do
+      expect(step.to_s).to eq("#{name} (#{described_class::DEFAULT_STATUS})")
+    end
+  end
+
+  describe '#previous!' do
+    context 'when current status is \'pending\'', options: { status: :pending } do
+      it 'raises an error' do
+        expect { step.previous! }.to raise_error(Onboardable::InvalidTransitionError)
+      end
+    end
+
+    context 'when current status is \'current\'', options: { status: :current } do
+      before { step.previous! }
+
+      it 'changes status to \'pending\'' do
+        expect(step).to be_pending
+      end
+    end
+
+    context 'when current status is \'completed\'', options: { status: :completed } do
+      before { step.previous! }
+
+      it 'changes status to \'current\'' do
+        expect(step).to be_current
+      end
+    end
+  end
+
+  describe '#next!' do
+    context 'when current status is \'pending\'', options: { status: :pending } do
+      before { step.next! }
+
+      it 'changes status to \'current\'' do
+        expect(step).to be_current
+      end
+    end
+
+    context 'when current status is \'current\'', options: { status: :current } do
+      before { step.next! }
+
+      it 'changes status to \'completed\'' do
+        expect(step).to be_completed
+      end
+    end
+
+    context 'when current status is \'completed\'', options: { status: :completed } do
+      it 'raises an error' do
+        expect { step.next! }.to raise_error(Onboardable::InvalidTransitionError)
+      end
     end
   end
 

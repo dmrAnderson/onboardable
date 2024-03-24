@@ -10,18 +10,14 @@ module Onboardable
     DEFAULT_STATUS = PENDING_STATUS
 
     attr_reader :name, :status
-    alias to_s name
 
-    def initialize(name, status: DEFAULT_STATUS, allow_logs: false)
+    def initialize(name, status: DEFAULT_STATUS)
       @name = name
       self.status = status
-      @allow_logs = allow_logs
     end
 
     STATUSES.each do |status|
       define_method :"#{status}?" do
-        log_status_list_if(self.status, status)
-
         self.status == status
       end
 
@@ -31,34 +27,48 @@ module Onboardable
     end
 
     def status=(raw_status)
-      log_status_list_if(raw_status, status)
-
       @status = validate_status!(raw_status)
+    end
+
+    def previous!
+      self.status = find_status!(status, &:pred)
+    end
+    alias up! previous!
+
+    def next!
+      self.status = find_status!(status, &:next)
+    end
+    alias down! next!
+
+    def to_s
+      "#{name} (#{status})"
     end
 
     private
 
-    attr_reader :allow_logs
+    def find_status!(raw_status)
+      STATUSES.index(raw_status).then do |old_index|
+        invalid_status!(raw_status) unless old_index
 
-    def render_status_list(new_status, old_status = nil)
-      puts STATUSES.map { |word|
-        "\t› #{word}".tap do |status_line|
-          status_line << ' ⚑' if word == new_status
-          status_line << ' ⚐' if word == old_status
+        yield(old_index).then do |index|
+          invalid_transition!(raw_status) if index.negative?
+          STATUSES[index] || invalid_transition!(raw_status)
         end
-      }.join("\n")
+      end
     end
 
-    def log_status_list_if(*args)
-      return unless allow_logs
+    def validate_status!(raw_status)
+      return raw_status if STATUSES.include?(raw_status)
 
-      render_status_list(*args)
+      invalid_status!(raw_status)
     end
 
-    def validate_status!(new_status)
-      return new_status if STATUSES.include?(new_status)
+    def invalid_status!(raw_status)
+      raise InvalidStatusError, "Invalid status: #{raw_status}, must be one of: #{STATUSES.join(', ')}."
+    end
 
-      raise InvalidStatusError, "Invalid status: #{new_status}. Must be one of: #{STATUSES.join(', ')}"
+    def invalid_transition!(raw_status)
+      raise InvalidTransitionError, "Cannot transition from #{raw_status}."
     end
   end
 end
