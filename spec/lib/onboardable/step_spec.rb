@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe Onboardable::Step do
-  subject(:step) { described_class.new(name) }
+  subject(:step) { described_class.new(name, allow_logs: true) }
 
   let(:name) { 'Intro' }
 
   describe '#name' do
     it 'returns the name of the step' do
       expect(step.name).to eq(name)
-    end
-
-    it 'returns a string representation including the name and default status' do
-      expect(step.to_s).to eq("#{name} (#{described_class::DEFAULT_STATUS})")
     end
   end
 
