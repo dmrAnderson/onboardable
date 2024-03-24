@@ -2,4 +2,5 @@
 
 module Onboardable
   class Error < StandardError; end
+  class InvalidStatusError < ArgumentError; end
 end
