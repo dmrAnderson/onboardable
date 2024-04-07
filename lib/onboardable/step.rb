@@ -2,12 +2,14 @@
 
 module Onboardable
   class Step
-    PENDING_STATUS   = :pending
-    CURRENT_STATUS   = :current
+    PENDING_STATUS = :pending
+    CURRENT_STATUS = :current
     COMPLETED_STATUS = :completed
 
-    STATUSES       = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
+    STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
     DEFAULT_STATUS = PENDING_STATUS
+
+    include Comparable
 
     attr_reader :name, :status
 
@@ -16,59 +18,46 @@ module Onboardable
       self.status = status
     end
 
-    STATUSES.each do |status|
-      define_method :"#{status}?" do
-        self.status == status
-      end
-
-      define_method :"#{status}!" do
-        self.status = status
+    STATUSES.each do |status_method|
+      define_method :"#{status_method}?" do
+        status == status_method
       end
     end
 
-    def status=(raw_status)
-      @status = validate_status!(raw_status)
+    def status=(new_status)
+      @status = validate_status!(new_status)
     end
 
-    def previous!
-      self.status = find_status!(status, &:pred)
+    def <=>(other)
+      name.to_s <=> other.name.to_s
     end
-    alias up! previous!
-
-    def next!
-      self.status = find_status!(status, &:next)
-    end
-    alias down! next!
 
     def to_s
       "#{name} (#{status})"
     end
 
-    private
-
-    def find_status!(raw_status)
-      STATUSES.index(raw_status).then do |old_index|
-        invalid_status!(raw_status) unless old_index
-
-        yield(old_index).then do |index|
-          invalid_transition!(raw_status) if index.negative?
-          STATUSES[index] || invalid_transition!(raw_status)
-        end
+    def update_status(comparison_result)
+      case comparison_result
+      when -1
+        self.status = COMPLETED_STATUS
+      when 0
+        self.status = CURRENT_STATUS
+      when 1
+        self.status = PENDING_STATUS
+      else
+        raise ArgumentError, "Invalid comparison result: #{comparison_result}. Expected -1, 0, or 1."
       end
     end
 
-    def validate_status!(raw_status)
-      return raw_status if STATUSES.include?(raw_status)
+    private
 
-      invalid_status!(raw_status)
-    end
+    def validate_status!(new_status)
+      unless STATUSES.include?(new_status)
+        raise InvalidStatusError,
+              "Invalid status: #{new_status}, must be one of: #{STATUSES.join(', ')}."
+      end
 
-    def invalid_status!(raw_status)
-      raise InvalidStatusError, "Invalid status: #{raw_status}, must be one of: #{STATUSES.join(', ')}."
-    end
-
-    def invalid_transition!(raw_status)
-      raise InvalidTransitionError, "Cannot transition from #{raw_status}."
+      new_status
     end
   end
 end

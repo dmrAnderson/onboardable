@@ -1,88 +1,64 @@
 # frozen_string_literal: true
 
 RSpec.describe Onboardable::Step do
-  subject(:step) do |ex|
-    described_class.new(name, **ex.metadata.fetch(:options, {}))
-  end
+  subject(:step) { described_class.new(name, status: initial_status) }
 
   let(:name) { 'Intro' }
+  let(:initial_status) { described_class::DEFAULT_STATUS }
 
   describe '#name' do
     it 'returns the name of the step' do
       expect(step.name).to eq(name)
     end
 
-    it 'returns a string representation including the name and default status' do
-      expect(step.to_s).to eq("#{name} (#{described_class::DEFAULT_STATUS})")
+    it 'returns a string representation including the name and status' do
+      expect(step.to_s).to eq("#{name} (#{initial_status})")
     end
   end
 
-  describe '#previous!' do
-    context 'when current status is \'pending\'', options: { status: :pending } do
-      it 'raises an error' do
-        expect { step.previous! }.to raise_error(Onboardable::InvalidTransitionError)
-      end
-    end
-
-    context 'when current status is \'current\'', options: { status: :current } do
-      before { step.previous! }
-
-      it 'changes status to \'pending\'' do
-        expect(step).to be_pending
-      end
-    end
-
-    context 'when current status is \'completed\'', options: { status: :completed } do
-      before { step.previous! }
-
-      it 'changes status to \'current\'' do
+  describe '#update_status' do
+    context 'when updating status based on comparison result' do
+      it 'transitions from pending to current with 0' do
+        step.update_status(0) # Assuming initial status is pending
         expect(step).to be_current
       end
-    end
-  end
 
-  describe '#next!' do
-    context 'when current status is \'pending\'', options: { status: :pending } do
-      before { step.next! }
-
-      it 'changes status to \'current\'' do
+      it 'maintains current status with 0' do
+        step.status = :current
+        step.update_status(0)
         expect(step).to be_current
       end
-    end
 
-    context 'when current status is \'current\'', options: { status: :current } do
-      before { step.next! }
-
-      it 'changes status to \'completed\'' do
+      it 'transitions from current to completed with -1' do
+        step.status = :current
+        step.update_status(-1)
         expect(step).to be_completed
       end
-    end
 
-    context 'when current status is \'completed\'', options: { status: :completed } do
-      it 'raises an error' do
-        expect { step.next! }.to raise_error(Onboardable::InvalidTransitionError)
+      it 'transitions from completed to pending with 1' do
+        step.status = :completed
+        step.update_status(1)
+        expect(step).to be_pending
+      end
+
+      it 'raises an error with an invalid comparison result' do
+        expect { step.update_status(2) }.to raise_error(ArgumentError)
       end
     end
   end
 
   describe '#status' do
-    context 'when status is the default' do
-      it 'returns the default status' do
-        expect(step.status).to eq(described_class::DEFAULT_STATUS)
-      end
+    context 'with the default status' do
+      let(:initial_status) { described_class::DEFAULT_STATUS }
 
-      it 'is in the default status state' do
-        expect(step).to public_send("be_#{described_class::DEFAULT_STATUS}")
+      it 'returns the default status' do
+        expect(step.status).to eq(initial_status)
       end
     end
 
     described_class::STATUSES.each do |status|
       context "when status is '#{status}'" do
-        before { step.public_send(:"#{status}!") }
-
-        it "changes the status to '#{status}'" do
-          expect(step.status).to eq(status)
-        end
+        let(:initial_status) { status }
 
         it "is in the '#{status}' state" do
           expect(step).to public_send(:"be_#{status}")
@@ -90,11 +66,9 @@ RSpec.describe Onboardable::Step do
       end
     end
 
-    context 'when status is not one of the defined statuses' do
-      let(:status) { 'invalid' }
-
+    context 'when attempting to set an invalid status' do
       it 'raises an error' do
-        expect { step.status = status }.to raise_error(Onboardable::InvalidStatusError)
+        expect { step.status = :invalid }.to raise_error(Onboardable::InvalidStatusError)
       end
     end
   end
