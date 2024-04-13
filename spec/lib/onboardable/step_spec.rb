@@ -16,33 +16,33 @@ RSpec.describe Onboardable::Step do
     end
   end
 
-  describe '#update_status' do
+  describe '#update_status!' do
     context 'when updating status based on comparison result' do
       it 'transitions from pending to current with 0' do
-        step.update_status(0) # Assuming initial status is pending
+        step.update_status!(0) # Assuming initial status is pending
         expect(step).to be_current
       end
 
       it 'maintains current status with 0' do
         step.status = :current
-        step.update_status(0)
+        step.update_status!(0)
         expect(step).to be_current
       end
 
       it 'transitions from current to completed with -1' do
         step.status = :current
-        step.update_status(-1)
+        step.update_status!(-1)
         expect(step).to be_completed
       end
 
       it 'transitions from completed to pending with 1' do
         step.status = :completed
-        step.update_status(1)
+        step.update_status!(1)
         expect(step).to be_pending
       end
 
       it 'raises an error with an invalid comparison result' do
-        expect { step.update_status(2) }.to raise_error(ArgumentError)
+        expect { step.update_status!(2) }.to raise_error(Onboardable::InvalidComparisonResultError)
       end
     end
   end

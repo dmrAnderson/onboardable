@@ -4,32 +4,37 @@ module Onboardable
   class List
     attr_reader :steps, :current_step
 
-    def initialize(raw_steps, raw_current_step = nil)
-      self.steps = raw_steps
-      self.current_step = (raw_current_step || raw_steps[0])
+    def initialize(steps, current_step = nil)
+      self.steps = steps
+      self.current_step = current_step || steps[0]
     end
+
+    def next; end
+
+    def back; end
 
     private
 
-    def steps=(raw_steps)
-      unique_steps = raw_steps.uniq
-      warn_about_duplicates(raw_steps) if unique_steps.size < raw_steps.size
+    def steps=(new_steps)
+      unique_steps = new_steps.uniq
+      warn_about_duplicates(new_steps) if unique_steps.size < new_steps.size
       @steps = unique_steps.map { |step| Step.new(step) }.freeze
     end
 
-    def current_step=(raw_current_step)
-      current_step_index = steps.index { |step| step.name == raw_current_step }
-      raise ArgumentError, "Unknown step `#{raw_current_step}`" unless current_step_index
+    def current_step=(new_current_step)
+      current_step_index = steps.index { |step| step.public_send(Step::COMPARABLE_KEY) == new_current_step }
 
-      steps.each_with_index do |step, index|
-        step.update_status(index <=> current_step_index)
+      unless current_step_index
+        allowed_steps = steps.map { |step| step.public_send(Step::COMPARABLE_KEY) }
+        raise InvalidStepError.new(new_current_step, allowed_steps)
       end
 
-      @current_step = steps[current_step_index]
+      steps.each_with_index { |step, index| step.update_status!(index <=> current_step_index) }
+      @current_step = steps.fetch(current_step_index)
     end
 
-    def warn_about_duplicates(raw_steps)
-      duplicated_steps = raw_steps.group_by { |step| step }.select { |_, occurrences| occurrences.size > 1 }.keys
+    def warn_about_duplicates(new_steps)
+      duplicated_steps = new_steps.tally.select { |_, occurrences| occurrences.size > 1 }.keys
       warn("Ignored duplicates: `#{duplicated_steps.join('`, `')}`.", uplevel: 1)
     end
   end
