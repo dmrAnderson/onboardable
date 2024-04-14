@@ -2,8 +2,10 @@
 
 require_relative 'onboardable/version'
 require_relative 'onboardable/errors'
-require_relative 'onboardable/list'
+require_relative 'onboardable/utils/warnings'
 require_relative 'onboardable/step'
+require_relative 'onboardable/step_sequence'
+require_relative 'onboardable/list'
 
 module Onboardable
   # class Base
