@@ -11,8 +11,8 @@ RSpec.describe Onboardable::Step do
       expect(step.name).to eq(name)
     end
 
-    it 'returns a string representation including the name and status' do
-      expect(step.to_s).to eq("#{name} (#{initial_status})")
+    it 'returns a string representation of the step name' do
+      expect(step.to_s).to eq(name)
     end
   end
 

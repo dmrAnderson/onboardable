@@ -7,7 +7,6 @@ module Onboardable
     COMPLETED_STATUS = :completed
     STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
     DEFAULT_STATUS = PENDING_STATUS
-    COMPARABLE_KEY = :name
 
     include Comparable
 
@@ -31,11 +30,11 @@ module Onboardable
     end
 
     def <=>(other)
-      name.to_s <=> other.public_send(COMPARABLE_KEY).to_s
+      to_s <=> other.to_s
     end
 
     def to_s
-      "#{name} (#{status})"
+      name.to_s
     end
 
     def update_status!(comparison_result)

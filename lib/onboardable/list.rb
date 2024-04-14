@@ -2,16 +2,15 @@
 
 module Onboardable
   class List
+    include Utils::Warnings
+    include StepSequence
+
     attr_reader :steps, :current_step
 
     def initialize(steps, current_step = nil)
       self.steps = steps
       self.current_step = current_step || steps[0]
     end
-
-    def next; end
-
-    def back; end
 
     private
 
@@ -22,20 +21,11 @@ module Onboardable
     end
 
     def current_step=(new_current_step)
-      current_step_index = steps.index { |step| step.public_send(Step::COMPARABLE_KEY) == new_current_step }
-
-      unless current_step_index
-        allowed_steps = steps.map { |step| step.public_send(Step::COMPARABLE_KEY) }
-        raise InvalidStepError.new(new_current_step, allowed_steps)
-      end
+      current_step_index = steps.index { |step| step == new_current_step }
+      raise InvalidStepError.new(new_current_step, *steps.map(&:to_s)) unless current_step_index
 
       steps.each_with_index { |step, index| step.update_status!(index <=> current_step_index) }
       @current_step = steps.fetch(current_step_index)
-    end
-
-    def warn_about_duplicates(new_steps)
-      duplicated_steps = new_steps.tally.select { |_, occurrences| occurrences.size > 1 }.keys
-      warn("Ignored duplicates: `#{duplicated_steps.join('`, `')}`.", uplevel: 1)
     end
   end
 end
