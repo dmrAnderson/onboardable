@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Onboardable
-  module StepSequence
+  module Navigation
     def next_step!
       current_index = steps.index(current_step)
       raise LastStepError.new(current_step.name, *steps.map(&:name)) if current_index >= steps.size.pred
