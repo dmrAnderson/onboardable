@@ -51,6 +51,14 @@ RSpec.describe Onboardable::List do
     it 'is marked as the current step' do
       expect(current_step).to be_current
     end
+
+    context 'when step is invalid' do
+      let(:raw_current_step) { 'Invalid Step' }
+
+      it 'raises an InvalidStepError' do
+        expect { current_step }.to raise_error(Onboardable::InvalidStepError)
+      end
+    end
   end
 
   describe '#next_step!' do

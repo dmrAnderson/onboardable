@@ -23,13 +23,13 @@ module Onboardable
 
   class LastStepError < Error
     def initialize(step, *expected_steps)
-      super("Currently #{step} the last step. Available steps are: `#{expected_steps.join('`, `')}`.")
+      super("Currently `#{step}` the last step. Available steps are: `#{expected_steps.join('`, `')}`.")
     end
   end
 
   class FirstStepError < Error
     def initialize(step, *expected_steps)
-      super("Currently #{step} the first step. Available steps are: `#{expected_steps.join('`, `')}`.")
+      super("Currently `#{step}` the first step. Available steps are: `#{expected_steps.join('`, `')}`.")
     end
   end
 end

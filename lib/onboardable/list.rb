@@ -3,13 +3,12 @@
 module Onboardable
   class List
     include Utils::Warnings
-    include StepSequence
-
+    include Navigation
     attr_reader :steps, :current_step
 
     def initialize(steps, current_step = nil)
       self.steps = steps
-      self.current_step = current_step || steps[0]
+      self.current_step = current_step || steps.fetch(0)
     end
 
     private
