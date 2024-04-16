@@ -21,6 +21,22 @@ RSpec.describe Onboardable::List do
         expect(list_instance).to be_an_instance_of(described_class)
       end
     end
+
+    context 'when initialized with only one unique step' do
+      let(:steps) { %w[nickname nickname] }
+
+      it 'raises an InsufficientUniqueStepsError with the list of provided steps' do
+        expect { list_instance }.to raise_error(Onboardable::InsufficientUniqueStepsError)
+      end
+    end
+
+    context 'when initialized with no steps' do
+      let(:steps) { [] }
+
+      it 'raises an InsufficientUniqueStepsError mentioning no steps provided' do
+        expect { list_instance }.to raise_error(Onboardable::InsufficientUniqueStepsError)
+      end
+    end
   end
 
   describe '#steps' do

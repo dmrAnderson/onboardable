@@ -5,10 +5,8 @@ module Onboardable
     PENDING_STATUS = :pending
     CURRENT_STATUS = :current
     COMPLETED_STATUS = :completed
-    STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
     DEFAULT_STATUS = PENDING_STATUS
-
-    include Comparable
+    STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
 
     attr_reader :name, :status
 
@@ -29,12 +27,12 @@ module Onboardable
       @status = new_status
     end
 
-    def <=>(other)
-      to_s <=> other.to_s
+    def ==(other)
+      to_s == other.to_s
     end
 
     def to_s
-      name.to_s
+      name
     end
 
     def update_status!(comparison_result)
@@ -46,7 +44,7 @@ module Onboardable
       when 1
         self.status = PENDING_STATUS
       else
-        raise InvalidComparisonResultError.new(comparison_result, -1, 0, 1)
+        raise InvalidComparisonResultError.new(comparison_result, [-1, 0, 1])
       end
     end
   end
