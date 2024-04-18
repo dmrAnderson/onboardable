@@ -1,0 +1,7 @@
+module Onboardable
+  module Utils
+    module Warnings
+      def warn_about_duplicates: (Array[String]) -> void
+    end
+  end
+end

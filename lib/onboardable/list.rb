@@ -9,7 +9,7 @@ module Onboardable
 
     def initialize(steps, current_step: nil)
       self.steps = steps
-      self.current_step = current_step || steps.fetch(0)
+      self.current_step = current_step.nil? ? self.steps.fetch(0) : Step.new(current_step)
     end
 
     private

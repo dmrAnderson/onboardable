@@ -1,0 +1,21 @@
+module Onboardable
+  class Step
+    PENDING_STATUS: Symbol
+    CURRENT_STATUS: Symbol
+    COMPLETED_STATUS: Symbol
+    DEFAULT_STATUS: Symbol
+    STATUSES: Array[Symbol]
+
+    attr_reader name: String
+    attr_reader status: Symbol
+
+    def initialize: (String, ?status: Symbol) -> void
+    def pending?: () -> bool
+    def current?: () -> bool
+    def completed?: () -> bool
+    def status=: (Symbol) -> void
+    def ==: (Step) -> bool
+    def to_s: () -> String
+    def update_status!: (Integer) -> void
+  end
+end
