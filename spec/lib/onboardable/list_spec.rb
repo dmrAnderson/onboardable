@@ -52,7 +52,7 @@ RSpec.describe Onboardable::List do
   end
 
   describe '#current_step' do
-    subject(:current_step) { described_class.new(raw_steps, raw_current_step).current_step }
+    subject(:current_step) { described_class.new(raw_steps, current_step: raw_current_step).current_step }
 
     let(:raw_current_step) { raw_steps.sample }
 
@@ -78,7 +78,7 @@ RSpec.describe Onboardable::List do
   end
 
   describe '#next_step' do
-    subject(:list) { described_class.new(raw_steps, current_step) }
+    subject(:list) { described_class.new(raw_steps, current_step: current_step) }
 
     context 'when not at the last step' do
       let(:current_step) { 'nickname' }
@@ -98,7 +98,7 @@ RSpec.describe Onboardable::List do
   end
 
   describe '#next_step!' do
-    subject(:list) { described_class.new(raw_steps, current_step) }
+    subject(:list) { described_class.new(raw_steps, current_step: current_step) }
 
     context 'when not at the last step' do
       let(:current_step) { 'nickname' }
@@ -119,8 +119,28 @@ RSpec.describe Onboardable::List do
     end
   end
 
+  describe '#prev_step' do
+    subject(:list) { described_class.new(raw_steps, current_step: current_step) }
+
+    context 'when not at the first step' do
+      let(:current_step) { 'address' }
+
+      it 'moves to the previous step correctly' do
+        expect(list.prev_step.name).to eq('nickname')
+      end
+    end
+
+    context 'when at the first step' do
+      let(:current_step) { 'nickname' }
+
+      it 'raises a FirstStepError with correct message and step list' do
+        expect { list.prev_step }.to raise_error(Onboardable::FirstStepError)
+      end
+    end
+  end
+
   describe '#prev_step!' do
-    subject(:list) { described_class.new(raw_steps, current_step) }
+    subject(:list) { described_class.new(raw_steps, current_step: current_step) }
 
     context 'when not at the first step' do
       let(:current_step) { 'address' }
@@ -137,6 +157,46 @@ RSpec.describe Onboardable::List do
 
       it 'raises a FirstStepError' do
         expect { list.prev_step! }.to raise_error(Onboardable::FirstStepError)
+      end
+    end
+  end
+
+  describe '#first_step?' do
+    subject(:first_step?) { described_class.new(raw_steps, current_step: current_step).first_step? }
+
+    context 'when the current step is the first step' do
+      let(:current_step) { 'nickname' }
+
+      it 'returns true' do
+        expect(first_step?).to be true
+      end
+    end
+
+    context 'when the current step is not the first step' do
+      let(:current_step) { 'address' }
+
+      it 'returns false' do
+        expect(first_step?).to be false
+      end
+    end
+  end
+
+  describe '#last_step?' do
+    subject(:last_step?) { described_class.new(raw_steps, current_step: current_step).last_step? }
+
+    context 'when the current step is the last step' do
+      let(:current_step) { 'phone_number' }
+
+      it 'returns true' do
+        expect(last_step?).to be true
+      end
+    end
+
+    context 'when the current step is not the last step' do
+      let(:current_step) { 'address' }
+
+      it 'returns false' do
+        expect(last_step?).to be false
       end
     end
   end

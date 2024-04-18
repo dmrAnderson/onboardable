@@ -23,5 +23,13 @@ module Onboardable
     def prev_step!
       self.current_step = prev_step
     end
+
+    def first_step?
+      current_step == steps.fetch(0)
+    end
+
+    def last_step?
+      current_step == steps.fetch(-1)
+    end
   end
 end
