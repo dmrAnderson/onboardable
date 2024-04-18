@@ -1,7 +1,9 @@
 module Onboardable
   module Utils
     module Warnings
-      def warn_about_duplicates: (Array[String]) -> void
+      private
+
+      def warn_about_duplicates: (Array[String]) -> nil
     end
   end
 end
