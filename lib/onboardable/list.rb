@@ -7,7 +7,7 @@ module Onboardable
 
     attr_reader :steps, :current_step
 
-    def initialize(steps, current_step = nil)
+    def initialize(steps, current_step: nil)
       self.steps = steps
       self.current_step = current_step || steps.fetch(0)
     end
