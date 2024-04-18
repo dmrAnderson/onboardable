@@ -77,6 +77,26 @@ RSpec.describe Onboardable::List do
     end
   end
 
+  describe '#next_step' do
+    subject(:list) { described_class.new(raw_steps, current_step) }
+
+    context 'when not at the last step' do
+      let(:current_step) { 'nickname' }
+
+      it 'advances to the next step correctly' do
+        expect(list.next_step.name).to eq('address')
+      end
+    end
+
+    context 'when at the last step' do
+      let(:current_step) { 'phone_number' }
+
+      it 'raises a LastStepError with correct message and step list' do
+        expect { list.next_step }.to raise_error(Onboardable::LastStepError)
+      end
+    end
+  end
+
   describe '#next_step!' do
     subject(:list) { described_class.new(raw_steps, current_step) }
 
