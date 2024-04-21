@@ -15,6 +15,8 @@ module Onboardable
     private
 
     def steps=(new_steps)
+      raise ArgumentError, 'Steps must be an array of steps.' unless new_steps.is_a?(Array)
+
       unique_steps = new_steps.uniq
       warn_about_duplicates(new_steps) if unique_steps.size < new_steps.size
       raise InsufficientUniqueStepsError, unique_steps if unique_steps.size < 2

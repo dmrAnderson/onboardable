@@ -1,32 +1,20 @@
 # frozen_string_literal: true
 
-# RSpec.describe Onboardable::Base do
-#   describe '.call' do
-#     subject(:dummy) { described_class.call(steps) }
-#
-#     let(:raw_steps) { 'nickname address phone_number' }
-#
-#     context 'without appropriate argument' do
-#       alias_method :steps, :raw_steps
-#       specify do
-#         expect { dummy }.to raise_error(ArgumentError)
-#       end
-#     end
-#
-#     context 'with duplicate steps' do
-#       let(:steps) { [raw_steps, raw_steps] }
-#
-#       specify do
-#         expect { dummy }.not_to raise_error
-#       end
-#     end
-#
-#     context 'with appropriate argument' do
-#       let(:steps) { raw_steps.split }
-#
-#       specify do
-#         expect(dummy).to be_an_instance_of(Onboardable::List)
-#       end
-#     end
-#   end
-# end
+RSpec.describe Onboardable do
+  class Dummy
+    include Onboardable
+    has_onboarding %w[first_name last_name]
+  end
+
+  it 'stores the onboarding steps as a constant in the class' do
+    expect(Dummy::ONBOARDABLE_STEPS).to eq(%w[first_name last_name])
+  end
+
+  it 'ensures the onboarding steps constant is frozen to prevent modification' do
+    expect(Dummy::ONBOARDABLE_STEPS).to be_frozen
+  end
+
+  it 'creates an Onboardable::List instance for handling the onboarding process' do
+    expect(Dummy.new.onboarding).to be_an_instance_of(Onboardable::List)
+  end
+end
