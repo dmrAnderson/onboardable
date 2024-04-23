@@ -3,7 +3,7 @@
 module Onboardable
   class Error < StandardError; end
 
-  class InvalidStatusError < Error
+  class InvalidStepStatusError < Error
     def initialize(status, expected_statuses)
       super("Invalid status: `#{status}`. Must be one of: `#{expected_statuses.join('`, `')}`.")
     end
@@ -15,9 +15,9 @@ module Onboardable
     end
   end
 
-  class InvalidComparisonResultError < Error
-    def initialize(comparison, expected_comparisons)
-      super("Invalid comparison result: `#{comparison}`. Must be one of: `#{expected_comparisons.join('`, `')}`.")
+  class InvalidStepsTypeError < Error
+    def initialize(steps)
+      super("Steps must be an enumerable object. Received: `#{steps.class}`.")
     end
   end
 
@@ -25,6 +25,12 @@ module Onboardable
     def initialize(existed_steps)
       existed_steps_str = existed_steps.any? ? "`#{existed_steps.join('`, `')}`" : 'none'
       super("Need at least two unique steps. Provided: #{existed_steps_str}.")
+    end
+  end
+
+  class InvalidComparisonResultError < Error
+    def initialize(comparison, expected_comparisons)
+      super("Invalid comparison result: `#{comparison}`. Must be one of: #{expected_comparisons.join('`, `')}.")
     end
   end
 

@@ -13,6 +13,7 @@ module Onboardable
     def pending?: () -> bool
     def current?: () -> bool
     def completed?: () -> bool
+    def name=: (String) -> String
     def status=: (Symbol) -> Symbol
     def ==: (Step) -> bool
     def to_s: () -> String

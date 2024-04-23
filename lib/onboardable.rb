@@ -13,12 +13,12 @@ module Onboardable
   end
 
   module ClassMethods
-    def has_onboarding(steps)
-      const_set(:ONBOARDABLE_STEPS, steps.freeze)
-    end
-  end
+    attr_reader :list
+    alias onboarding list
 
-  def onboarding
-    @onboarding ||= Onboardable::List.new(self.class.const_get(:ONBOARDABLE_STEPS))
+    def list=(raw_list)
+      @list = List.new(raw_list)
+    end
+    alias has_onboarding list=
   end
 end

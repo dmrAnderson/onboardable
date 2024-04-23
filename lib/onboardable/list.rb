@@ -14,19 +14,19 @@ module Onboardable
 
     private
 
-    def steps=(new_steps)
-      raise ArgumentError, 'Steps must be an array of steps.' unless new_steps.is_a?(Array)
+    def steps=(raw_steps)
+      raise InvalidStepsTypeError, raw_steps unless raw_steps.is_a?(Enumerable)
 
-      unique_steps = new_steps.uniq
-      warn_about_duplicates(new_steps) if unique_steps.size < new_steps.size
+      unique_steps = raw_steps.uniq
+      warn_about_duplicates(raw_steps) if unique_steps.size < raw_steps.size
       raise InsufficientUniqueStepsError, unique_steps if unique_steps.size < 2
 
       @steps = unique_steps.map { |step| Step.new(step) }.freeze
     end
 
-    def current_step=(new_current_step)
-      current_step_index = steps.index { |step| step == new_current_step }
-      raise InvalidStepError.new(new_current_step, steps.map(&:to_s)) unless current_step_index
+    def current_step=(raw_current_step)
+      current_step_index = steps.index { |step| step == raw_current_step }
+      raise InvalidStepError.new(raw_current_step, steps.map(&:to_s)) unless current_step_index
 
       steps.each_with_index { |step, index| step.update_status!(index <=> current_step_index) }
       @current_step = steps.fetch(current_step_index)
