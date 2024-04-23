@@ -1,16 +1,21 @@
 # frozen_string_literal: true
 
-class Dummy
-  include Onboardable
-  has_onboarding %w[first_name last_name]
-end
-
 RSpec.describe Onboardable do
   describe '.onboarding' do
-    subject(:onboarding) { Dummy.onboarding }
+    subject(:dummy) do
+      Class.new do
+        include Onboardable
+
+        has_onboarding do
+          step 'First Name', Class.new
+          step 'Second Name'
+          step 'Last Name', Class.new
+        end
+      end
+    end
 
     it 'returns an instance of Onboardable::List' do
-      expect(onboarding).to be_an_instance_of(Onboardable::List)
+      expect(dummy.onboarding).to be_an_instance_of(Onboardable::List)
     end
   end
 end

@@ -9,7 +9,7 @@ module Onboardable
     attr_reader name: String
     attr_reader status: Symbol
 
-    def initialize: (String, ?status: Symbol) -> Step
+    def initialize: (String, ?status: Symbol) -> instance
     def pending?: () -> bool
     def current?: () -> bool
     def completed?: () -> bool

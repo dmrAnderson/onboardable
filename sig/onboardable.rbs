@@ -5,10 +5,11 @@ module Onboardable
   def self.included: (Module klass) -> void
 
   module ClassMethods
-    attr_reader list: List
-    alias onboarding list
+    attr_reader steps_builder: StepsBuilder
 
-    def list=: (Array[String] raw_list) -> List
-    alias has_onboarding list=
+    def steps_builder=: () { () -> void } -> StepsBuilder
+    alias has_onboarding steps_builder=
+
+    def onboarding: -> List
   end
 end
