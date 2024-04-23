@@ -7,9 +7,9 @@ RSpec.describe Onboardable do
         include Onboardable
 
         has_onboarding do
-          step 'First Name', Data.define
+          step 'First Name', Class.new
           step 'Second Name'
-          step 'Last Name', Data.define
+          step 'Last Name', Class.new
         end
       end
     end
