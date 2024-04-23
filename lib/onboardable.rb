@@ -8,19 +8,17 @@ require_relative 'onboardable/navigation'
 require_relative 'onboardable/list'
 
 module Onboardable
-  # class Base
-  #   class << self
-  #     def call(list, _current_step = nil)
-  #       List[*list]
-  #     end
-  #   end
-  #
-  #   attr_reader :list
-  #
-  #   def initialize(raw_list, raw_current_step)
-  #     @list = List[*raw_list]
-  #     @current_step = raw_current_step
-  #   end
-  #   private_class_method :new
-  # end
+  def self.included(klass)
+    klass.extend ClassMethods
+  end
+
+  module ClassMethods
+    attr_reader :list
+    alias onboarding list
+
+    def list=(raw_list)
+      @list = List.new(raw_list)
+    end
+    alias has_onboarding list=
+  end
 end

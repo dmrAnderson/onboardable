@@ -68,7 +68,7 @@ RSpec.describe Onboardable::Step do
 
     context 'when attempting to set an invalid status' do
       it 'raises an error' do
-        expect { step.status = :invalid }.to raise_error(Onboardable::InvalidStatusError)
+        expect { step.status = :invalid }.to raise_error(Onboardable::InvalidStepStatusError)
       end
     end
   end

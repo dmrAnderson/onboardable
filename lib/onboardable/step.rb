@@ -11,7 +11,7 @@ module Onboardable
     attr_reader :name, :status
 
     def initialize(name, status: DEFAULT_STATUS)
-      @name = name
+      self.name = name
       self.status = status
     end
 
@@ -21,10 +21,14 @@ module Onboardable
       end
     end
 
-    def status=(new_status)
-      raise InvalidStatusError.new(new_status, STATUSES) unless STATUSES.include?(new_status)
+    def name=(raw_name)
+      @name = raw_name.to_s
+    end
 
-      @status = new_status
+    def status=(raw_status)
+      raise InvalidStepStatusError.new(raw_status, STATUSES) unless STATUSES.include?(raw_status)
+
+      @status = raw_status
     end
 
     def ==(other)

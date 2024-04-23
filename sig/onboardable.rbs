@@ -1,4 +1,14 @@
 module Onboardable
   VERSION: String
   # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+
+  def self.included: (Module klass) -> void
+
+  module ClassMethods
+    attr_reader list: List
+    alias onboarding list
+
+    def list=: (Array[String] raw_list) -> List
+    alias has_onboarding list=
+  end
 end
