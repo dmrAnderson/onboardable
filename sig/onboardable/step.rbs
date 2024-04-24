@@ -7,16 +7,20 @@ module Onboardable
     STATUSES: Array[Symbol]
 
     attr_reader name: String
-    attr_reader status: Symbol
+    attr_accessor status: Symbol
+    attr_accessor representation: Class?
 
-    def initialize: (String, ?status: Symbol) -> instance
+    def initialize: (String, Class?) -> instance
+
     def pending?: () -> bool
     def current?: () -> bool
     def completed?: () -> bool
-    def name=: (String) -> String
-    def status=: (Symbol) -> Symbol
     def ==: (Step) -> bool
     def to_s: () -> String
     def update_status!: (Integer) -> Symbol
+
+    private
+
+    def name=: (String) -> String
   end
 end

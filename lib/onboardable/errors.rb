@@ -3,12 +3,6 @@
 module Onboardable
   class Error < StandardError; end
 
-  class InvalidStepStatusError < Error
-    def initialize(status, expected_statuses)
-      super("Invalid status: `#{status}`. Must be one of: `#{expected_statuses.join('`, `')}`.")
-    end
-  end
-
   class InvalidComparisonResultError < Error
     def initialize(comparison, expected_comparisons)
       super("Invalid comparison result: `#{comparison}`. Must be one of: #{expected_comparisons.join('`, `')}.")
