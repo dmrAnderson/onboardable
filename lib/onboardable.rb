@@ -9,22 +9,23 @@ require_relative 'onboardable/list'
 module Onboardable
   def self.included(klass)
     klass.extend ClassMethods
+    klass.include InstanceMethods
   end
 
   module ClassMethods
+    def list_builder
+      @list_builder ||= ListBuilder.new
+    end
+
     def list_builder=(&block)
       list_builder.instance_eval(&block)
     end
     alias has_onboarding list_builder=
+  end
 
+  module InstanceMethods
     def onboarding
-      list_builder.build!
-    end
-
-    private
-
-    def list_builder
-      @list_builder ||= ListBuilder.new
+      @onboarding ||= self.class.list_builder.build!
     end
   end
 end

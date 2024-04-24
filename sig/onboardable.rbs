@@ -5,13 +5,14 @@ module Onboardable
   def self.included: (Module klass) -> void
 
   module ClassMethods
-    def list_builder=: () { () -> void } -> ListBuilder
-    alias has_onboarding list_builder=
-
-    def onboarding: -> List
-
-    private
-
     attr_reader list_builder: ListBuilder
+
+    def list_builder=: () { () -> ListBuilder } -> Step
+    alias has_onboarding list_builder=
+  end
+
+  module InstanceMethods
+    attr_reader onboarding: List
   end
 end
+
