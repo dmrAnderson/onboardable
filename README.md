@@ -3,9 +3,12 @@
 ![Build](https://img.shields.io/github/actions/workflow/status/dmrAnderson/onboardable/ci.yml)
 ![Code Coverage](https://img.shields.io/coverallsCoverage/github/dmrAnderson/onboardable)
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/onboardable`. To experiment with that code, run `bin/console` for an interactive prompt.
+The Onboardable gem is a Ruby module designed to simplify and streamline the
+process of managing and navigating through a series of steps or stages within
+an application, typically used for user onboarding workflows. By including
+the Onboardable module in a class, developers can easily define a sequence
+of onboarding steps, handle transitions between these steps, and maintain
+the state of the current step in the sequence.
 
 ## 🔌 Installation
 
@@ -38,7 +41,7 @@ TODO: Write usage instructions here
 
 Bug reports and pull requests are welcome on GitHub at <https://github.com/dmrAnderson/onboardable>.
 This project is intended to be a safe, welcoming space for collaboration,
-and contributors areexpected to adhere to the [code of conduct](https://github.com/dmrAnderson/onboardable/blob/main/CODE_OF_CONDUCT.md).
+and contributors are expected to adhere to the [code of conduct](https://github.com/dmrAnderson/onboardable/blob/main/CODE_OF_CONDUCT.md).
 
 ## 📃 License
 

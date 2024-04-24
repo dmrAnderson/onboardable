@@ -4,6 +4,9 @@
 require 'bundler/setup'
 require 'onboardable'
 
+# Load the Dummy class to demonstrate the Onboardable functionality
+require './spec/support/dummy'
+
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
 
