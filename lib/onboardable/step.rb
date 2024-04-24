@@ -8,27 +8,19 @@ module Onboardable
     DEFAULT_STATUS = PENDING_STATUS
     STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
 
-    attr_reader :name, :status
+    attr_reader :name
+    attr_accessor :status, :representation
 
-    def initialize(name, status: DEFAULT_STATUS)
+    def initialize(name, representation)
       self.name = name
-      self.status = status
+      self.representation = representation
+      self.status = DEFAULT_STATUS
     end
 
     STATUSES.each do |status_method|
       define_method :"#{status_method}?" do
         status == status_method
       end
-    end
-
-    def name=(raw_name)
-      @name = raw_name.to_s
-    end
-
-    def status=(raw_status)
-      raise InvalidStepStatusError.new(raw_status, STATUSES) unless STATUSES.include?(raw_status)
-
-      @status = raw_status
     end
 
     def ==(other)
@@ -50,6 +42,12 @@ module Onboardable
       else
         raise InvalidComparisonResultError.new(comparison_result, [-1, 0, 1])
       end
+    end
+
+    private
+
+    def name=(raw_name)
+      @name = raw_name.to_s
     end
   end
 end

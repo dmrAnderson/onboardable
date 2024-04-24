@@ -12,19 +12,85 @@ the state of the current step in the sequence.
 
 ## 🔌 Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+```shell
+bundle add onboardable
+```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+```shell
+gem install onboardable
+```
 
 ## ⚙️ Usage
 
-TODO: Write usage instructions here
+First, ensure that the Onboardable gem is installed and properly set up in your
+project as per the installation guide provided earlier.
+
+### Basic Configuration
+
+1. **Include Onboardable in Your Class**
+
+   Decide which Ruby class should have the onboarding process.
+   For example, if you want to add an onboarding process to a User
+   class, you would modify the class as follows:
+
+   ```ruby
+   class User
+     include Onboardable
+   end
+   ```
+
+1. **Define Onboarding Steps**
+
+   You can define the steps involved in the onboarding process using
+   the has_onboarding method provided by the gem. Here's an example of
+   how to define a simple onboarding process with custom steps:
+
+   ```ruby
+   class User
+     has_onboarding do
+       step 'Create Account', UserCreate
+       step 'Verify Email', EmailVerify
+       step 'Complete Profile', AddressCreate
+       step 'Introduction Tour'
+     end
+   end
+   ```
+
+### Using the Onboarding Steps
+
+Once you have defined the onboarding steps, you can use them within your
+application to track user progress, determine the next steps, and manage
+transitions between steps.
+
+1. **Accessing Onboarding Steps**
+
+   You can retrieve the onboarding steps for any instance of your class:
+
+   ```ruby
+   user = User.new
+   user.onboarding.steps  # => Returns the list of steps defined
+   ```
+
+1. **Navigating Steps**
+
+   Implement navigation between steps using the methods provided:
+
+   ```ruby
+   user.onboarding.next_step!  # Advances to the next step
+   user.onboarding.prev_step!  # Moves back to the previous step
+   ```
+
+   You can check if a step is the first or the last to handle edge
+   cases in your UI or logic:
+
+   ```ruby
+   user.onboarding.first_step?  # => true if the current step is the first
+   user.onboarding.last_step?   # => true if the current step is the last
+   ```
 
 ## 🛠 Development
 

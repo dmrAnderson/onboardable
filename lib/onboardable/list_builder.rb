@@ -8,8 +8,8 @@ module Onboardable
       @steps = steps
     end
 
-    def step=(name, _class_representation = nil)
-      steps[name] = Step.new(name)
+    def step=(name, representation = nil)
+      steps[name] = Step.new(name, representation)
     end
     alias step step=
 
