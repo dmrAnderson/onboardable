@@ -9,25 +9,6 @@ module Onboardable
     end
   end
 
-  class InvalidStepError < Error
-    def initialize(step, expected_steps)
-      super("Invalid step: `#{step}`. Must be one of: `#{expected_steps.join('`, `')}`.")
-    end
-  end
-
-  class InvalidStepsTypeError < Error
-    def initialize(steps)
-      super("Steps must be an enumerable object. Received: `#{steps.class}`.")
-    end
-  end
-
-  class InsufficientUniqueStepsError < Error
-    def initialize(existed_steps)
-      existed_steps_str = existed_steps.any? ? "`#{existed_steps.join('`, `')}`" : 'none'
-      super("Need at least two unique steps. Provided: #{existed_steps_str}.")
-    end
-  end
-
   class InvalidComparisonResultError < Error
     def initialize(comparison, expected_comparisons)
       super("Invalid comparison result: `#{comparison}`. Must be one of: #{expected_comparisons.join('`, `')}.")

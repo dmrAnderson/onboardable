@@ -1,0 +1,12 @@
+module Onboardable
+  class ListBuilder
+    attr_reader steps: Hash[String, Step]
+
+    def initialize: (?steps: Hash[String, Step]) -> Hash[String, Step]
+
+    def step=: (String, ?Class?) -> Step
+    alias step step=
+
+    def build!: (?Step?) -> List
+  end
+end

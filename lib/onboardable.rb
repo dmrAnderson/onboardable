@@ -2,10 +2,8 @@
 
 require_relative 'onboardable/version'
 require_relative 'onboardable/errors'
-require_relative 'onboardable/utils/warnings'
 require_relative 'onboardable/step'
-require_relative 'onboardable/step_builder'
-require_relative 'onboardable/navigation'
+require_relative 'onboardable/list_builder'
 require_relative 'onboardable/list'
 
 module Onboardable
@@ -14,19 +12,19 @@ module Onboardable
   end
 
   module ClassMethods
-    def steps_builder=(&block)
-      steps_builder.instance_eval(&block)
+    def list_builder=(&block)
+      list_builder.instance_eval(&block)
     end
-    alias has_onboarding steps_builder=
+    alias has_onboarding list_builder=
 
     def onboarding
-      steps_builder.build!
+      list_builder.build!
     end
 
     private
 
-    def steps_builder
-      @steps_builder ||= StepsBuilder.new
+    def list_builder
+      @list_builder ||= ListBuilder.new
     end
   end
 end

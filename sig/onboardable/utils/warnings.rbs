@@ -1,9 +1,0 @@
-module Onboardable
-  module Utils
-    module Warnings
-      private
-
-      def warn_about_duplicates: (Array[String]) -> nil
-    end
-  end
-end
