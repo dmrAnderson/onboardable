@@ -62,35 +62,103 @@ project as per the installation guide provided earlier.
 
 ### Using the Onboarding Steps
 
-Once you have defined the onboarding steps, you can use them within your
-application to track user progress, determine the next steps, and manage
-transitions between steps.
+To enhance the guidance for users on how to navigate and manage the
+onboarding flow using the Onboardable gem, here's a concise guide that
+could be included in the documentation. This guide covers initialization,
+navigation, step verification, and completion of the onboarding process.
 
-1. **Accessing Onboarding Steps**
+After defining and accessing the onboarding steps as described
+earlier, manage the onboarding process through various controls
+that allow step navigation and state verification:
 
-   You can retrieve the onboarding steps for any instance of your class:
+1. **Initialize Onboarding Process**
 
-   ```ruby
-   user = User.new
-   user.onboarding.steps  # => Returns the list of steps defined
-   ```
-
-1. **Navigating Steps**
-
-   Implement navigation between steps using the methods provided:
+   Instantiate the onboarding process when a user object is created.
+   This sets up the initial step based on the defined onboarding flow.
 
    ```ruby
-   user.onboarding.next_step!  # Advances to the next step
-   user.onboarding.prev_step!  # Moves back to the previous step
+   onboarding = User.new.onboarding
+   # => Initializes the onboarding process for a new user instance
    ```
 
-   You can check if a step is the first or the last to handle edge
-   cases in your UI or logic:
+1. **Navigating Through Steps**
+
+   Navigate through the onboarding steps using the navigation methods provided.
+   These methods help in moving forward and backward through the onboarding process.
+
+   - **Next Step**
+
+      Access the next step without changing the current step to preview
+      what's next or advance to it, updating the current step status.
+
+      ```ruby
+      next_step_preview = onboarding.next_step
+      # Returns the next step without changing the current step
+
+      onboarding.next_step!
+      # Advances to the next step, updating the current step
+      ```
+
+   - **Previous Step**
+
+     Similarly, access the previous step to move back without
+     making changes or update to revert to the previous step.
+
+     ```ruby
+     previous_step_preview = onboarding.prev_step
+     # Returns the previous step without changing the current step
+
+     onboarding.prev_step!
+     # Moves back to the previous step, updating the current step
+     ```
+
+1. **Check Step Position**
+
+   Determine whether the current step is the first or the last in the sequence
+   to manage UI elements like 'Next' or 'Back' buttons appropriately.
 
    ```ruby
-   user.onboarding.first_step?  # => true if the current step is the first
-   user.onboarding.last_step?   # => true if the current step is the last
+   onboarding.first_step?
+   # => true if the current step is the first
+
+   onboarding.last_step?
+   # => true if the current step is the last
    ```
+
+1. **Access Current Step Details**
+
+   Retrieve details about the current step, which can include the name,
+   representation, and status, to display appropriate information or help
+   the user complete tasks associated with the step.
+
+   ```ruby
+   current_step = onboarding.current_step
+   # => Returns the current step in the onboarding process
+
+   current_step_name = onboarding.current_step.name
+   # => Returns the name of the current step
+
+   current_step_representation = onboarding.current_step.representation
+   # => Returns a representation object or nil if not specified
+
+   current_step_status = onboarding.current_step.status
+   # => Provides the current status or progress of the step
+   ```
+
+1. **Complete the Onboarding Process**
+
+   Once the user reaches the last step and completes it, finalize the
+   onboarding process, which might involve setting a user attribute to
+   indicate completion or triggering other application logic.
+
+   ```ruby
+   if onboarding.last_step?
+     # Trigger finalization processes like database updates or notifications
+   end
+   ```
+
+By following these steps, developers can effectively manage and facilitate a
+user-friendly onboarding process using the Onboardable gem.
 
 ## 🛠 Development
 
