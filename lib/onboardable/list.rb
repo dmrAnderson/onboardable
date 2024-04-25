@@ -10,7 +10,7 @@ module Onboardable
     end
 
     def next_step
-      current_index = step_index(current_step)
+      current_index = step_index!(current_step)
       raise LastStepError.new(current_step, steps) if current_index >= steps.size.pred
 
       steps.fetch(current_index.next)
@@ -21,7 +21,7 @@ module Onboardable
     end
 
     def prev_step
-      current_index = step_index(current_step)
+      current_index = step_index!(current_step)
       raise FirstStepError.new(current_step, steps) unless current_index.positive?
 
       steps.fetch(current_index.pred)
@@ -46,13 +46,13 @@ module Onboardable
     end
 
     def current_step=(raw_current_step)
-      current_step_index = step_index(raw_current_step)
+      current_step_index = step_index!(raw_current_step)
       steps.each_with_index { |step, index| step.update_status!(index <=> current_step_index) }
       @current_step = steps.fetch(current_step_index)
     end
 
-    def step_index(raw_step)
-      steps.index { |step| step == raw_step } || 0
+    def step_index!(raw_step)
+      steps.index { |step| step == raw_step } || raise(InvalidStepError.new(raw_step, steps.map(&:name)))
     end
   end
 end

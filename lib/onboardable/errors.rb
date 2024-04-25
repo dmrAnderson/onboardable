@@ -3,6 +3,12 @@
 module Onboardable
   class Error < StandardError; end
 
+  class InvalidStepError < Error
+    def initialize(step, expected_steps)
+      super("Invalid step: `#{step}`. Must be one of: `#{expected_steps.join('`, `')}`.")
+    end
+  end
+
   class InvalidComparisonResultError < Error
     def initialize(comparison, expected_comparisons)
       super("Invalid comparison result: `#{comparison}`. Must be one of: #{expected_comparisons.join('`, `')}.")
