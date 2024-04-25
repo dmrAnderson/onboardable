@@ -8,8 +8,7 @@ module Onboardable
     DEFAULT_STATUS = PENDING_STATUS
     STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
 
-    attr_reader :name
-    attr_accessor :status, :representation
+    attr_reader :name, :representation, :status
 
     def initialize(name, representation)
       self.name = name
@@ -45,6 +44,8 @@ module Onboardable
     end
 
     private
+
+    attr_writer :representation, :status
 
     def name=(raw_name)
       @name = raw_name.to_s

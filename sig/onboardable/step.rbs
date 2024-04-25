@@ -7,8 +7,8 @@ module Onboardable
     STATUSES: Array[Symbol]
 
     attr_reader name: String
-    attr_accessor status: Symbol
-    attr_accessor representation: Class?
+    attr_reader representation: Class?
+    attr_reader status: Symbol
 
     def initialize: (String, Class?) -> instance
 
@@ -20,6 +20,9 @@ module Onboardable
     def update_status!: (Integer) -> Symbol
 
     private
+
+    attr_writer representation: Class?
+    attr_writer status: Symbol
 
     def name=: (String) -> String
   end
