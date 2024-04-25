@@ -3,51 +3,58 @@
 RSpec.describe Onboardable::ListBuilder do
   subject(:list_builder) { described_class.new }
 
-  let(:step_name) { 'Profile Completion' }
-  let(:another_step_name) { 'Email Confirmation' }
+  describe '#add_step' do
+    let(:step_name) { 'intro' }
 
-  describe '#step=' do
-    before { list_builder.add_step(step_name) }
-
-    it 'adds a step with the given name and representation' do
-      expect(list_builder.steps[step_name]).to have_attributes(name: step_name)
+    it 'adds a step to the list' do
+      list_builder.add_step(step_name)
+      expect(list_builder.steps.keys).to include(step_name)
     end
 
-    it 'sets the first added step as the default current step' do
-      expect(list_builder.current_step).to have_attributes(name: step_name)
+    it 'sets the correct step name' do
+      list_builder.add_step(step_name)
+      expect(list_builder.steps[step_name].name).to eq(step_name)
     end
 
-    it 'does not change the current step when more steps are added' do
-      list_builder.add_step(another_step_name)
+    it 'sets the first added step as the current step' do
+      list_builder.add_step(step_name)
       expect(list_builder.current_step.name).to eq(step_name)
+    end
+
+    context 'when adding multiple steps' do
+      let(:second_step_name) { 'details' }
+
+      before do
+        list_builder.add_step(step_name)
+        list_builder.add_step(second_step_name)
+      end
+
+      it 'does not change the current step when more steps are added' do
+        expect(list_builder.current_step.name).to eq(step_name)
+      end
     end
   end
 
-  describe '#build' do
-    before do
-      list_builder.add_step(step_name)
-      list_builder.add_step(another_step_name)
-    end
-
-    context 'with a specified current step name' do
-      it 'builds a list with the specified step as current' do
-        list = list_builder.build!(another_step_name)
-        expect(list.current_step.name).to eq(another_step_name)
+  describe '#build!' do
+    context 'when no steps have been added' do
+      it 'raises an EmptyListError' do
+        expect { list_builder.build!(nil) }.to raise_error(Onboardable::EmptyListError)
       end
     end
 
-    context 'with no current step name provided' do
-      it 'builds a list with the default current step' do
-        list = list_builder.build!(nil)
-        expect(list.current_step.name).to eq(step_name)
+    context 'when steps are present' do
+      before do
+        list_builder.add_step('step1')
+        list_builder.add_step('step2')
       end
-    end
 
-    context 'with an invalid step name' do
-      it 'raises an error when the specified step name does not exist' do
-        expect do
-          list_builder.build!('Nonexistent Step')
-        end.to raise_error(Onboardable::InvalidStepError)
+      it 'builds a list with the specified current step' do
+        list = list_builder.build!('step2')
+        expect(list.current_step.name).to eq('step2')
+      end
+
+      it 'raises an InvalidStepError if the specified current step does not exist' do
+        expect { list_builder.build!('nonexistent') }.to raise_error(Onboardable::InvalidStepError)
       end
     end
   end

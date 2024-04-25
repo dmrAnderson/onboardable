@@ -3,7 +3,7 @@ module Onboardable
     attr_reader steps: Array[Step]
     attr_reader current_step: Step
 
-    def initialize: (Hash[String, Step], Step) -> instance
+    def initialize: (Array[Step], Step) -> instance
 
     def next_step: () -> Step
     def next_step!: () -> Step
@@ -14,7 +14,7 @@ module Onboardable
 
     private
 
-    def steps=: (Hash[String, Step]) -> Array[Step]
+    def steps=: (Array[Step]) -> Array[Step]
     def current_step=: (Step) -> Step
 
     def step_index!: (Step)-> Integer

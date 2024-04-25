@@ -2,8 +2,6 @@ module Onboardable
   VERSION: String
   # See the writing guide of rbs: https://github.com/ruby/rbs#guides
 
-  def self.included: (Module klass) -> void
-
   module ClassMethods
     attr_reader list_builder: ListBuilder
 

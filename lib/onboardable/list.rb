@@ -42,7 +42,7 @@ module Onboardable
     private
 
     def steps=(raw_steps)
-      @steps = raw_steps.values.freeze
+      @steps = raw_steps.freeze
     end
 
     def current_step=(raw_current_step)

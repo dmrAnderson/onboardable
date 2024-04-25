@@ -18,7 +18,9 @@ module Onboardable
     alias step add_step
 
     def build!(current_step_name)
-      List.new(steps, convert_to_step!(current_step_name))
+      raise EmptyListError if steps.empty?
+
+      List.new(steps.values, convert_to_step!(current_step_name))
     end
 
     private

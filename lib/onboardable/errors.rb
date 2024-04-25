@@ -3,6 +3,12 @@
 module Onboardable
   class Error < StandardError; end
 
+  class EmptyListError < Error
+    def initialize
+      super('Cannot be performed because the list is empty.')
+    end
+  end
+
   class InvalidStepError < Error
     def initialize(step, expected_steps)
       super("Invalid step: `#{step}`. Must be one of: `#{expected_steps.join('`, `')}`.")
