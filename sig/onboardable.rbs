@@ -12,7 +12,6 @@ module Onboardable
   end
 
   module InstanceMethods
-    attr_reader onboarding: List
+    def  onboarding: (String?) -> List
   end
 end
-

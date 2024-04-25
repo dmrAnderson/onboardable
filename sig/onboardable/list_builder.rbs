@@ -1,12 +1,17 @@
 module Onboardable
   class ListBuilder
     attr_reader steps: Hash[String, Step]
+    attr_accessor current_step: Step
 
     def initialize: (?steps: Hash[String, Step]) -> Hash[String, Step]
 
-    def step=: (String, ?Class?) -> Step
-    alias step step=
+    def add_step: (String, ?Class?) -> Step
+    alias step add_step
 
-    def build!: (?Step?) -> List
+    def build!: (String?) -> List
+
+    private
+
+    def convert_to_step!: (String?) -> Step
   end
 end

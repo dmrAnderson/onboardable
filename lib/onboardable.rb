@@ -24,8 +24,8 @@ module Onboardable
   end
 
   module InstanceMethods
-    def onboarding
-      @onboarding ||= self.class.list_builder.build!
+    def onboarding(current_step_name = nil)
+      self.class.list_builder.build!(current_step_name)
     end
   end
 end
