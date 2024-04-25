@@ -2,15 +2,11 @@
 
 RSpec.describe Onboardable::List do
   subject(:list) do
-    described_class.new(raw_steps, steps.fetch(1)) # starting from 'step2'
+    described_class.new(steps, steps.fetch(1)) # starting from 'step2'
   end
 
   let(:steps) do
     %w[step1 step2 step3].map { |name| Onboardable::Step.new(name, nil) }
-  end
-
-  let(:raw_steps) do
-    steps.to_h { |step| [step.name, step] }
   end
 
   describe '#initialize' do
@@ -31,7 +27,7 @@ RSpec.describe Onboardable::List do
     end
 
     context 'when at the last step' do
-      subject(:last_step_list) { described_class.new(raw_steps, steps.fetch(-1)) }
+      subject(:last_step_list) { described_class.new(steps, steps.fetch(-1)) }
 
       it 'raises a LastStepError' do
         expect { last_step_list.next_step }.to raise_error(Onboardable::LastStepError)
@@ -54,7 +50,7 @@ RSpec.describe Onboardable::List do
     end
 
     context 'when at the first step' do
-      subject(:first_step_list) { described_class.new(raw_steps, steps.fetch(0)) }
+      subject(:first_step_list) { described_class.new(steps, steps.fetch(0)) }
 
       it 'raises a FirstStepError' do
         expect { first_step_list.prev_step }.to raise_error(Onboardable::FirstStepError)
@@ -71,7 +67,7 @@ RSpec.describe Onboardable::List do
 
   describe '#first_step?' do
     context 'when at the first step' do
-      subject(:first_step_list) { described_class.new(raw_steps, steps.fetch(0)) }
+      subject(:first_step_list) { described_class.new(steps, steps.fetch(0)) }
 
       it 'returns true' do
         expect(first_step_list.first_step?).to be true
@@ -87,7 +83,7 @@ RSpec.describe Onboardable::List do
 
   describe '#last_step?' do
     context 'when at the last step' do
-      subject(:last_step_list) { described_class.new(raw_steps, steps.fetch(-1)) }
+      subject(:last_step_list) { described_class.new(steps, steps.fetch(-1)) }
 
       it 'returns true' do
         expect(last_step_list.last_step?).to be true
