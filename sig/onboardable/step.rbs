@@ -17,13 +17,14 @@ module Onboardable
     def completed?: () -> bool
     def ==: (Step) -> bool
     def to_s: () -> String
+    alias to_str to_s
+
     def update_status!: (Integer) -> Symbol
 
     private
 
+    attr_writer name: String
     attr_writer representation: Class?
     attr_writer status: Symbol
-
-    def name=: (String) -> String
   end
 end

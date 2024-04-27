@@ -5,17 +5,17 @@ module Onboardable
 
     def initialize: (Array[Step], Step) -> instance
 
-    def next_step: () -> Step
+    def next_step: () -> Step?
     def next_step!: () -> Step
-    def prev_step: () -> Step
+    def prev_step: () -> Step?
     def prev_step!: () -> Step
     def first_step?: () -> bool
     def last_step?: () -> bool
 
     private
 
-    def steps=: (Array[Step]) -> Array[Step]
-    def current_step=: (Step) -> Step
+    attr_writer steps: Array[Step]
+    attr_writer current_step: Step
 
     def step_index!: (Step)-> Integer
   end

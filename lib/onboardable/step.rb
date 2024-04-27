@@ -23,12 +23,13 @@ module Onboardable
     end
 
     def ==(other)
-      to_s == other.to_s
+      to_str == other.to_str
     end
 
     def to_s
       name
     end
+    alias to_str to_s
 
     def update_status!(comparison_result)
       case comparison_result
@@ -45,10 +46,10 @@ module Onboardable
 
     private
 
-    attr_writer :representation, :status
-
     def name=(raw_name)
-      @name = raw_name.to_s
+      @name = String.new(String.try_convert(raw_name))
     end
+
+    attr_writer :representation, :status
   end
 end

@@ -6,7 +6,7 @@ module Onboardable
     attr_accessor :current_step
 
     def initialize(steps: {})
-      @steps = steps
+      self.steps = steps
     end
 
     def add_step(name, representation = nil)
@@ -18,12 +18,14 @@ module Onboardable
     alias step add_step
 
     def build!(current_step_name)
-      raise EmptyListError if steps.empty?
-
       List.new(steps.values, convert_to_step!(current_step_name))
     end
 
     private
+
+    def steps=(raw_steps)
+      @steps = Hash(Hash.try_convert(raw_steps))
+    end
 
     def convert_to_step!(name)
       return current_step unless name
