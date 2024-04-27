@@ -29,16 +29,27 @@ RSpec.describe Onboardable::List do
     context 'when at the last step' do
       subject(:last_step_list) { described_class.new(steps, steps.fetch(-1)) }
 
-      it 'raises a LastStepError' do
-        expect { last_step_list.next_step }.to raise_error(Onboardable::LastStepError)
+      it 'returns nil' do
+        expect(last_step_list.next_step).to be_nil
       end
     end
   end
 
   describe '#next_step!' do
-    it 'updates the current step to the next step' do
-      list.next_step!
-      expect(list.current_step).to eq(steps.fetch(2))
+    context 'when not at the last step' do
+      before { list.next_step! }
+
+      it 'updates the current step to the next step' do
+        expect(list.current_step).to eq(steps.fetch(2))
+      end
+    end
+
+    context 'when at the last step' do
+      subject(:last_step_list) { described_class.new(steps, steps.fetch(-1)) }
+
+      it 'raises a LastStepError' do
+        expect { last_step_list.next_step! }.to raise_error(Onboardable::LastStepError)
+      end
     end
   end
 
@@ -52,16 +63,27 @@ RSpec.describe Onboardable::List do
     context 'when at the first step' do
       subject(:first_step_list) { described_class.new(steps, steps.fetch(0)) }
 
-      it 'raises a FirstStepError' do
-        expect { first_step_list.prev_step }.to raise_error(Onboardable::FirstStepError)
+      it 'returns nil' do
+        expect(first_step_list.prev_step).to be_nil
       end
     end
   end
 
   describe '#prev_step!' do
-    it 'updates the current step to the previous step' do
-      list.prev_step!
-      expect(list.current_step).to eq(steps.fetch(0))
+    context 'when not at the first step' do
+      before { list.prev_step! }
+
+      it 'updates the current step to the previous step' do
+        expect(list.current_step).to eq(steps.fetch(0))
+      end
+    end
+
+    context 'when at the first step' do
+      subject(:first_step_list) { described_class.new(steps, steps.fetch(0)) }
+
+      it 'raises a FirstStepError' do
+        expect { first_step_list.prev_step! }.to raise_error(Onboardable::FirstStepError)
+      end
     end
   end
 

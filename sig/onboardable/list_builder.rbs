@@ -12,6 +12,8 @@ module Onboardable
 
     private
 
+    attr_writer steps: Hash[String, Step]
+
     def convert_to_step!: (String?) -> Step
   end
 end

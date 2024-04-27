@@ -11,24 +11,22 @@ module Onboardable
 
     def next_step
       current_index = step_index!(current_step)
-      raise LastStepError.new(current_step, steps) if current_index >= steps.size.pred
 
-      steps.fetch(current_index.next)
+      steps[current_index.next]
     end
 
     def next_step!
-      self.current_step = next_step
+      self.current_step = next_step || raise(LastStepError.new(current_step, steps))
     end
 
     def prev_step
       current_index = step_index!(current_step)
-      raise FirstStepError.new(current_step, steps) unless current_index.positive?
 
-      steps.fetch(current_index.pred)
+      current_index.positive? ? steps[current_index.pred] : nil
     end
 
     def prev_step!
-      self.current_step = prev_step
+      self.current_step = prev_step || raise(FirstStepError.new(current_step, steps))
     end
 
     def first_step?
@@ -42,7 +40,11 @@ module Onboardable
     private
 
     def steps=(raw_steps)
-      @steps = raw_steps.freeze
+      Array(Array.try_convert(raw_steps)).then do |converted_steps|
+        raise EmptyListError if converted_steps.empty?
+
+        @steps = converted_steps.freeze
+      end
     end
 
     def current_step=(raw_current_step)
