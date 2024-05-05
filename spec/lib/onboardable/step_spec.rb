@@ -51,11 +51,11 @@ RSpec.describe Onboardable::Step do
     end
   end
 
-  describe '#to_s' do
+  describe '#to_str' do
     let(:step) { described_class.new('Register', nil) }
 
     it 'returns the name of the step' do
-      expect(step.to_s).to eq('Register')
+      expect(step.to_str).to eq('Register')
     end
   end
 

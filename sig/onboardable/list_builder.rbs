@@ -3,7 +3,7 @@ module Onboardable
     attr_reader steps: Hash[String, Step]
     attr_accessor current_step: Step
 
-    def initialize: (?steps: Hash[String, Step]) -> Hash[String, Step]
+    def initialize: () -> Hash[String, Step]
 
     def add_step: (String, ?Class?) -> Step
     alias step add_step

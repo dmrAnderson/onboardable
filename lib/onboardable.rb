@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'onboardable/version'
+require_relative 'onboardable/utils/navigation'
 require_relative 'onboardable/errors'
-require_relative 'onboardable/step'
-require_relative 'onboardable/list_builder'
 require_relative 'onboardable/list'
+require_relative 'onboardable/list_builder'
+require_relative 'onboardable/step'
+require_relative 'onboardable/version'
 
 module Onboardable
   def self.included(klass)

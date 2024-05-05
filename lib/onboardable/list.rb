@@ -2,39 +2,13 @@
 
 module Onboardable
   class List
+    include Utils::Navigation
+
     attr_reader :steps, :current_step
 
     def initialize(steps, current_step)
       self.steps = steps
       self.current_step = current_step
-    end
-
-    def next_step
-      current_index = step_index!(current_step)
-
-      steps[current_index.next]
-    end
-
-    def next_step!
-      self.current_step = next_step || raise(LastStepError.new(current_step, steps))
-    end
-
-    def prev_step
-      current_index = step_index!(current_step)
-
-      current_index.positive? ? steps[current_index.pred] : nil
-    end
-
-    def prev_step!
-      self.current_step = prev_step || raise(FirstStepError.new(current_step, steps))
-    end
-
-    def first_step?
-      current_step == steps.fetch(0)
-    end
-
-    def last_step?
-      current_step == steps.fetch(-1)
     end
 
     private
@@ -54,7 +28,7 @@ module Onboardable
     end
 
     def step_index!(raw_step)
-      steps.index { |step| step == raw_step } || raise(InvalidStepError.new(raw_step, steps.map(&:name)))
+      steps.index { |step| step == raw_step } || raise(InvalidStepError.new(raw_step, steps.map(&:to_str)))
     end
   end
 end

@@ -5,8 +5,8 @@ module Onboardable
     attr_reader :steps
     attr_accessor :current_step
 
-    def initialize(steps: {})
-      self.steps = steps
+    def initialize
+      self.steps = {}
     end
 
     def add_step(name, representation = nil)

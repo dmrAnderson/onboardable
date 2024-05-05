@@ -16,8 +16,7 @@ module Onboardable
     def current?: () -> bool
     def completed?: () -> bool
     def ==: (Step) -> bool
-    def to_s: () -> String
-    alias to_str to_s
+    def to_str: () -> String
 
     def update_status!: (Integer) -> Symbol
 
