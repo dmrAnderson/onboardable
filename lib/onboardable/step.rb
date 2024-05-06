@@ -26,10 +26,9 @@ module Onboardable
       to_str == other.to_str
     end
 
-    def to_s
+    def to_str
       name
     end
-    alias to_str to_s
 
     def update_status!(comparison_result)
       case comparison_result

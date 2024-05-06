@@ -38,10 +38,10 @@ Gem::Specification.new do |spec|
   # guide at: https://bundler.io/guides/creating_gem.html
   spec.add_development_dependency 'rake', '~> 13.2', '>= 13.2.1'
   spec.add_development_dependency 'rspec', '~> 3.13'
-  spec.add_development_dependency 'rubocop', '~> 1.63', '>= 1.63.3'
+  spec.add_development_dependency 'rubocop', '~> 1.63', '>= 1.63.4'
   spec.add_development_dependency 'rubocop-performance', '~> 1.21'
   spec.add_development_dependency 'rubocop-rake', '~> 0.6.0'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.29', '>= 2.29.1'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.29', '>= 2.29.2'
   spec.add_development_dependency 'simplecov', '~> 0.22.0'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
