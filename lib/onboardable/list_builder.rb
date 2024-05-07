@@ -9,8 +9,8 @@ module Onboardable
       self.steps = {}
     end
 
-    def add_step(name, representation = nil)
-      Step.new(name, representation).tap do |step|
+    def add_step(name, data = {})
+      Step.new(name, data).tap do |step|
         steps[name] = step
         self.current_step ||= step
       end

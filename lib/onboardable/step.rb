@@ -8,11 +8,12 @@ module Onboardable
     DEFAULT_STATUS = PENDING_STATUS
     STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
 
-    attr_reader :name, :representation, :status
+    attr_reader :name, :data, :status
 
-    def initialize(name, representation)
+    def initialize(name, data = {})
       self.name = name
-      self.representation = representation
+      self.data = data
+
       self.status = DEFAULT_STATUS
     end
 
@@ -31,24 +32,25 @@ module Onboardable
     end
 
     def update_status!(comparison_result)
-      case comparison_result
-      when -1
-        self.status = COMPLETED_STATUS
-      when 0
-        self.status = CURRENT_STATUS
-      when 1
-        self.status = PENDING_STATUS
-      else
-        raise InvalidComparisonResultError.new(comparison_result, [-1, 0, 1])
-      end
+      self.status = case comparison_result
+                    when -1 then COMPLETED_STATUS
+                    when 0 then CURRENT_STATUS
+                    when 1 then PENDING_STATUS
+                    else
+                      raise InvalidComparisonResultError.new(comparison_result, [-1, 0, 1])
+                    end
     end
 
     private
 
     def name=(raw_name)
-      @name = String.new(String.try_convert(raw_name))
+      @name = String.new(String.try_convert(raw_name)).freeze
     end
 
-    attr_writer :representation, :status
+    def data=(raw_data)
+      @data = Hash(Hash.try_convert(raw_data)).freeze
+    end
+
+    attr_writer :status
   end
 end

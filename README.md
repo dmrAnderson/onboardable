@@ -34,7 +34,7 @@ project as per the installation guide provided earlier.
 1. **Include Onboardable in Your Class**
 
    Decide which Ruby class should have the onboarding process.
-   For example, if you want to add an onboarding process to a User
+   For example, if you want to add an onboarding process to a `User`
    class, you would modify the class as follows:
 
    ```ruby
@@ -46,16 +46,17 @@ project as per the installation guide provided earlier.
 1. **Define Onboarding Steps**
 
    You can define the steps involved in the onboarding process using
-   the has_onboarding method provided by the gem. Here's an example of
-   how to define a simple onboarding process with custom steps:
+   the `has_onboarding` method provided by the gem. Here's an example of
+   how to define a simple onboarding process with custom steps,
+   potentially including specific data for each step:
 
    ```ruby
    class User
      has_onboarding do
-       step 'Create Account', UserCreate
-       step 'Verify Email', EmailVerify
-       step 'Complete Profile', AddressCreate
-       step 'Introduction Tour'
+       step 'Create Account', tooltip: 'Minimum 8 characters.'
+       step('Verify Email', Class.new { def self.to_hash = { required: true } })
+       step 'Complete Profile' # This step does not include specific action data
+       step 'Introduction Tour', description: 'Get to know your new workspace!'
      end
    end
    ```
@@ -68,7 +69,7 @@ could be included in the documentation. This guide covers initialization,
 navigation, step verification, and completion of the onboarding process.
 
 After defining and accessing the onboarding steps as described
-earlier, manage the onboarding process through various controls
+earlier, managed the onboarding process through various controls
 that allow step navigation and state verification:
 
 1. **Initialize Onboarding Process**
@@ -77,22 +78,21 @@ that allow step navigation and state verification:
    This sets up the initial step based on the defined onboarding flow.
 
    ```ruby
-   onboarding = User.new.onboarding
-   # => Initializes the onboarding process for a new user instance
+   User.new.onboarding
+   # Initializes the onboarding process for a new user instance
    ```
 
 1. **Navigating Through Steps**
 
    Navigate through the onboarding steps using the navigation methods provided.
-   These methods help in moving forward and backward through the onboarding process.
-
+   These methods help in moving forward and backward through the onboarding process
    - **Next Step**
 
       Access the next step without changing the current step to preview
       what's next or advance to it, updating the current step status.
 
       ```ruby
-      next_step_preview = onboarding.next_step
+      onboarding.next_step
       # Returns the next step without changing the current step
 
       onboarding.next_step!
@@ -102,14 +102,14 @@ that allow step navigation and state verification:
    - **Previous Step**
 
      Similarly, access the previous step to move back without
-     making changes or update to revert to the previous step.
+     making changes or updates to revert to the previous step.
 
      ```ruby
-     previous_step_preview = onboarding.prev_step
+     onboarding.prev_step
      # Returns the previous step without changing the current step
 
      onboarding.prev_step!
-     # Moves back to the previous step, updating the current step
+     # Reverts to the previous step, updating the current step
      ```
 
 1. **Check Step Position**
@@ -119,30 +119,30 @@ that allow step navigation and state verification:
 
    ```ruby
    onboarding.first_step?
-   # => true if the current step is the first
+   # Returns true if the current step is the first
 
    onboarding.last_step?
-   # => true if the current step is the last
+   # Returns true if the current step is the last
    ```
 
 1. **Access Current Step Details**
 
    Retrieve details about the current step, which can include the name,
-   representation, and status, to display appropriate information or help
+   custom data, and status, to display appropriate information or help
    the user complete tasks associated with the step.
 
    ```ruby
-   current_step = onboarding.current_step
-   # => Returns the current step in the onboarding process
+   onboarding.current_step
+   # Returns the current step in the onboarding process
 
-   current_step_name = onboarding.current_step.name
-   # => Returns the name of the current step
+   onboarding.current_step.name
+   # Returns the name of the current step
 
-   current_step_representation = onboarding.current_step.representation
-   # => Returns a representation object or nil if not specified
+   onboarding.current_step.data
+   # Returns the custom data associated with the step or an empty hash if not specified
 
-   current_step_status = onboarding.current_step.status
-   # => Provides the current status or progress of the step
+   onboarding.current_step.status
+   # Provides the current status or progress of the step
    ```
 
 1. **Complete the Onboarding Process**
@@ -167,7 +167,7 @@ user-friendly onboarding process using the Onboardable gem.
 1. Also run `bin/console` for an interactive prompt that will allow you to experiment.
 1. To install this gem onto your local machine, run `bundle exec rake install`.
 1. To release a new version, update the version number in `version.rb`.
-1. After run `bundle exec rake release`, which will create a git tag for the version.
+1. After, run `bundle exec rake release`, which will create a git tag for the version.
 1. Push git commits and the created tag.
 1. Then push the `.gem` file to [rubygems.org](https://rubygems.org).
 
@@ -184,4 +184,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## 📜 Code of Conduct
 
 Everyone interacting in the Onboardable project's codebases, issue trackers,
-chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/dmrAnderson/onboardable/blob/main/CODE_OF_CONDUCT.md).
+chat rooms and mailing lists are expected to follow the [code of conduct](https://github.com/dmrAnderson/onboardable/blob/main/CODE_OF_CONDUCT.md).

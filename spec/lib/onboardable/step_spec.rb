@@ -2,16 +2,24 @@
 
 RSpec.describe Onboardable::Step do
   describe '#initialize' do
-    subject(:step) { described_class.new('Register', representation) }
+    subject(:step) { described_class.new('Register', data) }
 
-    let(:representation) { Class.new }
+    let(:data) { { detail: 'Details about the step' } }
 
     it 'assigns a name' do
       expect(step.name).to eq('Register')
     end
 
-    it 'assigns a representation' do
-      expect(step.representation).to eq(representation)
+    it 'freezes the name to prevent modification' do
+      expect(step.name).to be_frozen
+    end
+
+    it 'assigns data' do
+      expect(step.data).to eq(data)
+    end
+
+    it 'freezes the data to prevent modification' do
+      expect(step.data).to be_frozen
     end
 
     it 'sets the default status to pending' do
@@ -20,7 +28,7 @@ RSpec.describe Onboardable::Step do
   end
 
   describe 'status predicates' do
-    let(:step) { described_class.new('Register', nil) }
+    let(:step) { described_class.new('Register') }
 
     context 'when the status is pending' do
       it 'returns true for pending?' do
@@ -38,9 +46,9 @@ RSpec.describe Onboardable::Step do
   end
 
   describe '#==' do
-    let(:step) { described_class.new('Register', nil) }
-    let(:another_step) { described_class.new('Register', nil) }
-    let(:different_step) { described_class.new('Confirm', nil) }
+    let(:step) { described_class.new('Register') }
+    let(:another_step) { described_class.new('Register') }
+    let(:different_step) { described_class.new('Confirm') }
 
     it 'is equal to another step with the same name' do
       expect(step).to eq(another_step)
@@ -52,7 +60,7 @@ RSpec.describe Onboardable::Step do
   end
 
   describe '#to_str' do
-    let(:step) { described_class.new('Register', nil) }
+    let(:step) { described_class.new('Register') }
 
     it 'returns the name of the step' do
       expect(step.to_str).to eq('Register')
@@ -60,7 +68,7 @@ RSpec.describe Onboardable::Step do
   end
 
   describe '#update_status!' do
-    let(:step) { described_class.new('Register', nil) }
+    let(:step) { described_class.new('Register') }
 
     context 'when comparison result is -1' do
       it 'sets the status to completed' do
