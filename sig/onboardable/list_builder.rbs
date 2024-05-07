@@ -5,7 +5,7 @@ module Onboardable
 
     def initialize: () -> Hash[String, Step]
 
-    def add_step: (String, ?Class?) -> Step
+    def add_step: (String, Hash[Symbol, untyped]) -> Step
     alias step add_step
 
     def build!: (String?) -> List

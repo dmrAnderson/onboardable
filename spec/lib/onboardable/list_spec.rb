@@ -6,7 +6,7 @@ RSpec.describe Onboardable::List do
   end
 
   let(:steps) do
-    %w[step1 step2 step3].map { |name| Onboardable::Step.new(name, nil) }
+    %w[step1 step2 step3].map { |name| Onboardable::Step.new(name) }
   end
 
   describe '#initialize' do

@@ -7,10 +7,10 @@ module Onboardable
     STATUSES: Array[Symbol]
 
     attr_reader name: String
-    attr_reader representation: Class?
+    attr_reader data: Hash[Symbol, untyped]
     attr_reader status: Symbol
 
-    def initialize: (String, Class?) -> instance
+    def initialize: (String, Hash[Symbol, untyped]) -> instance
 
     def pending?: () -> bool
     def current?: () -> bool
@@ -23,7 +23,7 @@ module Onboardable
     private
 
     attr_writer name: String
-    attr_writer representation: Class?
+    attr_writer data: Hash[Symbol, untyped]
     attr_writer status: Symbol
   end
 end
