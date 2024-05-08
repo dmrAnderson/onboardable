@@ -6,9 +6,7 @@ module Onboardable
       def prev_step: () -> Step?
       def prev_step!: () -> Step
       def first_step?: (?Step) -> bool
-      def first_step: -> Step
       def last_step?: (?Step) -> bool
-      def last_step: -> Step
     end
   end
 end
