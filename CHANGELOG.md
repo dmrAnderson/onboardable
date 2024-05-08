@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Added `first_step` and `last_step` methods to easily access the boundaries of step lists.
 - Added `progress` method for calculating onboarding completion percentage.
 
 ## [1.0.0] - 2024-05-08

@@ -24,11 +24,19 @@ module Onboardable
       end
 
       def first_step?(step = current_step)
-        step == steps.fetch(0)
+        step == first_step
       end
 
       def last_step?(step = current_step)
-        step == steps.fetch(-1)
+        step == last_step
+      end
+
+      def first_step
+        steps.fetch(0)
+      end
+
+      def last_step
+        steps.fetch(-1)
       end
     end
   end
