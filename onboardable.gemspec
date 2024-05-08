@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
 
-  # spec.metadata['homepage_uri'] = spec.homepage
+  spec.metadata['homepage_uri'] = spec.homepage
   # spec.metadata['source_code_uri'] = "TODO: Put your gem's public repo URL here."
   spec.metadata['changelog_uri'] = 'https://github.com/dmrAnderson/onboardable/blob/main/CHANGELOG.md'
   spec.metadata['bug_tracker_uri'] = 'https://github.com/dmrAnderson/onboardable/issues'

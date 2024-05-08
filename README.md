@@ -78,7 +78,7 @@ that allow step navigation and state verification:
    This sets up the initial step based on the defined onboarding flow.
 
    ```ruby
-   User.new.onboarding
+   onboarding = User.new.onboarding
    # Initializes the onboarding process for a new user instance
    ```
 
@@ -123,6 +123,16 @@ that allow step navigation and state verification:
 
    onboarding.last_step?
    # Returns true if the current step is the last
+   ```
+
+1. **Monitor Progress**
+
+   Calculate the progress or completion percentage of the onboarding process
+   to provide users with an indication of how far they have progressed.
+
+   ```ruby
+   onboarding.progress
+   # Returns the percentage of onboarding completion
    ```
 
 1. **Access Current Step Details**
