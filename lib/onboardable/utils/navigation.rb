@@ -23,12 +23,12 @@ module Onboardable
         self.current_step = prev_step || raise(FirstStepError.new(current_step, steps))
       end
 
-      def first_step?
-        current_step == steps.fetch(0)
+      def first_step?(step = current_step)
+        step == steps.fetch(0)
       end
 
-      def last_step?
-        current_step == steps.fetch(-1)
+      def last_step?(step = current_step)
+        step == steps.fetch(-1)
       end
     end
   end
