@@ -101,6 +101,16 @@ RSpec.describe Onboardable::List do
         expect(list.first_step?).to be false
       end
     end
+
+    context 'when checking a specific step explicitly' do
+      it 'returns true if the specified step is the first' do
+        expect(list.first_step?(steps.fetch(0))).to be true
+      end
+
+      it 'returns false if the specified step is not the first' do
+        expect(list.first_step?(steps.fetch(-1))).to be false
+      end
+    end
   end
 
   describe '#last_step?' do
@@ -115,6 +125,16 @@ RSpec.describe Onboardable::List do
     context 'when not at the last step' do
       it 'returns false' do
         expect(list.last_step?).to be false
+      end
+    end
+
+    context 'when checking a specific step explicitly' do
+      it 'returns true if the specified step is the last' do
+        expect(list.last_step?(steps.fetch(-1))).to be true
+      end
+
+      it 'returns false if the specified step is not the last' do
+        expect(list.last_step?(steps.fetch(0))).to be false
       end
     end
   end
