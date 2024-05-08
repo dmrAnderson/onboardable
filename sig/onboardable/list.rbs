@@ -5,6 +5,8 @@ module Onboardable
 
     def initialize: (Array[Step], Step) -> instance
 
+    def progress: -> Float
+
     private
 
     attr_writer steps: Array[Step]

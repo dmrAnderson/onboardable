@@ -11,6 +11,10 @@ module Onboardable
       self.current_step = current_step
     end
 
+    def progress
+      (step_index!(current_step).to_f / steps.size) * 100
+    end
+
     private
 
     def steps=(raw_steps)
