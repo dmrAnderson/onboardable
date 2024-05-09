@@ -85,7 +85,8 @@ that allow step navigation and state verification:
 1. **Navigating Through Steps**
 
    Navigate through the onboarding steps using the navigation methods provided.
-   These methods help in moving forward and backward through the onboarding process
+   These methods help in moving forward and backward through the onboarding process.
+
    - **Next Step**
 
       Access the next step without changing the current step to preview
@@ -162,8 +163,35 @@ that allow step navigation and state verification:
    indicate completion or triggering other application logic.
 
    ```ruby
+   # Direct Check Approach
    if onboarding.last_step?
-     # Trigger finalization processes like database updates or notifications
+     # Implement finalization processes like updating user attributes
+   end
+
+   # Exception Handling Approach
+   begin
+     onboarding.next_step!
+   rescue LastStepError
+     # Implement finalization processes like updating user attributes
+   end
+   ```
+
+1. **Exit the Onboarding Process Early**
+
+   Handle cases where a user decides to discontinue the onboarding
+   by attempting to navigate back from the initial step.
+
+   ```ruby
+   # Direct Check Approach
+   if onboarding.first_step?
+     # Implement cleanup or final actions for an orderly exit
+   end
+
+   # Exception Handling Approach
+   begin
+     onboarding.prev_step!
+   rescue FirstStepError
+     # Implement cleanup or final actions for an orderly exit
    end
    ```
 

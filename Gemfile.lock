@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    onboardable (1.0.0)
+    onboardable (1.0.1)
 
 GEM
   remote: https://rubygems.org/
