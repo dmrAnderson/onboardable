@@ -31,31 +31,19 @@ project as per the installation guide provided earlier.
 
 ### Basic Configuration
 
-1. **Include Onboardable in Your Class**
-
-   Decide which Ruby class should have the onboarding process.
-   For example, if you want to add an onboarding process to a `User`
-   class, you would modify the class as follows:
+   To incorporate an onboarding process into your Ruby User class, start by
+   including the Onboardable module to add onboarding functionality. Then,
+   define the onboarding steps with the has_onboarding method, detailing each
+   step with helpful tooltips and descriptions. Here's how you can set it up:
 
    ```ruby
    class User
      include Onboardable
-   end
-   ```
 
-1. **Define Onboarding Steps**
-
-   You can define the steps involved in the onboarding process using
-   the `has_onboarding` method provided by the gem. Here's an example of
-   how to define a simple onboarding process with custom steps,
-   potentially including specific data for each step:
-
-   ```ruby
-   class User
      has_onboarding do
        step 'Create Account', tooltip: 'Minimum 8 characters.'
        step('Verify Email', Class.new { def self.to_hash = { required: true } })
-       step 'Complete Profile' # This step does not include specific action data
+       step 'Complete Profile'
        step 'Introduction Tour', description: 'Get to know your new workspace!'
      end
    end

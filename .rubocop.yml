@@ -7,8 +7,5 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.0.0
 
-Style/Documentation:
-  Enabled: false
-
 Gemspec/DevelopmentDependencies:
   EnforcedStyle: gemspec
