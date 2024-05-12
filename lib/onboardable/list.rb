@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Onboardable
-  # The List class represents a list of steps in the onboarding process.
+  # The List class manages a sequence of steps in an onboarding process, tracking progress and current state.
   class List
     include Utils::Navigation
 
@@ -11,50 +11,45 @@ module Onboardable
     # @return [Step] the current step in the list
     attr_reader :current_step
 
-    # Initializes a new List.
+    # Initializes a new instance of List with steps and a current step.
     #
-    # @param steps [Array<Step>] the steps in the list
-    # @param current_step [Step] the current step in the list
+    # @param steps [Array<Step>] An array of steps comprising the onboarding process.
+    # @param current_step [Step] The step currently active in the process.
     def initialize(steps, current_step)
       self.steps = steps
       self.current_step = current_step
     end
 
-    # Returns the progress of the onboarding process as a percentage.
+    # Calculates and returns the onboarding progress as a percentage.
     #
-    # @return [Float] the progress of the onboarding process
+    # @return [Float] The completion percentage of the onboarding process.
     def progress
       (step_index!(current_step).to_f / steps.size) * 100
     end
 
     private
 
-    # Sets the steps in the list.
+    # Sets and validates the steps array, ensuring it is an Array of Step objects.
     #
-    # @param raw_steps [Array<Step>] the raw steps
-    # @raise [EmptyListError] if the list of steps is empty
-    def steps=(raw_steps)
-      Array(Array.try_convert(raw_steps)).then do |converted_steps|
-        raise EmptyListError if converted_steps.empty?
-
-        @steps = converted_steps.freeze
-      end
+    # @param steps [Array<Step>] The steps to be assigned to the list.
+    def steps=(steps)
+      @steps = Array(Array.try_convert(steps)).freeze
     end
 
-    # Sets the current step in the list.
+    # Updates the current step and recalibrates the status of all steps in the list.
     #
-    # @param raw_current_step [Step] the raw current step
+    # @param raw_current_step [Step] The new current step to set.
     def current_step=(raw_current_step)
       current_step_index = step_index!(raw_current_step)
       steps.each_with_index { |step, index| step.update_status!(index <=> current_step_index) }
       @current_step = steps.fetch(current_step_index)
     end
 
-    # Returns the index of the given step in the list.
+    # Determines the index of a given step in the list, ensuring the step exists.
     #
-    # @param raw_step [Step] the raw step
-    # @return [Integer] the index of the step
-    # @raise [InvalidStepError] if the step is not in the list
+    # @param raw_step [Step] The step for which the index is requested.
+    # @return [Integer] The index of the step within the list.
+    # @raise [InvalidStepError] Raises an error if the step does not exist in the list.
     def step_index!(raw_step)
       steps.index { |step| step == raw_step } || raise(InvalidStepError.new(raw_step.to_str, steps.map(&:to_str)))
     end
