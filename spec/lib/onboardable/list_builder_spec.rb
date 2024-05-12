@@ -38,7 +38,7 @@ RSpec.describe Onboardable::ListBuilder do
   describe '#build!' do
     context 'when no steps have been added' do
       it 'raises an EmptyListError' do
-        expect { list_builder.build!(nil) }.to raise_error(Onboardable::EmptyListError)
+        expect { list_builder.build!('') }.to raise_error(Onboardable::EmptyStepsError)
       end
     end
 

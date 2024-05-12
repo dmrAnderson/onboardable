@@ -10,6 +10,6 @@ module Onboardable
   end
 
   module InstanceMethods
-    def  onboarding: (String?) -> List
+    def onboarding: (String?) -> List
   end
 end

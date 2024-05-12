@@ -14,6 +14,8 @@ module Onboardable
 
     attr_writer steps: Hash[String, Step]
 
-    def convert_to_step!: (String?) -> Step
+    def convert_to_step!: (String) -> Step
+
+    def convert_to_steps!: -> Array[Step]
   end
 end
