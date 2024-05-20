@@ -41,10 +41,10 @@ project as per the installation guide provided earlier.
      include Onboardable
 
      has_onboarding do
-       step 'Create Account', tooltip: 'Minimum 8 characters.'
-       step('Verify Email', Class.new { def self.to_hash = { required: true } })
-       step 'Complete Profile'
-       step 'Introduction Tour', description: 'Get to know your new workspace!'
+       step 'welcome', message: 'Welcome to your new account!'
+       step 'account_setup', task: 'Create credentials'
+       step 'profile_completion', task: 'Add a photo and bio'
+       step 'confirmation', prompt: 'Confirm your details'
      end
    end
    ```

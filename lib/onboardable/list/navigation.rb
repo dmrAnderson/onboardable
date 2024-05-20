@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Onboardable
-  module Utils
+  module List
     # The Navigation module provides methods for navigating through the steps of the onboarding process.
     module Navigation
       # Returns the next step in the onboarding process.
@@ -36,7 +36,7 @@ module Onboardable
 
       # Checks if the specified step is the first step in the onboarding process.
       #
-      # @param step [Step] the step to check (defaults to the current step if not specified).
+      # @param step [Step] The step to check (defaults to the current step if not specified).
       # @return [Boolean] True if the specified step is the first step, false otherwise.
       def first_step?(step = current_step)
         step == first_step
@@ -44,7 +44,7 @@ module Onboardable
 
       # Checks if the specified step is the last step in the onboarding process.
       #
-      # @param step [Step] the step to check (defaults to the current step if not specified).
+      # @param step [Step] The step to check (defaults to the current step if not specified).
       # @return [Boolean] True if the specified step is the last step, false otherwise.
       def last_step?(step = current_step)
         step == last_step

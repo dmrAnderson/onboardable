@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Added warn_about_override method to alert on step overrides.
 - Added YARD documentation to the project for improved code documentation.
 
 ## [1.0.1] - 2024-05-09

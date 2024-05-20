@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Onboardable::List do
+RSpec.describe Onboardable::List::Base do
   subject(:list) do
     described_class.new(steps, steps.fetch(1)) # starting from 'step2'
   end
