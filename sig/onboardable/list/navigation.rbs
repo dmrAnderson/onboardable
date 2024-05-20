@@ -1,5 +1,5 @@
 module Onboardable
-  module Utils
+  module List
     module Navigation
       def next_step: () -> Step?
       def next_step!: () -> Step

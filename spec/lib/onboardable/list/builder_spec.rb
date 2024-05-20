@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Onboardable::ListBuilder do
+RSpec.describe Onboardable::List::Builder do
   subject(:list_builder) { described_class.new }
 
   describe '#add_step' do
@@ -33,11 +33,29 @@ RSpec.describe Onboardable::ListBuilder do
         expect(list_builder.current_step.name).to eq(step_name)
       end
     end
+
+    context 'when adding a step with an existing name' do
+      let(:new_step_data) { { description: 'New description' } }
+
+      before do
+        list_builder.add_step(step_name)
+      end
+
+      it 'warns about overriding the existing step' do
+        expect { list_builder.add_step(step_name, new_step_data) }
+          .to output(/warning: Step `#{step_name}` already exists and will be overridden./).to_stderr
+      end
+
+      it 'overrides the existing step with the new data' do
+        list_builder.add_step(step_name, new_step_data)
+        expect(list_builder.steps[step_name].data).to eq(new_step_data)
+      end
+    end
   end
 
   describe '#build!' do
     context 'when no steps have been added' do
-      it 'raises an EmptyListError' do
+      it 'raises an EmptyStepsError' do
         expect { list_builder.build!('') }.to raise_error(Onboardable::EmptyStepsError)
       end
     end

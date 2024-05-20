@@ -3,9 +3,9 @@ module Onboardable
   # See the writing guide of rbs: https://github.com/ruby/rbs#guides
 
   module ClassMethods
-    attr_reader list_builder: ListBuilder
+    attr_reader list_builder: List::Builder
 
-    def list_builder=: () { () -> ListBuilder } -> Step
+    def list_builder=: () { () -> List::Builder } -> Step
     alias has_onboarding list_builder=
   end
 

@@ -1,0 +1,9 @@
+module Onboardable
+  module Utils
+    module Warnings
+      private
+
+      def warn_about_override: (Hash[String, Step]) -> nil
+    end
+  end
+end

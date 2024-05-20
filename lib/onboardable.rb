@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'onboardable/utils/navigation'
 require_relative 'onboardable/errors'
-require_relative 'onboardable/list'
-require_relative 'onboardable/list_builder'
+require_relative 'onboardable/utils/warnings'
+require_relative 'onboardable/list/navigation'
+require_relative 'onboardable/list/builder'
+require_relative 'onboardable/list/base'
 require_relative 'onboardable/step'
 require_relative 'onboardable/version'
 
@@ -21,14 +22,14 @@ module Onboardable
   module ClassMethods
     # Retrieves or initializes a ListBuilder for onboarding steps at the class level.
     #
-    # @return [ListBuilder] the ListBuilder associated with the class
+    # @return [List::Builder] the ListBuilder associated with the class
     def list_builder
-      @list_builder ||= ListBuilder.new
+      @list_builder ||= List::Builder.new
     end
 
     # Configures onboarding steps via a ListBuilder with a provided block.
     #
-    # @yield [ListBuilder] executes block in the context of ListBuilder
+    # @yield [List::Builder] executes block in the context of List::Builder
     def list_builder=(&block)
       list_builder.instance_eval(&block)
     end
@@ -40,7 +41,7 @@ module Onboardable
     # Builds a List from the ListBuilder at the class level, optionally specifying the current step.
     #
     # @param current_step_name [String, nil] the name of the current step, if specified
-    # @return [List] the List built from the class's ListBuilder
+    # @return [List::Base] the List built from the class's ListBuilder
     def onboarding(current_step_name = nil)
       self.class.list_builder.build!(current_step_name)
     end

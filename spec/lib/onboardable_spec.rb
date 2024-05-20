@@ -7,7 +7,7 @@ RSpec.describe Onboardable do
     subject(:dummy) { Dummy.new }
 
     it 'returns an instance of Onboardable::List' do
-      expect(dummy.onboarding).to be_an_instance_of(Onboardable::List)
+      expect(dummy.onboarding).to be_an_instance_of(Onboardable::List::Base)
     end
   end
 end
