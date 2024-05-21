@@ -6,14 +6,19 @@ module Onboardable
 
       def initialize: () -> Hash[String, Step]
 
-      def add_step: (String, Hash[Symbol, untyped]) -> Step
-      alias step add_step
+      def create_step: (String, Hash[Symbol, untyped]) -> Step
+      alias step create_step
+
+      def create_step_from!: (Class) -> Step
+      alias step_from create_step_from!
 
       def build!: (String?) -> Base
 
       private
 
       attr_writer steps: Hash[String, Step]
+
+      def add_step: (Step) -> Step
 
       def convert_to_step!: (String) -> Step
 

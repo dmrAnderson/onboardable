@@ -1,10 +1,13 @@
 module Onboardable
   class Step
+    CONVERSION_METHOD: Symbol
     PENDING_STATUS: Symbol
     CURRENT_STATUS: Symbol
     COMPLETED_STATUS: Symbol
     DEFAULT_STATUS: Symbol
     STATUSES: Array[Symbol]
+
+    def self.try_convert: -> Step?
 
     attr_reader name: String
     attr_reader data: Hash[Symbol, untyped]

@@ -41,10 +41,28 @@ project as per the installation guide provided earlier.
      include Onboardable
 
      has_onboarding do
+       # Welcome step with a greeting message.
        step 'welcome', message: 'Welcome to your new account!'
+
+       # Account setup step for credentials.
        step 'account_setup', task: 'Create credentials'
+
+       # Profile completion step to add photo and bio.
        step 'profile_completion', task: 'Add a photo and bio'
+
+       # Confirmation step to verify details before completion.
        step 'confirmation', prompt: 'Confirm your details'
+
+       # Use `step_from` to add steps from external sources for reusability.
+       step_from ExternalStepProvider
+     end
+   end
+
+   # External class for providing a reusable onboarding step
+   class ExternalStepProvider
+     # Define a method to return an onboarding step
+     def self.to_onboardable_step
+       Onboardable::Step.new('external_step', info: 'This is an external step.')
      end
    end
    ```
@@ -67,7 +85,6 @@ that allow step navigation and state verification:
 
    ```ruby
    onboarding = User.new.onboarding
-   # Initializes the onboarding process for a new user instance
    ```
 
 1. **Navigating Through Steps**
@@ -81,11 +98,8 @@ that allow step navigation and state verification:
       what's next or advance to it, updating the current step status.
 
       ```ruby
-      onboarding.next_step
-      # Returns the next step without changing the current step
-
-      onboarding.next_step!
-      # Advances to the next step, updating the current step
+      onboarding.next_step  # Preview the next step
+      onboarding.next_step! # Advance to the next step
       ```
 
    - **Previous Step**
@@ -94,11 +108,8 @@ that allow step navigation and state verification:
      making changes or updates to revert to the previous step.
 
      ```ruby
-     onboarding.prev_step
-     # Returns the previous step without changing the current step
-
-     onboarding.prev_step!
-     # Reverts to the previous step, updating the current step
+     onboarding.prev_step  # Preview the previous step
+     onboarding.prev_step! # Move back to the previous step
      ```
 
 1. **Check Step Position**
@@ -107,11 +118,8 @@ that allow step navigation and state verification:
    to manage UI elements like 'Next' or 'Back' buttons appropriately.
 
    ```ruby
-   onboarding.first_step?
-   # Returns true if the current step is the first
-
-   onboarding.last_step?
-   # Returns true if the current step is the last
+   onboarding.first_step? # Is the first step?
+   onboarding.last_step?  # Is the last step?
    ```
 
 1. **Monitor Progress**
@@ -120,8 +128,7 @@ that allow step navigation and state verification:
    to provide users with an indication of how far they have progressed.
 
    ```ruby
-   onboarding.progress
-   # Returns the percentage of onboarding completion
+   onboarding.progress # Returns the completion percentage
    ```
 
 1. **Access Current Step Details**
@@ -131,17 +138,10 @@ that allow step navigation and state verification:
    the user complete tasks associated with the step.
 
    ```ruby
-   onboarding.current_step
-   # Returns the current step in the onboarding process
-
-   onboarding.current_step.name
-   # Returns the name of the current step
-
-   onboarding.current_step.data
-   # Returns the custom data associated with the step or an empty hash if not specified
-
-   onboarding.current_step.status
-   # Provides the current status or progress of the step
+   onboarding.current_step        # Current step details
+   onboarding.current_step.name   # Step name
+   onboarding.current_step.data   # Step custom data
+   onboarding.current_step.status # Step status
    ```
 
 1. **Complete the Onboarding Process**

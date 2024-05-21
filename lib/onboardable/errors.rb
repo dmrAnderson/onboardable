@@ -4,6 +4,28 @@ module Onboardable
   # Base error class for Onboardable-related exceptions.
   class Error < StandardError; end
 
+  # Error raised when a method is called on an object that does not define it.
+  class UndefinedMethodError < Error
+    # Initializes a new instance of UndefinedMethodError.
+    #
+    # @param klass [Class] The class that does not have the method defined.
+    # @param method [Symbol, String] The name of the method that is not defined.
+    def initialize(klass, method)
+      super("Method `#{method}` is not defined for `#{klass}`.")
+    end
+  end
+
+  # Error raised when an object cannot be converted to a Step.
+  class StepConversionError < Error
+    # Initializes a new instance of StepConversionError.
+    #
+    # @param klass [Class] The class that failed to convert.
+    # @param step [Object] The object returned by the failed conversion.
+    def initialize(klass, step)
+      super("can't convert #{klass} to Step (#{klass}#to_onboarding_step gives #{step.class}).")
+    end
+  end
+
   # Error raised when an operation is attempted on an empty steps collection.
   class EmptyStepsError < Error
     # Initializes a new instance of EmptyStepsError.
@@ -24,11 +46,11 @@ module Onboardable
     end
   end
 
-  # Error raised when an invalid comparison result is encountered in sorting or comparing steps.
-  class InvalidComparisonResultError < Error
-    # Initializes a new InvalidComparisonResultError with details about the invalid comparison.
+  # Error raised when an invalid comparison result is encountered.
+  class ComparisonResultError < Error
+    # Initializes a new ComparisonResultError with details about the issue.
     #
-    # @param comparison [Integer] The erroneous comparison result.
+    # @param comparison [Integer] The invalid comparison result that triggered the error.
     # @param expected_comparisons [Array<Integer>] The list of valid comparison results expected.
     def initialize(comparison, expected_comparisons)
       super("Invalid comparison result: `#{comparison}`. Must be one of: #{expected_comparisons.join('`, `')}.")

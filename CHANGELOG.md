@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2024-05-21
+
+- Introduced `step_from` method for adding steps from external sources.
 - Added warn_about_override method to alert on step overrides.
 - Added YARD documentation to the project for improved code documentation.
 
