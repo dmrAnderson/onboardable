@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Added `onboarding` class method to define the onboarding steps.
+- Added [documentation link](https://rubydoc.info/gems/onboardable) to gemspec.
+
 ## [1.1.0] - 2024-05-21
 
 - Introduced `step_from` method for adding steps from external sources.

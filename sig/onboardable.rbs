@@ -7,9 +7,11 @@ module Onboardable
 
     def list_builder=: () { () -> List::Builder } -> Step
     alias has_onboarding list_builder=
+
+    def onboarding: (String?) -> List::Base
   end
 
   module InstanceMethods
-    def onboarding: (String?) -> List
+    def onboarding: (String?) -> List::Base
   end
 end
