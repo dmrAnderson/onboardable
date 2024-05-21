@@ -3,11 +3,25 @@
 module Onboardable
   # Represents a single step within an onboarding process, including its status and associated data.
   class Step
+    CONVERSION_METHOD = :to_onboarding_step
+
     PENDING_STATUS = :pending
     CURRENT_STATUS = :current
     COMPLETED_STATUS = :completed
+
     DEFAULT_STATUS = PENDING_STATUS
+
     STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
+
+    class << self
+      def try_convert(value)
+        return unless value.respond_to?(CONVERSION_METHOD)
+
+        value.public_send(CONVERSION_METHOD).then do |step|
+          step.is_a?(Step) ? step : raise(StepConversionError.new(value, step))
+        end
+      end
+    end
 
     # @return [String] the name of the step
     attr_reader :name
@@ -56,14 +70,14 @@ module Onboardable
     # Updates the status of the step based on a specified comparison result.
     #
     # @param comparison_result [Integer] the result of a comparison with the current step (-1, 0, or 1)
-    # @raise [InvalidComparisonResultError] if the comparison result is not -1, 0, or 1
+    # @raise [ComparisonResultError] if the comparison result is not -1, 0, or 1
     def update_status!(comparison_result)
       self.status = case comparison_result
                     when -1 then COMPLETED_STATUS
                     when 0 then CURRENT_STATUS
                     when 1 then PENDING_STATUS
                     else
-                      raise InvalidComparisonResultError.new(comparison_result, [-1, 0, 1])
+                      raise ComparisonResultError.new(comparison_result, [-1, 0, 1])
                     end
     end
 

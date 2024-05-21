@@ -17,19 +17,26 @@ module Onboardable
         self.steps = {}
       end
 
-      # Adds a new step to the list with optional custom data.
+      # Creates a new Step object and adds it to the builder.
       #
       # @param name [String] The name of the step.
-      # @param data [Hash] A hash of custom data associated with the step (default: empty hash).
-      # @return [Step] The newly added step object.
-      def add_step(name, data = {})
-        Step.new(name, data).tap do |step|
-          warn_about_override(name) if steps.key?(name)
-          steps[name] = step
-          self.current_step ||= step
+      # @param data [Hash] The data associated with the step.
+      # @return [Step] The created step.
+      def create_step(name, data = {})
+        Step.new(name, data).tap { |step| add_step(step) }
+      end
+      alias step create_step
+
+      # Converts a class to a Step object and adds it to the builder.
+      #
+      # @param klass [Class] The class to be converted to a step.
+      # @raise [UndefinedMethodError] if the conversion method is not defined for the class.
+      def create_step_from!(klass)
+        Step.try_convert(klass).tap do |step|
+          add_step(step || raise(UndefinedMethodError.new(klass, Step::CONVERSION_METHOD)))
         end
       end
-      alias step add_step
+      alias step_from create_step_from!
 
       # Constructs a new List object from the steps added to the builder.
       #
@@ -41,6 +48,18 @@ module Onboardable
       end
 
       private
+
+      # Adds a step to the builder.
+      #
+      # @param step [Step] The step to be added.
+      def add_step(step)
+        step.name.then do |name|
+          warn_about_override(name) if steps.key?(name)
+          steps[name] = step
+        end
+
+        self.current_step ||= step
+      end
 
       # Assigns a hash of steps to the builder.
       #

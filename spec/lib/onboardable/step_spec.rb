@@ -94,7 +94,39 @@ RSpec.describe Onboardable::Step do
     it 'raises an error for an invalid comparison result' do
       expect do
         step.update_status!(2)
-      end.to raise_error(Onboardable::InvalidComparisonResultError)
+      end.to raise_error(Onboardable::ComparisonResultError)
+    end
+  end
+
+  describe '.try_convert' do
+    let(:valid_object) do
+      Class.new { def self.to_onboarding_step = Onboardable::Step.new('Test Step') }
+    end
+
+    let(:invalid_object) do
+      Class.new { def self.to_onboarding_step = 'Invalid Step' }
+    end
+
+    let(:no_conversion_method_object) { Object.new }
+
+    context 'when the object can be converted to a Step' do
+      let(:step) { described_class.try_convert(valid_object) }
+
+      it 'returns a step' do
+        expect(step).to be_a(described_class)
+      end
+
+      it 'assigns the correct name' do
+        expect(step.name).to eq('Test Step')
+      end
+    end
+
+    it 'raises a StepConversionError if the conversion does not return a Step' do
+      expect { described_class.try_convert(invalid_object) }.to raise_error(Onboardable::StepConversionError)
+    end
+
+    it 'returns nil if the object does not respond to the conversion method' do
+      expect(described_class.try_convert(no_conversion_method_object)).to be_nil
     end
   end
 end

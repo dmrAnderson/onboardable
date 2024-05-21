@@ -1,0 +1,32 @@
+module Onboardable
+  class Error < StandardError
+  end
+
+  class UndefinedMethodError < Error
+    def initialize: (Class, Symbol | String) -> void
+  end
+
+  class StepConversionError < Error
+    def initialize: (Class, untyped) -> void
+  end
+
+  class EmptyStepsError < Error
+    def initialize: () -> void
+  end
+
+  class InvalidStepError < Error
+    def initialize: (String, Array[String]) -> void
+  end
+
+  class ComparisonResultError < Error
+    def initialize: (Integer, Array[Integer]) -> void
+  end
+
+  class LastStepError < Error
+    def initialize: (String, Array[String]) -> void
+  end
+
+  class FirstStepError < Error
+    def initialize: (String, Array[String]) -> void
+  end
+end
