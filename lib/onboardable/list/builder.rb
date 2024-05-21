@@ -40,7 +40,7 @@ module Onboardable
 
       # Constructs a new List object from the steps added to the builder.
       #
-      # @param current_step_name [String] The name of the step to mark as current in the built list.
+      # @param current_step_name [String, nil] The name of the step to mark as current in the built list. Can be nil.
       # @return [Base] A new List object initialized with the steps and the specified current step.
       # @raise [EmptyStepsError] if no steps have been added to the builder.
       def build!(current_step_name)

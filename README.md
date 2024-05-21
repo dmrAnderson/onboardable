@@ -41,27 +41,20 @@ project as per the installation guide provided earlier.
      include Onboardable
 
      has_onboarding do
-       # Welcome step with a greeting message.
+       # Use the `step` method to steps with a name and optional data
        step 'welcome', message: 'Welcome to your new account!'
-
-       # Account setup step for credentials.
        step 'account_setup', task: 'Create credentials'
+       step 'confirmation'
 
-       # Profile completion step to add photo and bio.
-       step 'profile_completion', task: 'Add a photo and bio'
-
-       # Confirmation step to verify details before completion.
-       step 'confirmation', prompt: 'Confirm your details'
-
-       # Use `step_from` to add steps from external sources for reusability.
+       # Use the `step_from` method to define steps from external providers
        step_from ExternalStepProvider
      end
    end
 
    # External class for providing a reusable onboarding step
    class ExternalStepProvider
-     # Define a method to return an onboarding step
-     def self.to_onboardable_step
+     # Define class method to return an onboarding step
+     def self.to_onboarding_step
        Onboardable::Step.new('external_step', info: 'This is an external step.')
      end
    end

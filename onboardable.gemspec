@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   # spec.metadata['source_code_uri'] = "TODO: Put your gem's public repo URL here."
   spec.metadata['changelog_uri'] = 'https://github.com/dmrAnderson/onboardable/blob/main/CHANGELOG.md'
   spec.metadata['bug_tracker_uri'] = 'https://github.com/dmrAnderson/onboardable/issues'
-  spec.metadata['documentation_uri'] = 'https://github.com/dmrAnderson/onboardable/blob/main/README.md'
+  spec.metadata['documentation_uri'] = 'https://rubydoc.info/gems/onboardable'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
