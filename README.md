@@ -41,19 +41,14 @@ project as per the installation guide provided earlier.
      include Onboardable
 
      has_onboarding do
-       # Use the `step` method to steps with a name and optional data
        step 'welcome', message: 'Welcome to your new account!'
        step 'account_setup', task: 'Create credentials'
        step 'confirmation'
-
-       # Use the `step_from` method to define steps from external providers
        step_from ExternalStepProvider
      end
    end
 
-   # External class for providing a reusable onboarding step
    class ExternalStepProvider
-     # Define class method to return an onboarding step
      def self.to_onboarding_step
        Onboardable::Step.new('external_step', info: 'This is an external step.')
      end
@@ -78,6 +73,15 @@ that allow step navigation and state verification:
 
    ```ruby
    onboarding = User.new.onboarding
+   ```
+
+1. **Check order of steps**
+
+   Determine the order of steps in the onboarding process to ensure
+   that the sequence is correct and that the steps are defined as expected.
+
+   ```ruby
+   onboarding.steps # Returns the list of steps
    ```
 
 1. **Navigating Through Steps**
@@ -111,8 +115,13 @@ that allow step navigation and state verification:
    to manage UI elements like 'Next' or 'Back' buttons appropriately.
 
    ```ruby
-   onboarding.first_step? # Is the first step?
-   onboarding.last_step?  # Is the last step?
+   step = onboarding.steps.sample # Random step from the list
+
+   onboarding.first_step?(step)   # Is the first step?
+   onboarding.last_step?(step)    # Is the last step?
+   onboarding.current_step?(step) # Is the current step?
+   onboarding.second_step?(step)  # Is the second step?
+   onboarding.prev_step?(step)    # Is the previous step?
    ```
 
 1. **Monitor Progress**

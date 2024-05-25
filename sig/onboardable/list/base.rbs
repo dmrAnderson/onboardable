@@ -13,7 +13,11 @@ module Onboardable
       attr_writer steps: Array[Step]
       attr_writer current_step: Step
 
-      def step_index!: (Step)-> Integer
+      def step_error!: (Step) -> void
+
+      def step_index: (Step)-> Integer
+
+      def update_each_step_status: (Integer) -> Array[Step]
     end
   end
 end

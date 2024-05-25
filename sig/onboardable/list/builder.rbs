@@ -23,6 +23,8 @@ module Onboardable
       def convert_to_step!: (String) -> Step
 
       def convert_to_steps!: -> Array[Step]
+
+      def undefined_method_error!: (Class) -> void
     end
   end
 end

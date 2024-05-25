@@ -129,4 +129,20 @@ RSpec.describe Onboardable::Step do
       expect(described_class.try_convert(no_conversion_method_object)).to be_nil
     end
   end
+
+  describe '#status=' do
+    let(:step) { described_class.new('Register') }
+
+    it 'assigns the status' do
+      expect do
+        step.send(:status=, Onboardable::Step::COMPLETED_STATUS)
+      end.to change(step, :status).to(Onboardable::Step::COMPLETED_STATUS)
+    end
+
+    it 'raises an error for an invalid status' do
+      expect do
+        step.send(:status=, :invalid)
+      end.to raise_error(Onboardable::StepStatusError)
+    end
+  end
 end

@@ -36,8 +36,8 @@ module Onboardable
   end
 
   # Error raised when an invalid step is encountered within the onboarding process.
-  class InvalidStepError < Error
-    # Initializes a new InvalidStepError with details about the issue.
+  class StepError < Error
+    # Initializes a new StepError with details about the issue.
     #
     # @param step [String] The invalid step that triggered the error.
     # @param expected_steps [Array<String>] The list of valid steps expected at this point.
@@ -76,6 +76,17 @@ module Onboardable
     # @param expected_steps [Array<String>] The complete list of valid steps in the onboarding process.
     def initialize(step, expected_steps)
       super("Currently `#{step}` the first step. Available steps are: `#{expected_steps.join('`, `')}`.")
+    end
+  end
+
+  # Error raised when an invalid status is encountered for a step.
+  class StepStatusError < Error
+    # Initializes a new StepStatusError with details about the issue.
+    #
+    # @param status [Symbol] The invalid status that triggered the error.
+    # @param expected_statuses [Array<Symbol>] The list of valid statuses expected.
+    def initialize(status, expected_statuses)
+      super("Invalid status: `#{status}`. Must be one of: `#{expected_statuses.join('`, `')}`.")
     end
   end
 end

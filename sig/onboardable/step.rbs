@@ -28,5 +28,7 @@ module Onboardable
     attr_writer name: String
     attr_writer data: Hash[Symbol, untyped]
     attr_writer status: Symbol
+
+    def comparison_result_error!: (Integer) -> void
   end
 end

@@ -70,15 +70,14 @@ module Onboardable
     # Updates the status of the step based on a specified comparison result.
     #
     # @param comparison_result [Integer] the result of a comparison with the current step (-1, 0, or 1)
+    # @return [Symbol] the new status of the step
     # @raise [ComparisonResultError] if the comparison result is not -1, 0, or 1
     def update_status!(comparison_result)
       self.status = case comparison_result
                     when -1 then COMPLETED_STATUS
                     when 0 then CURRENT_STATUS
                     when 1 then PENDING_STATUS
-                    else
-                      raise ComparisonResultError.new(comparison_result, [-1, 0, 1])
-                    end
+                    else comparison_result_error!(comparison_result); end
     end
 
     private
@@ -90,6 +89,15 @@ module Onboardable
       @name = String.new(String.try_convert(raw_name)).freeze
     end
 
+    # Sets the status of the step.
+    #
+    # @param raw_status [Symbol] the new status of the step
+    def status=(raw_status)
+      STATUSES.include?(raw_status) || raise(StepStatusError.new(raw_status, STATUSES))
+
+      @status = raw_status
+    end
+
     # Sets the custom data for the step, ensuring it is a valid Hash.
     #
     # @param raw_data [Hash] the raw custom data
@@ -97,9 +105,12 @@ module Onboardable
       @data = Hash(Hash.try_convert(raw_data)).freeze
     end
 
-    # Sets the status of the step.
+    # Raises an error for an invalid comparison result.
     #
-    # @param status [Symbol] the new status of the step
-    attr_writer :status
+    # @param comparison_result [Integer] the invalid comparison result
+    # @raise [ComparisonResultError] raises an error for an invalid comparison result
+    def comparison_result_error!(comparison_result)
+      raise ComparisonResultError.new(comparison_result, (-1..1).to_a)
+    end
   end
 end

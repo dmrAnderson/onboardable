@@ -14,7 +14,7 @@ module Onboardable
     def initialize: () -> void
   end
 
-  class InvalidStepError < Error
+  class StepError < Error
     def initialize: (String, Array[String]) -> void
   end
 
@@ -28,5 +28,9 @@ module Onboardable
 
   class FirstStepError < Error
     def initialize: (String, Array[String]) -> void
+  end
+
+  class StepStatusError < Error
+    def initialize: (Symbol, Array[Symbol]) -> void
   end
 end
