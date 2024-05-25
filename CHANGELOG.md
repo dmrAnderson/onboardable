@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [1.2.0] - 2024-05-25
+
+- Added `#second_step?` method to check if the target step is the second step.
+- Added `#prev_step?` method to check if the target step is the previous step.
+- Added `#current_step?` method to check if the target step is the current step.
+
+## [1.1.1] - 2024-05-21
+
 - Added `onboarding` class method to define the onboarding steps.
 - Added [documentation link](https://rubydoc.info/gems/onboardable) to gemspec.
 

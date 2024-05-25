@@ -59,6 +59,16 @@ RSpec.describe Onboardable::List::Base do
     end
   end
 
+  describe '#next_step?' do
+    it 'returns true for the next step' do
+      expect(list.next_step?(steps.fetch(2))).to be(true)
+    end
+
+    it 'returns false for any other step' do
+      expect(list.next_step?(steps.fetch(0))).to be(false)
+    end
+  end
+
   describe '#next_step!' do
     context 'when not at the last step' do
       it 'advances the current step to the next step' do
@@ -88,6 +98,16 @@ RSpec.describe Onboardable::List::Base do
       it 'returns nil for the previous step' do
         expect(first_step_list.prev_step).to be_nil
       end
+    end
+  end
+
+  describe '#prev_step?' do
+    it 'returns true for the previous step' do
+      expect(list.prev_step?(steps.fetch(0))).to be(true)
+    end
+
+    it 'returns false for any other step' do
+      expect(list.prev_step?(steps.fetch(2))).to be(false)
     end
   end
 
@@ -156,6 +176,26 @@ RSpec.describe Onboardable::List::Base do
       it 'returns false if the specified step is not the last' do
         expect(list.last_step?(steps.fetch(0))).to be false
       end
+    end
+  end
+
+  describe '#current_step?' do
+    it 'returns true for the current step' do
+      expect(list.current_step?(steps.fetch(1))).to be true
+    end
+
+    it 'returns false for any other step' do
+      expect(list.current_step?(steps.fetch(0))).to be false
+    end
+  end
+
+  describe '#step_index' do
+    it 'returns the index of the specified step' do
+      expect(list.send(:step_index, steps.fetch(1))).to eq(1)
+    end
+
+    it 'raises a StepError if the step is not in the list' do
+      expect { list.send(:step_index, Onboardable::Step.new('step4')) }.to raise_error(Onboardable::StepError)
     end
   end
 end

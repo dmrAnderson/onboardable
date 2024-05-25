@@ -3,12 +3,24 @@ module Onboardable
     module Navigation
       def next_step: () -> Step?
       def next_step!: () -> Step
+      def next_step?: (Step) -> bool
+
       def prev_step: () -> Step?
+      def prev_step?: (Step) -> bool
       def prev_step!: () -> Step
-      def first_step?: (?Step) -> bool
+
       def first_step: -> Step
-      def last_step?: (?Step) -> bool
+      def first_step?: (?Step) -> bool
+
       def last_step: -> Step
+      def last_step?: (?Step) -> bool
+
+      def current_step?: (Step) -> bool
+
+      private
+
+      def first_step_error!: -> void
+      def last_step_error!: -> void
     end
   end
 end

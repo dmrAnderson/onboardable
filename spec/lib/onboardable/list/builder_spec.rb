@@ -86,8 +86,8 @@ RSpec.describe Onboardable::List::Builder do
         expect(list.current_step.name).to eq('step2')
       end
 
-      it 'raises an InvalidStepError if the specified current step does not exist' do
-        expect { list_builder.build!('nonexistent') }.to raise_error(Onboardable::InvalidStepError)
+      it 'raises an StepError if the specified current step does not exist' do
+        expect { list_builder.build!('nonexistent') }.to raise_error(Onboardable::StepError)
       end
     end
   end

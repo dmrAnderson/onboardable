@@ -30,11 +30,10 @@ module Onboardable
       # Converts a class to a Step object and adds it to the builder.
       #
       # @param klass [Class] The class to be converted to a step.
-      # @raise [UndefinedMethodError] if the conversion method is not defined for the class.
+      # @return [Step] The converted step.
+      # @raise [UndefinedMethodError] If the conversion method is not defined for the class.
       def create_step_from!(klass)
-        Step.try_convert(klass).tap do |step|
-          add_step(step || raise(UndefinedMethodError.new(klass, Step::CONVERSION_METHOD)))
-        end
+        (Step.try_convert(klass) || undefined_method_error!(klass)).tap { |step| add_step(step) }
       end
       alias step_from create_step_from!
 
@@ -42,7 +41,7 @@ module Onboardable
       #
       # @param current_step_name [String, nil] The name of the step to mark as current in the built list. Can be nil.
       # @return [Base] A new List object initialized with the steps and the specified current step.
-      # @raise [EmptyStepsError] if no steps have been added to the builder.
+      # @raise [EmptyStepsError] If no steps have been added to the builder.
       def build!(current_step_name)
         Base.new(convert_to_steps!, convert_to_step!(current_step_name || current_step.name))
       end
@@ -52,13 +51,14 @@ module Onboardable
       # Adds a step to the builder.
       #
       # @param step [Step] The step to be added.
+      # @return [Step] The added step.
       def add_step(step)
-        step.name.then do |name|
+        step.tap do
+          name = step.name
           warn_about_override(name) if steps.key?(name)
           steps[name] = step
+          self.current_step ||= step
         end
-
-        self.current_step ||= step
       end
 
       # Assigns a hash of steps to the builder.
@@ -73,18 +73,24 @@ module Onboardable
       # @return [Array<Step>] An array of steps.
       # @raise [EmptyStepsError] Raises if there are no steps to convert.
       def convert_to_steps!
-        raise EmptyStepsError if steps.empty?
-
-        steps.values
+        steps.any? ? steps.values : raise(EmptyStepsError)
       end
 
       # Retrieves a Step object from the builder's steps based on the step name.
       #
       # @param name [String] The name of the step to be converted to a Step object.
       # @return [Step] The corresponding Step object.
-      # @raise [InvalidStepError] Raises if the specified step name is not present in the steps hash.
+      # @raise [StepError] Raises if the specified step name is not present in the steps hash.
       def convert_to_step!(name)
-        steps[name] || raise(InvalidStepError.new(name, steps.keys))
+        steps[name] || raise(StepError.new(name, steps.keys))
+      end
+
+      # Raises an UndefinedMethodError indicating that the conversion method is not defined for the class.
+      #
+      # @param klass [Class] The class that does not have the conversion method defined.
+      # @raise [UndefinedMethodError] Raises an error indicating the missing conversion method.
+      def undefined_method_error!(klass)
+        raise UndefinedMethodError.new(klass, Step::CONVERSION_METHOD)
       end
     end
   end
