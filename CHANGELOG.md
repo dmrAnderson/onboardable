@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.2.1] - 2024-06-01
+
+- Added trusted publisher
+
 ## [1.2.0] - 2024-05-25
 
 - Added `#second_step?` method to check if the target step is the second step.

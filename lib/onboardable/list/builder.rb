@@ -31,18 +31,16 @@ module Onboardable
       #
       # @param klass [Class] The class to be converted to a step.
       # @return [Step] The converted step.
-      # @raise [UndefinedMethodError] If the conversion method is not defined for the class.
-      def create_step_from!(klass)
+      def create_step_from(klass)
         (Step.try_convert(klass) || undefined_method_error!(klass)).tap { |step| add_step(step) }
       end
-      alias step_from create_step_from!
+      alias step_from create_step_from
 
       # Constructs a new List object from the steps added to the builder.
       #
       # @param current_step_name [String, nil] The name of the step to mark as current in the built list. Can be nil.
       # @return [Base] A new List object initialized with the steps and the specified current step.
-      # @raise [EmptyStepsError] If no steps have been added to the builder.
-      def build!(current_step_name)
+      def build(current_step_name)
         Base.new(convert_to_steps!, convert_to_step!(current_step_name || current_step.name))
       end
 
@@ -53,12 +51,12 @@ module Onboardable
       # @param step [Step] The step to be added.
       # @return [Step] The added step.
       def add_step(step)
-        step.tap do
-          name = step.name
+        step.name.then do |name|
           warn_about_override(name) if steps.key?(name)
           steps[name] = step
-          self.current_step ||= step
         end
+
+        step.tap { self.current_step = step }
       end
 
       # Assigns a hash of steps to the builder.

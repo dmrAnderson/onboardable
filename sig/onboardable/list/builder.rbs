@@ -9,10 +9,10 @@ module Onboardable
       def create_step: (String, Hash[Symbol, untyped]) -> Step
       alias step create_step
 
-      def create_step_from!: (Class) -> Step
-      alias step_from create_step_from!
+      def create_step_from: (Class) -> Step
+      alias step_from create_step_from
 
-      def build!: (String?) -> Base
+      def build: (String?) -> Base
 
       private
 

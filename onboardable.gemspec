@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   spec.files = Dir.chdir(__dir__) do
     `git ls-files -z`.split("\x0").reject do |f|
-      (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|circleci)|appveyor)})
+      (f == __FILE__) || f.match(%r{\A(?:(?:bin|spec)/|\.(?:git|rspec|rubocop))})
     end
   end
 
@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   # guide at: https://bundler.io/guides/creating_gem.html
   spec.add_development_dependency 'rake', '~> 13.2', '>= 13.2.1'
   spec.add_development_dependency 'rspec', '~> 3.13'
-  spec.add_development_dependency 'rubocop', '~> 1.64'
+  spec.add_development_dependency 'rubocop', '~> 1.64', '>= 1.64.1'
   spec.add_development_dependency 'rubocop-performance', '~> 1.21'
   spec.add_development_dependency 'rubocop-rake', '~> 0.6.0'
   spec.add_development_dependency 'rubocop-rspec', '~> 2.29', '>= 2.29.2'
