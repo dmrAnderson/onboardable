@@ -18,7 +18,7 @@ Install the gem and add to the application's Gemfile by executing:
 bundle add onboardable
 ```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+If the bundler is not being used to manage dependencies, install the gem by executing:
 
 ```shell
 gem install onboardable
@@ -29,31 +29,31 @@ gem install onboardable
 First, ensure that the Onboardable gem is installed and properly set up in your
 project as per the installation guide provided earlier.
 
-### Basic Configuration
+### Defining Onboarding Steps
 
-   To incorporate an onboarding process into your Ruby User class, start by
-   including the Onboardable module to add onboarding functionality. Then,
-   define the onboarding steps with the has_onboarding method, detailing each
-   step with helpful tooltips and descriptions. Here's how you can set it up:
+To incorporate an onboarding process into your `User` class, start by
+including the `Onboardable` module to add onboarding functionality. Then,
+define the onboarding steps with the `has_onboarding` method, detailing each
+step with helpful tooltips and descriptions. Here's how you can set it up:
 
-   ```ruby
-   class User
-     include Onboardable
+```ruby
+class User
+  include Onboardable
 
-     has_onboarding do
-       step 'welcome', message: 'Welcome to your new account!'
-       step 'account_setup', task: 'Create credentials'
-       step 'confirmation'
-       step_from ExternalStepProvider
-     end
-   end
+  has_onboarding do
+    step 'welcome', message: 'Welcome to your new account!'
+    step 'account_setup', task: 'Create credentials'
+    step 'confirmation'
+    step_from ExternalStepProvider
+  end
+end
 
-   class ExternalStepProvider
-     def self.to_onboarding_step
-       Onboardable::Step.new('external_step', info: 'This is an external step.')
-     end
-   end
-   ```
+class ExternalStepProvider
+  def self.to_onboarding_step
+    Onboardable::Step.new 'external_step', info: 'This is an external step.'
+  end
+end
+```
 
 ### Using the Onboarding Steps
 
@@ -68,14 +68,28 @@ that allow step navigation and state verification:
 
 1. **Initialize Onboarding Process**
 
-   Instantiate the onboarding process when a user object is created.
-   This sets up the initial step based on the defined onboarding flow.
+   - Instantiate the onboarding process when a `User` object is created.
+     This sets up the initial step based on the defined onboarding flow.
 
    ```ruby
    onboarding = User.new.onboarding
    ```
 
-1. **Check order of steps**
+   - For a more detailed setup, use the `Onboardable::List::Builder` to
+     create a custom onboarding flow with specific steps and details.
+
+    ```ruby
+   builder = Onboardable::List::Builder.new
+
+   builder.create_step 'welcome', message: 'Welcome to your new account!'
+   builder.create_step 'account_setup', task: 'Create credentials'
+   builder.create_step 'confirmation'
+   builder.create_step_from ExternalStepProvider
+
+   onboarding = builder.build
+    ```
+
+1. **Check the order of steps**
 
    Determine the order of steps in the onboarding process to ensure
    that the sequence is correct and that the steps are defined as expected.
@@ -137,7 +151,7 @@ that allow step navigation and state verification:
 
    Retrieve details about the current step, which can include the name,
    custom data, and status, to display appropriate information or help
-   the user complete tasks associated with the step.
+   the user completes tasks associated with the step.
 
    ```ruby
    onboarding.current_step        # Current step details

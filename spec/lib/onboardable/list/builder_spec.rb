@@ -37,7 +37,7 @@ RSpec.describe Onboardable::List::Builder do
     end
   end
 
-  describe '#create_step_from!' do
+  describe '#create_step_from' do
     let(:klass) do
       Class.new do
         def self.to_onboarding_step
@@ -46,7 +46,7 @@ RSpec.describe Onboardable::List::Builder do
       end
     end
 
-    before { list_builder.create_step_from!(klass) }
+    before { list_builder.create_step_from(klass) }
 
     it 'adds a converted step from the class to the steps list' do
       expect(list_builder.steps['custom_step']).to be_a(Onboardable::Step)
@@ -62,16 +62,16 @@ RSpec.describe Onboardable::List::Builder do
       end
 
       it 'raises an UndefinedMethodError due to missing conversion method' do
-        expect { list_builder.create_step_from!(invalid_klass) }
+        expect { list_builder.create_step_from(invalid_klass) }
           .to raise_error(Onboardable::UndefinedMethodError)
       end
     end
   end
 
-  describe '#build!' do
+  describe '#build' do
     context 'when no steps have been added' do
       it 'raises an EmptyStepsError' do
-        expect { list_builder.build!('') }.to raise_error(Onboardable::EmptyStepsError)
+        expect { list_builder.build('') }.to raise_error(Onboardable::EmptyStepsError)
       end
     end
 
@@ -82,12 +82,12 @@ RSpec.describe Onboardable::List::Builder do
       end
 
       it 'builds a list with the specified current step' do
-        list = list_builder.build!('step2')
+        list = list_builder.build('step2')
         expect(list.current_step.name).to eq('step2')
       end
 
       it 'raises an StepError if the specified current step does not exist' do
-        expect { list_builder.build!('nonexistent') }.to raise_error(Onboardable::StepError)
+        expect { list_builder.build('nonexistent') }.to raise_error(Onboardable::StepError)
       end
     end
   end
