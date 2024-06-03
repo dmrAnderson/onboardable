@@ -38,9 +38,9 @@ module Onboardable
 
       # Constructs a new List object from the steps added to the builder.
       #
-      # @param current_step_name [String, nil] The name of the step to mark as current in the built list. Can be nil.
+      # @param current_step_name [String] The name of the current step.
       # @return [Base] A new List object initialized with the steps and the specified current step.
-      def build(current_step_name)
+      def build(current_step_name = nil)
         Base.new(convert_to_steps!, convert_to_step!(current_step_name || current_step.name))
       end
 
@@ -56,7 +56,7 @@ module Onboardable
           steps[name] = step
         end
 
-        step.tap { self.current_step = step }
+        step.tap { self.current_step ||= step }
       end
 
       # Assigns a hash of steps to the builder.

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.2.2] - 2024-06-03
+
+- Fix the issue with the default `#current_step` method.
+
 ## [1.2.1] - 2024-06-01
 
 - Added trusted publisher
