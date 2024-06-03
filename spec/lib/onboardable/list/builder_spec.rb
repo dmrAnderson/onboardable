@@ -71,7 +71,7 @@ RSpec.describe Onboardable::List::Builder do
   describe '#build' do
     context 'when no steps have been added' do
       it 'raises an EmptyStepsError' do
-        expect { list_builder.build('') }.to raise_error(Onboardable::EmptyStepsError)
+        expect { list_builder.build }.to raise_error(Onboardable::EmptyStepsError)
       end
     end
 
@@ -79,6 +79,11 @@ RSpec.describe Onboardable::List::Builder do
       before do
         list_builder.create_step('step1')
         list_builder.create_step('step2')
+      end
+
+      it 'builds a list with the first step as the current step' do
+        list = list_builder.build
+        expect(list.current_step.name).to eq('step1')
       end
 
       it 'builds a list with the specified current step' do
