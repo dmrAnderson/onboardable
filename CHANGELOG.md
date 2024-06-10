@@ -2,9 +2,13 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2024-06-10
+
+- Added option to calculate onboarding progress using a custom formula.
+
 ## [1.2.2] - 2024-06-03
 
-- Fix the issue with the default `#current_step` method.
+- Fixed the issue with the default `#current_step` method.
 
 ## [1.2.1] - 2024-06-01
 

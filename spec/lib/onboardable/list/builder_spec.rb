@@ -32,7 +32,7 @@ RSpec.describe Onboardable::List::Builder do
       end
 
       it 'overrides the existing step in the list' do
-        expect(list_builder.steps['intro']).to eq(second_step_name)
+        expect(list_builder.steps.fetch('intro')).to eq(second_step_name)
       end
     end
   end
@@ -49,11 +49,11 @@ RSpec.describe Onboardable::List::Builder do
     before { list_builder.create_step_from(klass) }
 
     it 'adds a converted step from the class to the steps list' do
-      expect(list_builder.steps['custom_step']).to be_a(Onboardable::Step)
+      expect(list_builder.steps.fetch('custom_step')).to be_a(Onboardable::Step)
     end
 
     it 'sets the correct name for the converted step' do
-      expect(list_builder.steps['custom_step'].name).to eq('custom_step')
+      expect(list_builder.steps.fetch('custom_step').name).to eq('custom_step')
     end
 
     context 'when the class cannot be converted to a Step' do

@@ -41,6 +41,27 @@ RSpec.describe Onboardable::List::Base do
         expect(last_step_list.progress.to_i).to eq(66)
       end
     end
+
+    context 'when using a custom progress calculation' do
+      subject(:custom_progress_list) do
+        described_class.new(steps, steps.fetch(1), progress_calculation: custom_progress_calculation)
+      end
+
+      let(:custom_progress_calculation) { ->(step_index, steps_size) { step_index + steps_size } }
+
+      it 'returns a Float' do
+        expect(custom_progress_list.progress).to be_an_instance_of(Float)
+      end
+
+      it 'returns the result of the custom calculation' do
+        expect(custom_progress_list.progress).to eq(4)
+      end
+
+      it 'accepts a custom calculation as an argument' do
+        dynamic_progress_calculation = ->(step_index, steps_size) { step_index + steps_size + 1 }
+        expect(custom_progress_list.progress(dynamic_progress_calculation)).to eq(5)
+      end
+    end
   end
 
   describe '#next_step' do

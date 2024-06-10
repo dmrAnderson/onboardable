@@ -10,12 +10,12 @@ jobs:
       contents: write
       id-token: write
     steps:
-      - name: Checkout
+      - name: 'Checkout'
         uses: actions/checkout@v4.1.6
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1.179.0
+      - name: 'Set up Ruby'
+        uses: ruby/setup-ruby@v1.179.1
         with:
           bundler-cache: true
           ruby-version: ruby
-      - name: Release Gem
+      - name: 'Release Gem'
         uses: rubygems/release-gem@v1

@@ -14,28 +14,42 @@ module Onboardable
     STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
 
     class << self
-      def try_convert(value)
-        return unless value.respond_to?(CONVERSION_METHOD)
+      # Attempts to convert a class to a Step object using a specified conversion method.
+      #
+      # @param klass [Class] The class to convert to a Step
+      # @return [Step, nil] The converted Step object, or nil if the class does not respond to the conversion method
+      def try_convert(klass)
+        return unless klass.respond_to?(CONVERSION_METHOD)
 
-        value.public_send(CONVERSION_METHOD).then do |step|
-          step.is_a?(Step) ? step : raise(StepConversionError.new(value, step))
+        klass.public_send(CONVERSION_METHOD).then do |step|
+          step.is_a?(Step) ? step : conversion_error!(klass, step)
         end
+      end
+
+      private
+
+      # Raises an error for a failed conversion attempt.
+      #
+      # @param klass [Class] The class that failed to convert
+      # @raise [StepConversionError] Raises an error for a failed conversion attempt
+      def conversion_error!(klass, step)
+        raise StepConversionError.new(klass, step)
       end
     end
 
-    # @return [String] the name of the step
+    # @return [String] The name of the step
     attr_reader :name
 
-    # @return [Hash] custom data associated with the step
+    # @return [Hash] Custom data associated with the step
     attr_reader :data
 
-    # @return [Symbol] the current status of the step
+    # @return [Symbol] The current status of the step
     attr_reader :status
 
     # Initializes a new Step with a name, optional custom data, and a default status.
     #
-    # @param name [String] the name of the step
-    # @param data [Hash] the custom data associated with the step, defaults to an empty hash
+    # @param name [String] The name of the step
+    # @param data [Hash] The custom data associated with the step, defaults to an empty hash
     def initialize(name, data = {})
       self.name = name
       self.data = data
@@ -46,7 +60,7 @@ module Onboardable
       # @!method {status_method}?
       # Checks if the step is in a specific status.
       #
-      # @return [Boolean] true if the step is currently in the {status_method} status, false otherwise.
+      # @return [Boolean] True if the step is currently in the {status_method} status, false otherwise.
       define_method :"#{status_method}?" do
         status == status_method
       end
@@ -54,24 +68,23 @@ module Onboardable
 
     # Compares this step to another to determine if they are equivalent, based on the step name.
     #
-    # @param other [Step] the step to compare with
-    # @return [Boolean] true if both steps have the same name, false otherwise
+    # @param other [Step] The step to compare with
+    # @return [Boolean] True if both steps have the same name, false otherwise
     def ==(other)
       to_str == other.to_str
     end
 
     # Provides a string representation of the step, using its name.
     #
-    # @return [String] the name of the step
+    # @return [String] The name of the step
     def to_str
       name
     end
 
     # Updates the status of the step based on a specified comparison result.
     #
-    # @param comparison_result [Integer] the result of a comparison with the current step (-1, 0, or 1)
-    # @return [Symbol] the new status of the step
-    # @raise [ComparisonResultError] if the comparison result is not -1, 0, or 1
+    # @param comparison_result [Integer] The result of a comparison with the current step (-1, 0, or 1)
+    # @return [Symbol] The new status of the step
     def update_status!(comparison_result)
       self.status = case comparison_result
                     when -1 then COMPLETED_STATUS
@@ -84,14 +97,14 @@ module Onboardable
 
     # Sets the name of the step, ensuring it is a valid String.
     #
-    # @param raw_name [String] the raw name of the step
+    # @param raw_name [String] The raw name of the step
     def name=(raw_name)
-      @name = String.new(String.try_convert(raw_name)).freeze
+      @name = String.new(raw_name).freeze
     end
 
     # Sets the status of the step.
     #
-    # @param raw_status [Symbol] the new status of the step
+    # @param raw_status [Symbol] The new status of the step
     def status=(raw_status)
       STATUSES.include?(raw_status) || raise(StepStatusError.new(raw_status, STATUSES))
 
@@ -100,15 +113,15 @@ module Onboardable
 
     # Sets the custom data for the step, ensuring it is a valid Hash.
     #
-    # @param raw_data [Hash] the raw custom data
+    # @param raw_data [Hash] The raw custom data
     def data=(raw_data)
-      @data = Hash(Hash.try_convert(raw_data)).freeze
+      @data = Hash(raw_data).freeze
     end
 
     # Raises an error for an invalid comparison result.
     #
-    # @param comparison_result [Integer] the invalid comparison result
-    # @raise [ComparisonResultError] raises an error for an invalid comparison result
+    # @param comparison_result [Integer] The invalid comparison result
+    # @raise [ComparisonResultError] Raises an error for an invalid comparison result
     def comparison_result_error!(comparison_result)
       raise ComparisonResultError.new(comparison_result, (-1..1).to_a)
     end

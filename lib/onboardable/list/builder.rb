@@ -6,15 +6,19 @@ module Onboardable
     class Builder
       include Utils::Warnings
 
-      # @return [Hash] A hash where keys are step names and values are Step objects.
-      attr_reader :steps
+      # Stores the steps added to the builder.
+      #
+      # @return [Hash] A hash of steps added to the builder.
+      def steps
+        options[__method__] ||= {}
+      end
 
       # @return [Step] The current step in the building process, defaulting to the first added step.
       attr_accessor :current_step
 
       # Initializes a new instance of ListBuilder.
-      def initialize
-        self.steps = {}
+      def initialize(options = {})
+        self.options = options
       end
 
       # Creates a new Step object and adds it to the builder.
@@ -38,13 +42,23 @@ module Onboardable
 
       # Constructs a new List object from the steps added to the builder.
       #
-      # @param current_step_name [String] The name of the current step.
+      # @param current_step_name [String, nil] The name of the current step.
       # @return [Base] A new List object initialized with the steps and the specified current step.
       def build(current_step_name = nil)
         Base.new(convert_to_steps!, convert_to_step!(current_step_name || current_step.name))
       end
 
       private
+
+      # @return [Hash] The options hash for the builder.
+      attr_reader :options
+
+      # Sets the options hash for the builder.
+      #
+      # @param options [Hash] The options hash to be set.
+      def options=(options)
+        @options = Hash(options)
+      end
 
       # Adds a step to the builder.
       #
@@ -57,13 +71,6 @@ module Onboardable
         end
 
         step.tap { self.current_step ||= step }
-      end
-
-      # Assigns a hash of steps to the builder.
-      #
-      # @param raw_steps [Hash] The hash of steps to be assigned.
-      def steps=(raw_steps)
-        @steps = Hash(Hash.try_convert(raw_steps))
       end
 
       # Converts the internal hash of steps to an array of Step objects.

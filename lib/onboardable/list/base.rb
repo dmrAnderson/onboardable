@@ -6,6 +6,8 @@ module Onboardable
     class Base
       include Navigation
 
+      PROGRESS_CALCULATION = ->(step_index, steps_size) { (step_index.to_f / steps_size) * 100 }
+
       # @return [Array<Step>] The steps in the list.
       attr_reader :steps
 
@@ -16,19 +18,26 @@ module Onboardable
       #
       # @param steps [Array<Step>] An array of steps comprising the onboarding process.
       # @param current_step [Step] The step currently active in the process.
-      def initialize(steps, current_step)
+      # @param options [Hash] An options hash for the list.
+      def initialize(steps, current_step, options = {})
         self.steps = steps
         self.current_step = current_step
+        self.options = options
       end
 
       # Calculates and returns the onboarding progress as a percentage.
       #
-      # @return [Float] The completion percentage of the onboarding process.
-      def progress
-        (step_index(current_step).to_f / steps.size) * 100
+      # @param progress_calculation [Proc, nil] An optional custom calculation for progress.
+      # @return [Float] The percentage of steps completed in the onboarding process.
+      def progress(progress_calculation = nil)
+        progress_calculation ||= options.fetch(:progress_calculation, PROGRESS_CALCULATION)
+        Float(progress_calculation[step_index(current_step), steps.size])
       end
 
       private
+
+      # @return [Hash] The options hash for the list.
+      attr_reader :options
 
       # Sets and validates the steps array, ensuring it is an Array of Step objects.
       #
@@ -47,6 +56,14 @@ module Onboardable
           update_each_step_status(index)
           @current_step = steps.fetch(index)
         end
+      end
+
+      # Sets and validates the options hash, ensuring it is a Hash object.
+      #
+      # @param options [Hash] The options to be assigned to the list.
+      # @return [Hash] The assigned options.
+      def options=(options)
+        @options = Hash(options).transform_keys(&:to_sym).freeze
       end
 
       # Determines the index of a given step in the list, ensuring the step exists.

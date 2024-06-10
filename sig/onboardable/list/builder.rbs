@@ -4,7 +4,7 @@ module Onboardable
       attr_reader steps: Hash[String, Step]
       attr_accessor current_step: Step
 
-      def initialize: () -> Hash[String, Step]
+      def initialize: (Hash[Symbol, untyped]) -> Hash[Symbol, untyped]
 
       def create_step: (String, Hash[Symbol, untyped]) -> Step
       alias step create_step
@@ -16,7 +16,7 @@ module Onboardable
 
       private
 
-      attr_writer steps: Hash[String, Step]
+      attr_accessor options: Hash[Symbol, untyped]
 
       def add_step: (Step) -> Step
 

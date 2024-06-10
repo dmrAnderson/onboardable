@@ -7,7 +7,9 @@ module Onboardable
     DEFAULT_STATUS: Symbol
     STATUSES: Array[Symbol]
 
-    def self.try_convert: -> Step?
+    def self.try_convert: (Class) -> Step?
+
+    def self.conversion_error!: (Class, untyped) -> void
 
     attr_reader name: String
     attr_reader data: Hash[Symbol, untyped]
