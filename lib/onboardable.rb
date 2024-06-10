@@ -21,21 +21,19 @@ module Onboardable
 
   # Class methods for managing the onboarding process, added to the class that includes the Onboardable module.
   module ClassMethods
-    # Retrieves or initializes a ListBuilder for onboarding steps at the class level.
-    #
-    # @return [List::Builder] The ListBuilder associated with the class.
-    def list_builder
-      @list_builder ||= List::Builder.new
-    end
+    # @return [List::Builder] The ListBuilder for configuring onboarding steps.
+    attr_accessor :list_builder
 
     # Configures onboarding steps via a ListBuilder with a provided block.
     #
+    # @param options [Hash] Optional configuration options for the ListBuilder.
     # @yield [List::Builder] Executes block in the context of List::Builder.
     # @return [Step] The current step in the building process.
-    def list_builder=(&block)
+    def onboarding=(options = {}, &block)
+      self.list_builder = List::Builder.new(options)
       list_builder.instance_eval(&block)
     end
-    alias has_onboarding list_builder=
+    alias has_onboarding onboarding=
 
     # Builds the onboarding list and optionally sets the current step.
     #

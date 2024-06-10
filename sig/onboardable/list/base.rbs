@@ -1,17 +1,21 @@
 module Onboardable
   module List
     class Base
+      PROGRESS_CALCULATION: Proc
+
       attr_reader steps: Array[Step]
       attr_reader current_step: Step
 
       def initialize: (Array[Step], Step) -> instance
 
-      def progress: -> Float
+      def progress: (Proc?) -> Float
 
       private
 
       attr_writer steps: Array[Step]
       attr_writer current_step: Step
+
+      attr_accessor options: Hash[Symbol, untyped]
 
       def step_error!: (Step) -> void
 

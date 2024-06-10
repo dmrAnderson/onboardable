@@ -1,7 +1,9 @@
 # 🚀 Onboardable
 
+![Gem Version](https://img.shields.io/gem/v/onboardable)
 ![Build](https://img.shields.io/github/actions/workflow/status/dmrAnderson/onboardable/ci.yml)
 ![Code Coverage](https://img.shields.io/coverallsCoverage/github/dmrAnderson/onboardable)
+![Gem Total Downloads](https://img.shields.io/gem/dt/onboardable)
 
 The Onboardable gem is a Ruby module designed to simplify and streamline the
 process of managing and navigating through a series of steps or stages within
@@ -140,12 +142,35 @@ that allow step navigation and state verification:
 
 1. **Monitor Progress**
 
-   Calculate the progress or completion percentage of the onboarding process
-   to provide users with an indication of how far they have progressed.
+   - Calculate the progress or completion percentage of the onboarding process
+     to provide users with an indication of how far they have progressed.
 
    ```ruby
    onboarding.progress # Returns the completion percentage
    ```
+
+   - To customize the progress calculation formula, define a lambda function
+     that takes the current step index and the total number of steps as arguments.
+
+    ```ruby
+    CALCULATION = ->(step_index, steps_size) { step_index + steps_size }
+    onboarding.progress(CALCULATION)
+    ```
+
+   - Alternatively, set the custom progress calculation formula during the
+     onboarding definition to automatically calculate the progress.
+
+    ```ruby
+    class User
+      include Onboardable
+
+      CALCULATION = ->(step_index, steps_size) { step_index + steps_size }
+
+      has_onboarding progress_calculation: CALCULATION do
+        # ...
+      end
+    end
+    ```
 
 1. **Access Current Step Details**
 
