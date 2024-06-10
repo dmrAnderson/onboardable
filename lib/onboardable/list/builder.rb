@@ -6,11 +6,13 @@ module Onboardable
     class Builder
       include Utils::Warnings
 
+      STEP_KEY = :steps
+
       # Stores the steps added to the builder.
       #
       # @return [Hash] A hash of steps added to the builder.
       def steps
-        options[__method__] ||= {}
+        options[STEP_KEY] ||= {}
       end
 
       # @return [Step] The current step in the building process, defaulting to the first added step.
@@ -45,7 +47,11 @@ module Onboardable
       # @param current_step_name [String, nil] The name of the current step.
       # @return [Base] A new List object initialized with the steps and the specified current step.
       def build(current_step_name = nil)
-        Base.new(convert_to_steps!, convert_to_step!(current_step_name || current_step.name))
+        Base.new(
+          convert_to_steps!,
+          convert_to_step!(current_step_name || current_step.name),
+          options.except(STEP_KEY)
+        )
       end
 
       private
@@ -57,7 +63,7 @@ module Onboardable
       #
       # @param options [Hash] The options hash to be set.
       def options=(options)
-        @options = Hash(options)
+        @options = Hash(options).except(STEP_KEY)
       end
 
       # Adds a step to the builder.

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.3.1] - 2024-06-10
+
+- Fixed the issue with the custom formula calculation.
+
 ## [1.3.0] - 2024-06-10
 
 - Added option to calculate onboarding progress using a custom formula.

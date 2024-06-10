@@ -1,6 +1,8 @@
 module Onboardable
   module List
     class Builder
+      STEP_KEY: Symbol
+
       attr_reader steps: Hash[String, Step]
       attr_accessor current_step: Step
 

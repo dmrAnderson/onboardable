@@ -17,6 +17,10 @@ RSpec.describe Onboardable::List::Base do
     it 'sets the given current step as @current_step' do
       expect(list.current_step).to eq(steps.fetch(1))
     end
+
+    it 'sets the given options hash as @options' do
+      expect(list.instance_variable_get(:@options)).to eq({})
+    end
   end
 
   describe '#progress' do
