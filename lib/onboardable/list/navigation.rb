@@ -23,7 +23,6 @@ module Onboardable
       # Moves the current step pointer to the next step in the onboarding process.
       #
       # @return [Step] The next step in the list.
-      # @raise [LastStepError] If the current step is the last step and there is no next step to move to.
       def next_step!
         self.current_step = next_step || last_step_error!
       end
@@ -47,7 +46,6 @@ module Onboardable
       # Moves the current step pointer to the previous step in the onboarding process.
       #
       # @return [Step] The previous step in the list.
-      # @raise [FirstStepError] If the current step is the first step and there is no previous step to move to.
       def prev_step!
         self.current_step = prev_step || first_step_error!
       end

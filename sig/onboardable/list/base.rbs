@@ -1,27 +1,33 @@
 module Onboardable
   module List
     class Base
-      PROGRESS_CALCULATION: Proc
+      include Navigation
+
+      PROGRESS_CALCULATION: untyped
 
       attr_reader steps: Array[Step]
+
       attr_reader current_step: Step
 
-      def initialize: (Array[Step], Step) -> instance
+      def initialize: (Array[Step] steps, Step current_step, ?Hash[Symbol, untyped] options) -> untyped
 
-      def progress: (Proc?) -> Float
+      def progress: (?Proc? progress_calculation) -> Float
 
       private
 
+      attr_reader options: Hash[Symbol, untyped]
+
       attr_writer steps: Array[Step]
+
       attr_writer current_step: Step
 
-      attr_accessor options: Hash[Symbol, untyped]
+      attr_writer options: Hash[Symbol, untyped]
 
-      def step_error!: (Step) -> void
+      def step_index: (Step step) -> Integer
 
-      def step_index: (Step)-> Integer
+      def update_each_step_status: (Integer current_step_index) -> Array[Step]
 
-      def update_each_step_status: (Integer) -> Array[Step]
+      def step_error!: (Step step) -> untyped
     end
   end
 end

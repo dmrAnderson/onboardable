@@ -56,14 +56,25 @@ module Onboardable
       self.status = DEFAULT_STATUS
     end
 
-    STATUSES.each do |status_method|
-      # @!method {status_method}?
-      # Checks if the step is in a specific status.
-      #
-      # @return [Boolean] True if the step is currently in the {status_method} status, false otherwise.
-      define_method :"#{status_method}?" do
-        status == status_method
-      end
+    # Checks if the step is in the pending status.
+    #
+    # @return [Boolean] True if the step is currently in the pending status, false otherwise.
+    def pending?
+      status == PENDING_STATUS
+    end
+
+    # Checks if the step is in the current status.
+    #
+    # @return [Boolean] True if the step is currently in the current status, false otherwise.
+    def current?
+      status == CURRENT_STATUS
+    end
+
+    # Checks if the step is in the completed status.
+    #
+    # @return [Boolean] True if the step is currently in the completed status, false otherwise.
+    def completed?
+      status == COMPLETED_STATUS
     end
 
     # Compares this step to another to determine if they are equivalent, based on the step name.
@@ -97,25 +108,25 @@ module Onboardable
 
     # Sets the name of the step, ensuring it is a valid String.
     #
-    # @param raw_name [String] The raw name of the step
-    def name=(raw_name)
-      @name = String.new(raw_name).freeze
+    # @param name [String] The raw name of the step
+    def name=(name)
+      @name = String.new(name).freeze
     end
 
     # Sets the status of the step.
     #
-    # @param raw_status [Symbol] The new status of the step
-    def status=(raw_status)
-      STATUSES.include?(raw_status) || raise(StepStatusError.new(raw_status, STATUSES))
+    # @param status [Symbol] The new status of the step
+    def status=(status)
+      STATUSES.include?(status) || raise(StepStatusError.new(status, STATUSES))
 
-      @status = raw_status
+      @status = status
     end
 
     # Sets the custom data for the step, ensuring it is a valid Hash.
     #
-    # @param raw_data [Hash] The raw custom data
-    def data=(raw_data)
-      @data = Hash(raw_data).freeze
+    # @param data [Hash] The raw custom data
+    def data=(data)
+      @data = Hash(data).freeze
     end
 
     # Raises an error for an invalid comparison result.

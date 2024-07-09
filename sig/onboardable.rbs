@@ -1,17 +1,19 @@
 module Onboardable
   VERSION: String
-  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+
+  def self.included: (Class klass) -> untyped
 
   module ClassMethods
     attr_accessor list_builder: List::Builder
 
-    def onboarding=: (Hash[Symbol, untyped]) { () -> List::Builder } -> Step
+    def onboarding=: (?Hash[Symbol, untyped] options) { () -> List::Builder } -> Step
+
     alias has_onboarding onboarding=
 
-    def onboarding: (String?) -> List::Base
+    def onboarding: (?String? current_step_name) -> List::Base
   end
 
   module InstanceMethods
-    def onboarding: (String?) -> List::Base
+    def onboarding: (?String? current_step_name) -> List::Base
   end
 end

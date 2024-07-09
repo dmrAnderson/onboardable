@@ -1,36 +1,53 @@
 module Onboardable
   class Step
     CONVERSION_METHOD: Symbol
+
     PENDING_STATUS: Symbol
+
     CURRENT_STATUS: Symbol
+
     COMPLETED_STATUS: Symbol
+
     DEFAULT_STATUS: Symbol
-    STATUSES: Array[Symbol]
 
-    def self.try_convert: (Class) -> Step?
+    STATUSES: ::Array[Symbol]
 
-    def self.conversion_error!: (Class, untyped) -> void
+    def self.try_convert: (Class klass) -> (Step | nil)
+
+    private
+
+    def self.conversion_error!: (Class klass, Step step) -> void
+
+    public
 
     attr_reader name: String
+
     attr_reader data: Hash[Symbol, untyped]
+
     attr_reader status: Symbol
 
-    def initialize: (String, Hash[Symbol, untyped]) -> instance
+    def initialize: (String name, ?Hash[Symbol, untyped] data) -> untyped
 
     def pending?: () -> bool
+
     def current?: () -> bool
+
     def completed?: () -> bool
-    def ==: (Step) -> bool
+
+    def ==: (Step other) -> bool
+
     def to_str: () -> String
 
-    def update_status!: (Integer) -> Symbol
+    def update_status!: (Integer comparison_result) -> Symbol
 
     private
 
     attr_writer name: String
-    attr_writer data: Hash[Symbol, untyped]
+
     attr_writer status: Symbol
 
-    def comparison_result_error!: (Integer) -> void
+    attr_writer data: Hash[Symbol, untyped]
+
+    def comparison_result_error!: (Integer comparison_result) -> untyped
   end
 end

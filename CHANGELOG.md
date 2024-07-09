@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.3.2] - 2024-07-10
+
+- Added adjustments to rbs files to improve type-checking.
+
 ## [1.3.1] - 2024-06-10
 
 - Fixed the issue with the custom formula calculation.
