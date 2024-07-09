@@ -1,32 +1,37 @@
 module Onboardable
   module List
     class Builder
+      include Utils::Warnings
+
       STEP_KEY: Symbol
 
-      attr_reader steps: Hash[String, Step]
+      def steps: () -> Hash[String, untyped]
+
       attr_accessor current_step: Step
 
-      def initialize: (Hash[Symbol, untyped]) -> Hash[Symbol, untyped]
+      def initialize: (?Hash[Symbol, untyped] options) -> untyped
 
-      def create_step: (String, Hash[Symbol, untyped]) -> Step
+      def create_step: (String name, ?Hash[Symbol, untyped] data) -> Step
+
       alias step create_step
 
-      def create_step_from: (Class) -> Step
+      def create_step_from: (Class klass) -> Step
+
       alias step_from create_step_from
 
-      def build: (String?) -> Base
+      def build: (?String? current_step_name) -> Base
 
       private
 
       attr_accessor options: Hash[Symbol, untyped]
 
-      def add_step: (Step) -> Step
+      def add_step: (Step step) -> Step
 
-      def convert_to_step!: (String) -> Step
+      def convert_to_steps!: () -> Array[Step]
 
-      def convert_to_steps!: -> Array[Step]
+      def convert_to_step!: (String name) -> Step
 
-      def undefined_method_error!: (Class) -> void
+      def undefined_method_error!: (Class klass) -> untyped
     end
   end
 end

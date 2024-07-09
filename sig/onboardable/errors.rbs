@@ -3,34 +3,34 @@ module Onboardable
   end
 
   class UndefinedMethodError < Error
-    def initialize: (Class, Symbol | String) -> void
+    def initialize: (Class klass, Symbol method) -> untyped
   end
 
   class StepConversionError < Error
-    def initialize: (Class, untyped) -> void
+    def initialize: (Class klass, untyped step) -> untyped
   end
 
   class EmptyStepsError < Error
-    def initialize: () -> void
+    def initialize: () -> untyped
   end
 
   class StepError < Error
-    def initialize: (String, Array[String]) -> void
+    def initialize: (String step, Array[String] expected_steps) -> untyped
   end
 
   class ComparisonResultError < Error
-    def initialize: (Integer, Array[Integer]) -> void
+    def initialize: (Integer comparison, Array[Integer] expected_comparisons) -> untyped
   end
 
   class LastStepError < Error
-    def initialize: (String, Array[String]) -> void
+    def initialize: (Symbol step, Array[Symbol] expected_steps) -> untyped
   end
 
   class FirstStepError < Error
-    def initialize: (String, Array[String]) -> void
+    def initialize: (Symbol step, Array[Symbol] expected_steps) -> untyped
   end
 
   class StepStatusError < Error
-    def initialize: (Symbol, Array[Symbol]) -> void
+    def initialize: (Symbol status, Array[Symbol] expected_statuses) -> untyped
   end
 end

@@ -9,7 +9,7 @@ module Onboardable
     # Initializes a new instance of UndefinedMethodError.
     #
     # @param klass [Class] The class that does not have the method defined.
-    # @param method [Symbol, String] The name of the method that is not defined.
+    # @param method [Symbol] The method that was called on the class.
     def initialize(klass, method)
       super("Method `#{method}` is not defined for `#{klass}`.")
     end
@@ -20,7 +20,7 @@ module Onboardable
     # Initializes a new instance of StepConversionError.
     #
     # @param klass [Class] The class that failed to convert.
-    # @param step [Object] The object returned by the failed conversion.
+    # @param step [unknown] The object that was attempted to be converted to a Step.
     def initialize(klass, step)
       super("can't convert #{klass} to Step (#{klass}#to_onboarding_step gives #{step.class}).")
     end

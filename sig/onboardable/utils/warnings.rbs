@@ -3,7 +3,7 @@ module Onboardable
     module Warnings
       private
 
-      def warn_about_override: (Hash[String, Step]) -> void
+      def warn_about_override: (String name) -> nil
     end
   end
 end

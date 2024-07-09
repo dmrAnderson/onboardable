@@ -11,9 +11,9 @@ jobs:
       id-token: write
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v4.1.6
+        uses: actions/checkout@v4.1.7
       - name: 'Set up Ruby'
-        uses: ruby/setup-ruby@v1.179.1
+        uses: ruby/setup-ruby@v1.186.0
         with:
           bundler-cache: true
           ruby-version: ruby

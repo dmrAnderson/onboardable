@@ -49,10 +49,10 @@ module Onboardable
 
       # Updates the current step and recalibrates the status of all steps in the list.
       #
-      # @param raw_current_step [Step] The new current step to set.
+      # @param current_step [Step] The new current step to set.
       # @return [Step] The updated current step.
-      def current_step=(raw_current_step)
-        step_index(raw_current_step).then do |index|
+      def current_step=(current_step)
+        step_index(current_step).then do |index|
           update_each_step_status(index)
           @current_step = steps.fetch(index)
         end
@@ -68,10 +68,10 @@ module Onboardable
 
       # Determines the index of a given step in the list, ensuring the step exists.
       #
-      # @param raw_step [Step] The step for which the index is requested.
+      # @param step [Step] The step for which the index is requested.
       # @return [Integer] The index of the step within the list.
-      def step_index(raw_step)
-        steps.index { |step| step == raw_step } || step_error!(raw_step)
+      def step_index(step)
+        steps.index { |item| item == step } || step_error!(step)
       end
 
       # Updates the status of each step in the list based on the current step index.
@@ -86,10 +86,10 @@ module Onboardable
 
       # Raises a StepError indicating an invalid step was encountered.
       #
-      # @param raw_step [Step] The step that triggered the error.
+      # @param step [Step] The step that triggered the error.
       # @raise [StepError] Raises an error if the step does not exist in the list.
-      def step_error!(raw_step)
-        raise StepError.new(raw_step.to_str, steps.map(&:to_str))
+      def step_error!(step)
+        raise StepError.new(step.to_str, steps.map(&:to_str))
       end
     end
   end

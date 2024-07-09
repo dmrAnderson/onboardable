@@ -1,26 +1,33 @@
 module Onboardable
   module List
     module Navigation
-      def next_step: () -> Step?
-      def next_step!: () -> Step
-      def next_step?: (Step) -> bool
+      def next_step: () -> (Step | nil)
 
-      def prev_step: () -> Step?
-      def prev_step?: (Step) -> bool
+      def next_step?: (Step step) -> bool
+
+      def next_step!: () -> Step
+
+      def prev_step: () -> (Step | nil)
+
+      def prev_step?: (Step step) -> bool
+
       def prev_step!: () -> Step
 
-      def first_step: -> Step
-      def first_step?: (?Step) -> bool
+      def first_step?: (?Step step) -> bool
 
-      def last_step: -> Step
-      def last_step?: (?Step) -> bool
+      def last_step?: (?Step step) -> bool
 
-      def current_step?: (Step) -> bool
+      def first_step: () -> Step
+
+      def current_step?: (Step step) -> bool
+
+      def last_step: () -> Step
 
       private
 
-      def first_step_error!: -> void
-      def last_step_error!: -> void
+      def first_step_error!: () -> untyped
+
+      def last_step_error!: () -> untyped
     end
   end
 end
