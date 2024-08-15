@@ -23,11 +23,11 @@ module Onboardable
   end
 
   class LastStepError < Error
-    def initialize: (Symbol step, Array[Symbol] expected_steps) -> untyped
+    def initialize: (String step, Array[String] expected_steps) -> untyped
   end
 
   class FirstStepError < Error
-    def initialize: (Symbol step, Array[Symbol] expected_steps) -> untyped
+    def initialize: (String step, Array[String] expected_steps) -> untyped
   end
 
   class StepStatusError < Error

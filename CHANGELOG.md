@@ -4,6 +4,7 @@
 
 ## [1.3.3] - 2024-08-16
 
+- Updated rbs files to improve type-checking.
 - Added github-actions package ecosystem to the development workflow.
 
 ## [1.3.2] - 2024-07-10

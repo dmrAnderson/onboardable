@@ -94,14 +94,14 @@ module Onboardable
       #
       # @raise [FirstStepError] The error indicating the current step is the first step.
       def first_step_error!
-        raise FirstStepError.new(current_step, steps.map(&:to_str))
+        raise FirstStepError.new(current_step.name, steps.map(&:to_str))
       end
 
       # Raises a LastStepError indicating the current step is the last step in the onboarding process.
       #
       # @raise [LastStepError] The error indicating the current step is the last step.
       def last_step_error!
-        raise LastStepError.new(current_step, steps.map(&:to_str))
+        raise LastStepError.new(current_step.name, steps.map(&:to_str))
       end
     end
   end
