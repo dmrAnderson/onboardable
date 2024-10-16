@@ -25,4 +25,4 @@ jobs:
       - name: 'Run the default task'
         run: bundle exec rake
       - name: 'Coveralls'
-        uses: coverallsapp/github-action@v2.3.1
+        uses: coverallsapp/github-action@v2.3.2
