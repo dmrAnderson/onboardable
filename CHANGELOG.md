@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.4.0] - 2025-04-01
+
+- Add support for Ruby 3.4.
+- Drop support for Ruby 3.0.
+
 ## [1.3.3] - 2024-08-16
 
 - Updated rbs files to improve type-checking.

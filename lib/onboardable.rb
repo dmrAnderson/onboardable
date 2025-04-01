@@ -29,9 +29,9 @@ module Onboardable
     # @param options [Hash] Optional configuration options for the ListBuilder.
     # @yield [List::Builder] Executes block in the context of List::Builder.
     # @return [Step] The current step in the building process.
-    def onboarding=(options = {}, &block)
+    def onboarding=(options = {}, &)
       self.list_builder = List::Builder.new(options)
-      list_builder.instance_eval(&block)
+      list_builder.instance_eval(&)
     end
     alias has_onboarding onboarding=
 

@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = 'Provides tools for easy setup of custom onboarding to boost engagement.'
   spec.homepage = 'https://github.com/dmrAnderson/onboardable'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 3.0.0'
+  spec.required_ruby_version = '>= 3.1.0'
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
 
