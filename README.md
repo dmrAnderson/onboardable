@@ -73,23 +73,23 @@ that allow step navigation and state verification:
    - Instantiate the onboarding process when a `User` object is created.
      This sets up the initial step based on the defined onboarding flow.
 
-   ```ruby
-   onboarding = User.new.onboarding
-   ```
+     ```ruby
+     onboarding = User.new.onboarding
+     ```
 
    - For a more detailed setup, use the `Onboardable::List::Builder` to
      create a custom onboarding flow with specific steps and details.
 
-    ```ruby
-   builder = Onboardable::List::Builder.new
+     ```ruby
+     builder = Onboardable::List::Builder.new
 
-   builder.create_step 'welcome', message: 'Welcome to your new account!'
-   builder.create_step 'account_setup', task: 'Create credentials'
-   builder.create_step 'confirmation'
-   builder.create_step_from ExternalStepProvider
+     builder.create_step 'welcome', message: 'Welcome to your new account!'
+     builder.create_step 'account_setup', task: 'Create credentials'
+     builder.create_step 'confirmation'
+     builder.create_step_from ExternalStepProvider
 
-   onboarding = builder.build
-    ```
+     onboarding = builder.build
+     ```
 
 1. **Check the order of steps**
 
@@ -145,32 +145,32 @@ that allow step navigation and state verification:
    - Calculate the progress or completion percentage of the onboarding process
      to provide users with an indication of how far they have progressed.
 
-   ```ruby
-   onboarding.progress # Returns the completion percentage
-   ```
+     ```ruby
+     onboarding.progress # Returns the completion percentage
+     ```
 
    - To customize the progress calculation formula, define a lambda function
      that takes the current step index and the total number of steps as arguments.
 
-    ```ruby
-    CALCULATION = ->(step_index, steps_size) { step_index + steps_size }
-    onboarding.progress(CALCULATION)
-    ```
+     ```ruby
+     CALCULATION = ->(step_index, steps_size) { step_index + steps_size }
+     onboarding.progress(CALCULATION)
+     ```
 
    - Alternatively, set the custom progress calculation formula during the
      onboarding definition to automatically calculate the progress.
 
-    ```ruby
-    class User
-      include Onboardable
+     ```ruby
+     class User
+       include Onboardable
 
-      CALCULATION = ->(step_index, steps_size) { step_index + steps_size }
+       CALCULATION = ->(step_index, steps_size) { step_index + steps_size }
 
-      has_onboarding progress_calculation: CALCULATION do
-        # ...
-      end
-    end
-    ```
+       has_onboarding progress_calculation: CALCULATION do
+         # ...
+       end
+     end
+     ```
 
 1. **Access Current Step Details**
 
