@@ -65,7 +65,7 @@ could be included in the documentation. This guide covers initialization,
 navigation, step verification, and completion of the onboarding process.
 
 After defining and accessing the onboarding steps as described
-earlier, managed the onboarding process through various controls
+earlier, manage the onboarding process through various controls
 that allow step navigation and state verification:
 
 1. **Initialize Onboarding Process**
@@ -91,16 +91,16 @@ that allow step navigation and state verification:
      onboarding = builder.build
      ```
 
-1. **Check the order of steps**
+2. **Check the order of steps**
 
    Determine the order of steps in the onboarding process to ensure
    that the sequence is correct and that the steps are defined as expected.
 
    ```ruby
-   onboarding.steps # Returns the list of steps
+   onboarding.steps
    ```
 
-1. **Navigating Through Steps**
+3. **Navigating Through Steps**
 
    Navigate through the onboarding steps using the navigation methods provided.
    These methods help in moving forward and backward through the onboarding process.
@@ -111,8 +111,8 @@ that allow step navigation and state verification:
       what's next or advance to it, updating the current step status.
 
       ```ruby
-      onboarding.next_step  # Preview the next step
-      onboarding.next_step! # Advance to the next step
+      onboarding.next_step
+      onboarding.next_step!
       ```
 
    - **Previous Step**
@@ -121,32 +121,32 @@ that allow step navigation and state verification:
      making changes or updates to revert to the previous step.
 
      ```ruby
-     onboarding.prev_step  # Preview the previous step
-     onboarding.prev_step! # Move back to the previous step
+     onboarding.prev_step
+     onboarding.prev_step!
      ```
 
-1. **Check Step Position**
+4. **Check Step Position**
 
    Determine whether the current step is the first or the last in the sequence
    to manage UI elements like 'Next' or 'Back' buttons appropriately.
 
    ```ruby
-   step = onboarding.steps.sample # Random step from the list
+   step = onboarding.steps.sample
 
-   onboarding.first_step?(step)   # Is the first step?
-   onboarding.last_step?(step)    # Is the last step?
-   onboarding.current_step?(step) # Is the current step?
-   onboarding.second_step?(step)  # Is the second step?
-   onboarding.prev_step?(step)    # Is the previous step?
+   onboarding.first_step?(step)
+   onboarding.last_step?(step)
+   onboarding.current_step?(step)
+   onboarding.second_step?(step)
+   onboarding.prev_step?(step)
    ```
 
-1. **Monitor Progress**
+5. **Monitor Progress**
 
    - Calculate the progress or completion percentage of the onboarding process
      to provide users with an indication of how far they have progressed.
 
      ```ruby
-     onboarding.progress # Returns the completion percentage
+     onboarding.progress
      ```
 
    - To customize the progress calculation formula, define a lambda function
@@ -172,20 +172,20 @@ that allow step navigation and state verification:
      end
      ```
 
-1. **Access Current Step Details**
+6. **Access Current Step Details**
 
    Retrieve details about the current step, which can include the name,
    custom data, and status, to display appropriate information or help
-   the user completes tasks associated with the step.
+   the user understand their current position in the onboarding process.
 
    ```ruby
-   onboarding.current_step        # Current step details
-   onboarding.current_step.name   # Step name
-   onboarding.current_step.data   # Step custom data
-   onboarding.current_step.status # Step status
+   onboarding.current_step
+   onboarding.current_step.name
+   onboarding.current_step.data
+   onboarding.current_step.status
    ```
 
-1. **Complete the Onboarding Process**
+7. **Complete the Onboarding Process**
 
    Once the user reaches the last step and completes it, finalize the
    onboarding process, which might involve setting a user attribute to
@@ -200,12 +200,12 @@ that allow step navigation and state verification:
    # Exception Handling Approach
    begin
      onboarding.next_step!
-   rescue LastStepError
+   rescue Onboardable::LastStepError
      # Implement finalization processes like updating user attributes
    end
    ```
 
-1. **Exit the Onboarding Process Early**
+8. **Exit the Onboarding Process Early**
 
    Handle cases where a user decides to discontinue the onboarding
    by attempting to navigate back from the initial step.
@@ -219,7 +219,7 @@ that allow step navigation and state verification:
    # Exception Handling Approach
    begin
      onboarding.prev_step!
-   rescue FirstStepError
+   rescue Onboardable::FirstStepError
      # Implement cleanup or final actions for an orderly exit
    end
    ```
@@ -230,13 +230,13 @@ user-friendly onboarding process using the Onboardable gem.
 ## 🛠 Development
 
 1. After checking out the repo, run `bin/setup` to install dependencies.
-1. Then, run `rake spec` to run the tests.
-1. Also run `bin/console` for an interactive prompt that will allow you to experiment.
-1. To install this gem onto your local machine, run `bundle exec rake install`.
-1. To release a new version, update the version number in `version.rb`.
-1. After, run `bundle exec rake release`, which will create a git tag for the version.
-1. Push git commits and the created tag.
-1. Then push the `.gem` file to [rubygems.org](https://rubygems.org).
+2. Then, run `rake spec` to run the tests.
+3. Also run `bin/console` for an interactive prompt that will allow you to experiment.
+4. To install this gem onto your local machine, run `bundle exec rake install`.
+5. To release a new version, update the version number in `version.rb`.
+6. After, run `bundle exec rake release`, which will create a git tag for the version.
+7. Push git commits and the created tag.
+8. Then push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## 🤝 Contributing
 
@@ -250,5 +250,5 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## 📜 Code of Conduct
 
-Everyone interacting in the Onboardable project's codebases, issue trackers,
+Everyone interacting with the Onboardable project's codebases, issue trackers,
 chat rooms and mailing lists are expected to follow the [code of conduct](https://github.com/dmrAnderson/onboardable/blob/main/CODE_OF_CONDUCT.md).
