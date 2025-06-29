@@ -59,9 +59,9 @@ module Onboardable
       # @return [Hash] The options hash for the builder.
       attr_reader :options
 
-      # Sets the options hash for the builder.
+      # Sets options hash for the builder.
       #
-      # @param options [Hash] The options hash to be set.
+      # @param options [Hash] Options to be set for the builder.
       def options=(options)
         @options = Hash(options).except(STEP_KEY)
       end
@@ -91,7 +91,7 @@ module Onboardable
       #
       # @param name [String] The name of the step to be converted to a Step object.
       # @return [Step] The corresponding Step object.
-      # @raise [StepError] Raises if the specified step name is not present in the steps hash.
+      # @raise [StepError] Raises if the specified step name is not present in steps hash.
       def convert_to_step!(name)
         steps[name] || raise(StepError.new(name, steps.keys))
       end
