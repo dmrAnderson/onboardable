@@ -14,11 +14,11 @@ module Onboardable
       # @return [Step] The current step in the list.
       attr_reader :current_step
 
-      # Initializes a new instance of List with steps and a current step.
+      # Initializes a new instance of the List with steps and a current step.
       #
       # @param steps [Array<Step>] An array of steps comprising the onboarding process.
       # @param current_step [Step] The step currently active in the process.
-      # @param options [Hash] An options hash for the list.
+      # @param options [Hash] Optional parameters for configuring the list.
       def initialize(steps, current_step, options = {})
         self.steps = steps
         self.current_step = current_step
@@ -39,7 +39,7 @@ module Onboardable
       # @return [Hash] The options hash for the list.
       attr_reader :options
 
-      # Sets and validates the steps array, ensuring it is an Array of Step objects.
+      # Sets and validates an array of steps.
       #
       # @param steps [Array<Step>] The steps to be assigned to the list.
       # @return [Array<Step>] The assigned steps.
@@ -58,7 +58,7 @@ module Onboardable
         end
       end
 
-      # Sets and validates the options hash, ensuring it is a Hash object.
+      # Sets and validates options for the list.
       #
       # @param options [Hash] The options to be assigned to the list.
       # @return [Hash] The assigned options.
