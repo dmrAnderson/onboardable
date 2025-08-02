@@ -4,6 +4,7 @@
 
 ## [1.4.1] - 2025-08-01
 
+- Drop support for Ruby 3.1.
 - Update development dependencies to their latest versions.
 
 ## [1.4.0] - 2025-04-01
