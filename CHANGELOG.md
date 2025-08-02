@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.4.1] - 2025-08-01
+
+- Update development dependencies to their latest versions.
+
 ## [1.4.0] - 2025-04-01
 
 - Add support for Ruby 3.4.
