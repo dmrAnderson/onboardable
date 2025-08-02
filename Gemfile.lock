@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    onboardable (1.4.0)
+    onboardable (1.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -84,4 +84,4 @@ DEPENDENCIES
   simplecov (~> 0.22.0)
 
 BUNDLED WITH
-   2.6.9
+   2.7.1
