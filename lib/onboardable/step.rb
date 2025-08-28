@@ -101,7 +101,8 @@ module Onboardable
                     when -1 then COMPLETED_STATUS
                     when 0 then CURRENT_STATUS
                     when 1 then PENDING_STATUS
-                    else comparison_result_error!(comparison_result); end
+                    else comparison_result_error!(comparison_result)
+                    end
     end
 
     private
