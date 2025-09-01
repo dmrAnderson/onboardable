@@ -13,7 +13,7 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v5.0.0
       - name: 'Set up Ruby'
-        uses: ruby/setup-ruby@v1.256.0
+        uses: ruby/setup-ruby@v1.257.0
         with:
           bundler-cache: true
           ruby-version: ruby
