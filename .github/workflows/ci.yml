@@ -27,5 +27,18 @@ jobs:
           bundler-cache: true
       - name: 'Run the default task'
         run: bundle exec rake
-      - name: 'Coveralls'
+      - name: 'Coveralls Parallel'
         uses: coverallsapp/github-action@v2.3.6
+        with:
+          flag-name: ruby-${{ matrix.ruby }}
+          parallel: true
+
+  coveralls_finish:
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    steps:
+      - name: 'Finalize Coveralls'
+        uses: coverallsapp/github-action@v2.3.6
+        with:
+          parallel-finished: true
