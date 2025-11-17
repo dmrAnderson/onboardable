@@ -70,7 +70,7 @@ GEM
     unicode-emoji (4.1.0)
 
 PLATFORMS
-  x86_64-darwin-24
+  x86_64-darwin-25
   x86_64-linux
 
 DEPENDENCIES
