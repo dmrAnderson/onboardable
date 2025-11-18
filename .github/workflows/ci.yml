@@ -28,7 +28,7 @@ jobs:
       - name: 'Run the default task'
         run: bundle exec rake
       - name: 'Coveralls Parallel'
-        uses: coverallsapp/github-action@v2.3.6
+        uses: coverallsapp/github-action@v2.3.7
         with:
           flag-name: ruby-${{ matrix.ruby }}
           parallel: true
@@ -39,6 +39,6 @@ jobs:
     if: always()
     steps:
       - name: 'Finalize Coveralls'
-        uses: coverallsapp/github-action@v2.3.6
+        uses: coverallsapp/github-action@v2.3.7
         with:
           parallel-finished: true
