@@ -27,6 +27,8 @@ module Onboardable
     # Configures onboarding steps via a ListBuilder with a provided block.
     #
     # @param options [Hash] Optional configuration options for the ListBuilder.
+    # @option options [Proc] :progress_calculation A custom calculation for progress percentage.
+    #   Receives step_index and steps_size as arguments and returns a Float.
     # @yield [List::Builder] Executes block in the context of List::Builder.
     # @return [Step] The current step in the building process.
     def onboarding=(options = {}, &)

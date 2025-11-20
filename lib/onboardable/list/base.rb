@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 module Onboardable
+  # The List module encapsulates functionality for managing a sequence of onboarding steps.
   module List
     # The List class manages a sequence of steps in an onboarding process, tracking progress and current state.
     class Base
       include Navigation
 
+      # Default calculation for onboarding progress as a percentage.
       PROGRESS_CALCULATION = ->(step_index, steps_size) { (step_index.to_f / steps_size) * 100 }
 
       # @return [Array<Step>] The steps in the list.
@@ -19,6 +21,8 @@ module Onboardable
       # @param steps [Array<Step>] An array of steps comprising the onboarding process.
       # @param current_step [Step] The step currently active in the process.
       # @param options [Hash] Optional parameters for configuring the list.
+      # @option options [Proc] :progress_calculation A custom calculation for progress percentage.
+      #   Receives step_index and steps_size as arguments and returns a Float.
       def initialize(steps, current_step, options = {})
         self.steps = steps
         self.current_step = current_step
@@ -61,6 +65,8 @@ module Onboardable
       # Sets and validates options for the list.
       #
       # @param options [Hash] The options to be assigned to the list.
+      # @option options [Proc] :progress_calculation A custom calculation for progress percentage.
+      #   Receives step_index and steps_size as arguments and returns a Float.
       # @return [Hash] The assigned options.
       def options=(options)
         @options = Hash(options).transform_keys(&:to_sym).freeze

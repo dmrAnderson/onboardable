@@ -3,14 +3,20 @@
 module Onboardable
   # Represents a single step within an onboarding process, including its status and associated data.
   class Step
+    # Method name used for converting a class to a Step object.
     CONVERSION_METHOD = :to_onboarding_step
 
+    # The step is pending and has not yet been started.
     PENDING_STATUS = :pending
+    # The step is currently in progress.
     CURRENT_STATUS = :current
+    # The step has been completed.
     COMPLETED_STATUS = :completed
 
+    # The default status for a new step.
     DEFAULT_STATUS = PENDING_STATUS
 
+    # All valid statuses for a step.
     STATUSES = [PENDING_STATUS, CURRENT_STATUS, COMPLETED_STATUS].freeze
 
     class << self
@@ -31,6 +37,7 @@ module Onboardable
       # Raises an error for a failed conversion attempt.
       #
       # @param klass [Class] The class that failed to convert.
+      # @param step [Object] The invalid object returned from the conversion method.
       # @raise [StepConversionError] Raises an error for a failed conversion attempt.
       def conversion_error!(klass, step)
         raise StepConversionError.new(klass, step)
