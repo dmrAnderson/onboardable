@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Onboardable
+  # The Utils module contains utility classes and modules for the Onboardable namespace.
   module Utils
     # The Warnings module provides utility methods for issuing warnings.
     module Warnings

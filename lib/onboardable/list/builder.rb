@@ -6,6 +6,7 @@ module Onboardable
     class Builder
       include Utils::Warnings
 
+      # Key used to store steps in the options hash.
       STEP_KEY = :steps
 
       # Stores the steps added to the builder.
@@ -19,6 +20,10 @@ module Onboardable
       attr_accessor :current_step
 
       # Initializes a new instance of ListBuilder.
+      #
+      # @param options [Hash] Options to be set for the builder.
+      # @option options [Proc] :progress_calculation A custom calculation for progress percentage.
+      #   Receives step_index and steps_size as arguments and returns a Float.
       def initialize(options = {})
         self.options = options
       end
@@ -62,6 +67,8 @@ module Onboardable
       # Sets options hash for the builder.
       #
       # @param options [Hash] Options to be set for the builder.
+      # @option options [Proc] :progress_calculation A custom calculation for progress percentage.
+      #   Receives step_index and steps_size as arguments and returns a Float.
       def options=(options)
         @options = Hash(options).except(STEP_KEY)
       end
