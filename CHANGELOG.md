@@ -1,7 +1,5 @@
 # CHANGELOG
 
-## [Unreleased]
-
 ## 1.6.0
 
 - Add support for Ruby 4.0.

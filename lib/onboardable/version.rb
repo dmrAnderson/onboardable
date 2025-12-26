@@ -2,5 +2,5 @@
 
 module Onboardable
   # The version of the Onboardable gem.
-  VERSION = '1.5.0'
+  VERSION = '1.6.0'
 end
