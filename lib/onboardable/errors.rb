@@ -20,7 +20,7 @@ module Onboardable
     # Initializes a new instance of StepConversionError.
     #
     # @param klass [Class] The class that failed to convert.
-    # @param step [unknown] The object that was attempted to be converted to a Step.
+    # @param step [Object] The object that was attempted to be converted to a Step.
     def initialize(klass, step)
       super("Can't convert #{klass} to Step (#{klass}#to_onboarding_step gives #{step.class}).")
     end
