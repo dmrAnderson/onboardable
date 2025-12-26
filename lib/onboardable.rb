@@ -13,7 +13,7 @@ module Onboardable
   # Initializes the Onboardable module when included in a class, extending it with class and instance methods.
   #
   # @param klass [Module] The class including the Onboardable module
-  # @return [untyped] The class including the Onboardable module.
+  # @return [void]
   def self.included(klass)
     klass.extend ClassMethods
     klass.include InstanceMethods

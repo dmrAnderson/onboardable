@@ -1,7 +1,7 @@
 module Onboardable
   VERSION: String
 
-  def self.included: (Class klass) -> untyped
+  def self.included: (Module klass) -> void
 
   module ClassMethods
     attr_accessor list_builder: List::Builder

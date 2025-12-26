@@ -7,7 +7,7 @@ module Onboardable
   end
 
   class StepConversionError < Error
-    def initialize: (Class klass, untyped step) -> untyped
+    def initialize: (Class klass, Object step) -> untyped
   end
 
   class EmptyStepsError < Error
