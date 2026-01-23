@@ -19,7 +19,7 @@ jobs:
         ruby: ['3.2', '3.3', '3.4', '4.0']
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
       - name: 'Set up Ruby'
         uses: ruby/setup-ruby@v1.285.0
         with:
@@ -39,7 +39,7 @@ jobs:
     name: Yard Lint
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
       - name: 'Set up Ruby'
         uses: ruby/setup-ruby@v1.285.0
         with:
