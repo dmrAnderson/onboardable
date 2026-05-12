@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Update Ruby version requirements to 3.3.
 - Drop Ruby 3.2 from the CI matrix.
 
 ## 1.6.0
