@@ -19,16 +19,16 @@ jobs:
         ruby: ['3.2', '3.3', '3.4', '4.0']
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6
       - name: 'Set up Ruby'
-        uses: ruby/setup-ruby@v1.307.0
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
       - name: 'Run the default task'
         run: bundle exec rake
       - name: 'Coveralls Parallel'
-        uses: coverallsapp/github-action@v2.3.7
+        uses: coverallsapp/github-action@v2
         with:
           flag-name: ruby-${{ matrix.ruby }}
           parallel: true
@@ -39,9 +39,9 @@ jobs:
     name: Yard Lint
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6
       - name: 'Set up Ruby'
-        uses: ruby/setup-ruby@v1.307.0
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.4
           bundler-cache: true
@@ -54,6 +54,6 @@ jobs:
     if: always()
     steps:
       - name: 'Finalize Coveralls'
-        uses: coverallsapp/github-action@v2.3.7
+        uses: coverallsapp/github-action@v2
         with:
           parallel-finished: true
