@@ -1,9 +1,10 @@
 # CHANGELOG
 
-## Unreleased
+## 1.7.0
 
 - Update Ruby version requirements to 3.3.
 - Drop Ruby 3.2 from the CI matrix.
+- Update development dependencies to their latest versions.
 
 ## 1.6.0
 
