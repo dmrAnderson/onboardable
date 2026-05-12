@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- Drop Ruby 3.2 from the CI matrix.
+
 ## 1.6.0
 
 - Add support for Ruby 4.0.
