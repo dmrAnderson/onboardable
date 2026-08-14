@@ -59,7 +59,7 @@ GEM
       regexp_parser (>= 2.0)
       rubocop (~> 1.86, >= 1.86.2)
     ruby-progressbar (1.13.0)
-    simplecov (1.0.3)
+    simplecov (1.1.0)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
@@ -81,7 +81,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.21, >= 1.21.1)
   rubocop-rake (~> 0.7.1)
   rubocop-rspec (~> 3.0, >= 3.0.4)
-  simplecov (~> 1.0.1)
+  simplecov (~> 1.1.0)
   yard-lint (~> 1.2, >= 1.2.3)
 
 BUNDLED WITH
