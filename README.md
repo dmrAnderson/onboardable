@@ -59,11 +59,6 @@ end
 
 ### Using the Onboarding Steps
 
-To enhance the guidance for users on how to navigate and manage the
-onboarding flow using the Onboardable gem, here's a concise guide that
-could be included in the documentation. This guide covers initialization,
-navigation, step verification, and completion of the onboarding process.
-
 After defining and accessing the onboarding steps as described
 earlier, manage the onboarding process through various controls
 that allow step navigation and state verification:
