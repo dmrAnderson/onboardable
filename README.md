@@ -136,7 +136,7 @@ that allow step navigation and state verification:
    onboarding.first_step?(step)
    onboarding.last_step?(step)
    onboarding.current_step?(step)
-   onboarding.second_step?(step)
+   onboarding.next_step?(step)
    onboarding.prev_step?(step)
    ```
 
