@@ -24,13 +24,13 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'rake', '~> 13.4'
-  spec.add_development_dependency 'rbs', '~> 4.2'
   spec.add_development_dependency 'rspec', '~> 3.13'
   spec.add_development_dependency 'rubocop', '~> 1.91'
   spec.add_development_dependency 'rubocop-performance', '~> 1.27'
   spec.add_development_dependency 'rubocop-rake', '~> 0.7'
   spec.add_development_dependency 'rubocop-rspec', '~> 3.10'
   spec.add_development_dependency 'simplecov', '~> 1.3'
+  spec.add_development_dependency 'steep', '~> 2.1'
   spec.add_development_dependency 'yard-lint', '~> 1.12'
 
   spec.metadata['rubygems_mfa_required'] = 'true'

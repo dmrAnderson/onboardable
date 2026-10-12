@@ -3,7 +3,7 @@ module Onboardable
     class Base
       include Navigation
 
-      PROGRESS_CALCULATION: untyped
+      PROGRESS_CALCULATION: ^(Integer, Integer) -> Float
 
       attr_reader steps: Array[Step]
 
@@ -11,7 +11,7 @@ module Onboardable
 
       def initialize: (Array[Step] steps, Step current_step, ?Hash[Symbol, untyped] options) -> untyped
 
-      def progress: (?Proc? progress_calculation) -> Float
+      def progress: (?(^(Integer, Integer) -> Numeric)? progress_calculation) -> Float
 
       private
 
@@ -27,7 +27,7 @@ module Onboardable
 
       def update_each_step_status: (Integer current_step_index) -> Array[Step]
 
-      def step_error!: (Step step) -> untyped
+      def step_error!: (Step step) -> bot
     end
   end
 end
