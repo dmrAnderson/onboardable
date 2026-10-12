@@ -153,7 +153,7 @@ that allow step navigation and state verification:
      that takes the current step index and the total number of steps as arguments.
 
      ```ruby
-     CALCULATION = ->(step_index, steps_size) { step_index + steps_size }
+     CALCULATION = ->(step_index, steps_size) { ((step_index + 1).to_f / steps_size) * 100 }
      onboarding.progress(CALCULATION)
      ```
 
@@ -164,7 +164,7 @@ that allow step navigation and state verification:
      class User
        include Onboardable
 
-       CALCULATION = ->(step_index, steps_size) { step_index + steps_size }
+       CALCULATION = ->(step_index, steps_size) { ((step_index + 1).to_f / steps_size) * 100 }
 
        has_onboarding progress_calculation: CALCULATION do
          # ...
