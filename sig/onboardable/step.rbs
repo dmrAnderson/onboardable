@@ -14,11 +14,7 @@ module Onboardable
 
     def self.try_convert: (Class klass) -> (Step | nil)
 
-    private
-
-    def self.conversion_error!: (Class klass, Step step) -> void
-
-    public
+    private def self.conversion_error!: (Class klass, untyped step) -> bot
 
     attr_reader name: String
 
@@ -34,7 +30,7 @@ module Onboardable
 
     def completed?: () -> bool
 
-    def ==: (Step other) -> bool
+    def ==: (untyped other) -> bool
 
     def to_str: () -> String
 
@@ -48,6 +44,6 @@ module Onboardable
 
     attr_writer data: Hash[Symbol, untyped]
 
-    def comparison_result_error!: (Integer comparison_result) -> untyped
+    def comparison_result_error!: (Integer comparison_result) -> bot
   end
 end

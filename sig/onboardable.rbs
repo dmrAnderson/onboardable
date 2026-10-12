@@ -6,14 +6,18 @@ module Onboardable
   module ClassMethods
     attr_accessor list_builder: List::Builder
 
-    def onboarding=: (?Hash[Symbol, untyped] options) { () -> List::Builder } -> Step
+    def onboarding=: (?Hash[Symbol, untyped] options) { (List::Builder) [self: List::Builder] -> untyped } -> untyped
 
     alias has_onboarding onboarding=
 
     def onboarding: (?String? current_step_name) -> List::Base
   end
 
-  module InstanceMethods
+  interface _OnboardableClass
+    def class: () -> ClassMethods
+  end
+
+  module InstanceMethods : _OnboardableClass
     def onboarding: (?String? current_step_name) -> List::Base
   end
 end

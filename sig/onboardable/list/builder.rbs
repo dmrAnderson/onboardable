@@ -5,7 +5,7 @@ module Onboardable
 
       STEP_KEY: Symbol
 
-      def steps: () -> Hash[String, untyped]
+      def steps: () -> Hash[String, Step]
 
       attr_accessor current_step: Step
 
@@ -31,7 +31,7 @@ module Onboardable
 
       def convert_to_step!: (String name) -> Step
 
-      def undefined_method_error!: (Class klass) -> untyped
+      def undefined_method_error!: (Class klass) -> bot
     end
   end
 end

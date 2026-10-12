@@ -1,6 +1,10 @@
 module Onboardable
   module List
     module Navigation
+      def steps: () -> Array[Step]
+
+      def current_step: () -> Step
+
       def next_step: () -> (Step | nil)
 
       def next_step?: (Step step) -> bool
@@ -25,9 +29,13 @@ module Onboardable
 
       private
 
-      def first_step_error!: () -> untyped
+      def current_step=: (Step current_step) -> Step
 
-      def last_step_error!: () -> untyped
+      def step_index: (Step step) -> Integer
+
+      def first_step_error!: () -> bot
+
+      def last_step_error!: () -> bot
     end
   end
 end
