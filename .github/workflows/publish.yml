@@ -17,5 +17,7 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: ruby
+      - name: 'Run the default task'
+        run: bundle exec rake
       - name: 'Release Gem'
         uses: rubygems/release-gem@v1
