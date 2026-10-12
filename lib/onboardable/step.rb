@@ -23,7 +23,8 @@ module Onboardable
       # Attempts to convert a class to a Step object using a specified conversion method.
       #
       # @param klass [Class] The class to convert to a Step.
-      # @return [Step, nil] The converted Step object, or nil if the class does not respond to the conversion method.
+      # @return [Onboardable::Step, nil] The converted Step object,
+      #   or nil if the class does not respond to the conversion method.
       def try_convert(klass)
         return unless klass.respond_to?(CONVERSION_METHOD)
 
@@ -38,7 +39,8 @@ module Onboardable
       #
       # @param klass [Class] The class that failed to convert.
       # @param step [Object] The invalid object returned from the conversion method.
-      # @raise [StepConversionError] Raises an error for a failed conversion attempt.
+      # @return [void]
+      # @raise [Onboardable::StepConversionError] Raises an error for a failed conversion attempt.
       def conversion_error!(klass, step)
         raise StepConversionError.new(klass, step)
       end
@@ -57,6 +59,7 @@ module Onboardable
     #
     # @param name [String] The name of the step.
     # @param data [Hash] The custom data associated with the step.
+    # @return [void]
     def initialize(name, data = {})
       self.name = name
       self.data = data
@@ -86,7 +89,7 @@ module Onboardable
 
     # Compares this step to another to determine if they are equivalent, based on the step name.
     #
-    # @param other [Step] The step to compare with.
+    # @param other [Onboardable::Step] The step to compare with.
     # @return [Boolean] True if both steps have the same name, false otherwise.
     def ==(other)
       to_str == other.to_str
@@ -117,6 +120,7 @@ module Onboardable
     # Sets the name of the step, ensuring it is a valid String.
     #
     # @param name [String] The raw name of the step.
+    # @return [String] The frozen name.
     def name=(name)
       @name = String.new(name).freeze
     end
@@ -124,6 +128,7 @@ module Onboardable
     # Sets the status of the step.
     #
     # @param status [Symbol] The new status of the step.
+    # @return [Symbol] The new status.
     def status=(status)
       STATUSES.include?(status) || raise(StepStatusError.new(status, STATUSES))
 
@@ -133,6 +138,7 @@ module Onboardable
     # Sets the custom data for the step, ensuring it is a valid Hash.
     #
     # @param data [Hash] The raw custom data.
+    # @return [Hash] The frozen custom data.
     def data=(data)
       @data = Hash(data).freeze
     end
@@ -140,7 +146,8 @@ module Onboardable
     # Raises an error for an invalid comparison result.
     #
     # @param comparison_result [Integer] The invalid comparison result.
-    # @raise [ComparisonResultError] Raises an error for an invalid comparison result.
+    # @return [void]
+    # @raise [Onboardable::ComparisonResultError] Raises an error for an invalid comparison result.
     def comparison_result_error!(comparison_result)
       raise ComparisonResultError.new(comparison_result, (-1..1).to_a)
     end

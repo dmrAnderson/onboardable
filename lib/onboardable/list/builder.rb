@@ -16,7 +16,7 @@ module Onboardable
         options[STEP_KEY] ||= {}
       end
 
-      # @return [Step] The current step in the building process, defaulting to the first added step.
+      # @return [Onboardable::Step] The current step in the building process, defaulting to the first added step.
       attr_accessor :current_step
 
       # Initializes a new instance of ListBuilder.
@@ -24,6 +24,7 @@ module Onboardable
       # @param options [Hash] Options to be set for the builder.
       # @option options [Proc] :progress_calculation A custom calculation for progress percentage.
       #   Receives step_index and steps_size as arguments and returns a Float.
+      # @return [void]
       def initialize(options = {})
         self.options = options
       end
@@ -32,7 +33,7 @@ module Onboardable
       #
       # @param name [String] The name of the step.
       # @param data [Hash] The data associated with the step.
-      # @return [Step] The created step.
+      # @return [Onboardable::Step] The created step.
       def create_step(name, data = {})
         Step.new(name, data).tap { |step| add_step(step) }
       end
@@ -41,7 +42,7 @@ module Onboardable
       # Converts a class to a Step object and adds it to the builder.
       #
       # @param klass [Class] The class to be converted to a step.
-      # @return [Step] The converted step.
+      # @return [Onboardable::Step] The converted step.
       def create_step_from(klass)
         (Step.try_convert(klass) || undefined_method_error!(klass)).tap { |step| add_step(step) }
       end
@@ -50,7 +51,7 @@ module Onboardable
       # Constructs a new List object from the steps added to the builder.
       #
       # @param current_step_name [String, nil] The name of the current step.
-      # @return [Base] A new List object initialized with the steps and the specified current step.
+      # @return [Onboardable::List::Base] A new List object initialized with the steps and the specified current step.
       def build(current_step_name = nil)
         Base.new(
           convert_to_steps!,
@@ -69,14 +70,15 @@ module Onboardable
       # @param options [Hash] Options to be set for the builder.
       # @option options [Proc] :progress_calculation A custom calculation for progress percentage.
       #   Receives step_index and steps_size as arguments and returns a Float.
+      # @return [Hash] The assigned options.
       def options=(options)
         @options = Hash(options).except(STEP_KEY)
       end
 
       # Adds a step to the builder.
       #
-      # @param step [Step] The step to be added.
-      # @return [Step] The added step.
+      # @param step [Onboardable::Step] The step to be added.
+      # @return [Onboardable::Step] The added step.
       def add_step(step)
         step.name.then do |name|
           warn_about_override(name) if steps.key?(name)
@@ -88,8 +90,8 @@ module Onboardable
 
       # Converts the internal hash of steps to an array of Step objects.
       #
-      # @return [Array<Step>] An array of steps.
-      # @raise [EmptyStepsError] Raises if there are no steps to convert.
+      # @return [Array<Onboardable::Step>] An array of steps.
+      # @raise [Onboardable::EmptyStepsError] Raises if there are no steps to convert.
       def convert_to_steps!
         steps.any? ? steps.values : raise(EmptyStepsError)
       end
@@ -97,8 +99,8 @@ module Onboardable
       # Retrieves a Step object from the builder's steps based on the step name.
       #
       # @param name [String] The name of the step to be converted to a Step object.
-      # @return [Step] The corresponding Step object.
-      # @raise [StepError] Raises if the specified step name is not present in steps hash.
+      # @return [Onboardable::Step] The corresponding Step object.
+      # @raise [Onboardable::StepError] Raises if the specified step name is not present in steps hash.
       def convert_to_step!(name)
         steps[name] || raise(StepError.new(name, steps.keys))
       end
@@ -106,7 +108,8 @@ module Onboardable
       # Raises an UndefinedMethodError indicating that the conversion method is not defined for the class.
       #
       # @param klass [Class] The class that does not have the conversion method defined.
-      # @raise [UndefinedMethodError] Raises an error indicating the missing conversion method.
+      # @return [void]
+      # @raise [Onboardable::UndefinedMethodError] Raises an error indicating the missing conversion method.
       def undefined_method_error!(klass)
         raise UndefinedMethodError.new(klass, Step::CONVERSION_METHOD)
       end

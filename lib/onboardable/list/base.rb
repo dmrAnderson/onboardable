@@ -10,19 +10,20 @@ module Onboardable
       # Default calculation for onboarding progress as a percentage.
       PROGRESS_CALCULATION = ->(step_index, steps_size) { (step_index.to_f / steps_size) * 100 }
 
-      # @return [Array<Step>] The steps in the list.
+      # @return [Array<Onboardable::Step>] The steps in the list.
       attr_reader :steps
 
-      # @return [Step] The current step in the list.
+      # @return [Onboardable::Step] The current step in the list.
       attr_reader :current_step
 
       # Initializes a new instance of the List with steps and a current step.
       #
-      # @param steps [Array<Step>] An array of steps comprising the onboarding process.
-      # @param current_step [Step] The step currently active in the process.
+      # @param steps [Array<Onboardable::Step>] An array of steps comprising the onboarding process.
+      # @param current_step [Onboardable::Step] The step currently active in the process.
       # @param options [Hash] Optional parameters for configuring the list.
       # @option options [Proc] :progress_calculation A custom calculation for progress percentage.
       #   Receives step_index and steps_size as arguments and returns a Float.
+      # @return [void]
       def initialize(steps, current_step, options = {})
         self.steps = steps
         self.current_step = current_step
@@ -45,16 +46,16 @@ module Onboardable
 
       # Sets and validates an array of steps.
       #
-      # @param steps [Array<Step>] The steps to be assigned to the list.
-      # @return [Array<Step>] The assigned steps.
+      # @param steps [Array<Onboardable::Step>] The steps to be assigned to the list.
+      # @return [Array<Onboardable::Step>] The assigned steps.
       def steps=(steps)
         @steps = Array(Array.try_convert(steps)).freeze
       end
 
       # Updates the current step and recalibrates the status of all steps in the list.
       #
-      # @param current_step [Step] The new current step to set.
-      # @return [Step] The updated current step.
+      # @param current_step [Onboardable::Step] The new current step to set.
+      # @return [Onboardable::Step] The updated current step.
       def current_step=(current_step)
         step_index(current_step).then do |index|
           update_each_step_status(index)
@@ -74,7 +75,7 @@ module Onboardable
 
       # Determines the index of a given step in the list, ensuring the step exists.
       #
-      # @param step [Step] The step for which the index is requested.
+      # @param step [Onboardable::Step] The step for which the index is requested.
       # @return [Integer] The index of the step within the list.
       def step_index(step)
         steps.index { |item| item == step } || step_error!(step)
@@ -83,7 +84,7 @@ module Onboardable
       # Updates the status of each step in the list based on the current step index.
       #
       # @param current_step_index [Integer] The index of the current step in the list.
-      # @return [Array<Step>] The updated steps array.
+      # @return [Array<Onboardable::Step>] The updated steps array.
       def update_each_step_status(current_step_index)
         steps.each_with_index do |step, index|
           step.update_status!(index <=> current_step_index)
@@ -92,8 +93,9 @@ module Onboardable
 
       # Raises a StepError indicating an invalid step was encountered.
       #
-      # @param step [Step] The step that triggered the error.
-      # @raise [StepError] Raises an error if the step does not exist in the list.
+      # @param step [Onboardable::Step] The step that triggered the error.
+      # @return [void]
+      # @raise [Onboardable::StepError] Raises an error if the step does not exist in the list.
       def step_error!(step)
         raise StepError.new(step.to_str, steps.map(&:to_str))
       end

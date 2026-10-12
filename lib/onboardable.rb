@@ -21,7 +21,7 @@ module Onboardable
 
   # Class methods for managing the onboarding process, added to the class that includes the Onboardable module.
   module ClassMethods
-    # @return [List::Builder] The ListBuilder for configuring onboarding steps.
+    # @return [Onboardable::List::Builder] The ListBuilder for configuring onboarding steps.
     attr_accessor :list_builder
 
     # Configures onboarding steps via a ListBuilder with a provided block.
@@ -29,8 +29,8 @@ module Onboardable
     # @param options [Hash] Optional configuration options for the ListBuilder.
     # @option options [Proc] :progress_calculation A custom calculation for progress percentage.
     #   Receives step_index and steps_size as arguments and returns a Float.
-    # @yield [List::Builder] Executes block in the context of List::Builder.
-    # @return [Step] The current step in the building process.
+    # @yield [Onboardable::List::Builder] Executes block in the context of List::Builder.
+    # @return [Onboardable::Step] The current step in the building process.
     def onboarding=(options = {}, &)
       self.list_builder = List::Builder.new(options)
       list_builder.instance_eval(&)
@@ -40,7 +40,7 @@ module Onboardable
     # Builds the onboarding list and optionally sets the current step.
     #
     # @param current_step_name [String, nil] The name of the current step, if specified.
-    # @return [List::Base] The List built from the class's ListBuilder.
+    # @return [Onboardable::List::Base] The List built from the class's ListBuilder.
     def onboarding(current_step_name = nil)
       list_builder.build(current_step_name)
     end
@@ -51,7 +51,7 @@ module Onboardable
     # Builds the onboarding list and optionally sets the current step.
     #
     # @param current_step_name [String, nil] The name of the current step, if specified.
-    # @return [List::Base] The List built from the class's ListBuilder.
+    # @return [Onboardable::List::Base] The List built from the class's ListBuilder.
     def onboarding(current_step_name = nil)
       self.class.onboarding(current_step_name)
     end

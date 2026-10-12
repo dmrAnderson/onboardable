@@ -10,6 +10,7 @@ module Onboardable
     #
     # @param klass [Class] The class that does not have the method defined.
     # @param method [Symbol] The method that was called on the class.
+    # @return [void]
     def initialize(klass, method)
       super("Method `#{method}` is not defined for `#{klass}`.")
     end
@@ -21,6 +22,7 @@ module Onboardable
     #
     # @param klass [Class] The class that failed to convert.
     # @param step [Object] The object that was attempted to be converted to a Step.
+    # @return [void]
     def initialize(klass, step)
       super("Can't convert #{klass} to Step (#{klass}#to_onboarding_step gives #{step.class}).")
     end
@@ -30,6 +32,7 @@ module Onboardable
   class EmptyStepsError < Error
     # Initializes a new instance of EmptyStepsError.
     # This error indicates that an operation requiring non-empty steps was attempted on an empty collection.
+    # @return [void]
     def initialize
       super('Cannot be performed because the steps is empty.')
     end
@@ -41,6 +44,7 @@ module Onboardable
     #
     # @param step [String] The invalid step that triggered the error.
     # @param expected_steps [Array<String>] The list of valid steps expected at this point.
+    # @return [void]
     def initialize(step, expected_steps)
       super("Invalid step: `#{step}`. Must be one of: `#{expected_steps.join('`, `')}`.")
     end
@@ -52,6 +56,7 @@ module Onboardable
     #
     # @param comparison [Integer] The invalid comparison result that triggered the error.
     # @param expected_comparisons [Array<Integer>] The list of valid comparison results expected.
+    # @return [void]
     def initialize(comparison, expected_comparisons)
       super("Invalid comparison result: `#{comparison}`. Must be one of: #{expected_comparisons.join('`, `')}.")
     end
@@ -63,6 +68,7 @@ module Onboardable
     #
     # @param step [String] The last step that was attempted to be surpassed.
     # @param expected_steps [Array<String>] The complete list of valid steps in the onboarding process.
+    # @return [void]
     def initialize(step, expected_steps)
       super("Currently `#{step}` the last step. Available steps are: `#{expected_steps.join('`, `')}`.")
     end
@@ -74,6 +80,7 @@ module Onboardable
     #
     # @param step [String] The first step that was attempted to be preceded.
     # @param expected_steps [Array<String>] The complete list of valid steps in the onboarding process.
+    # @return [void]
     def initialize(step, expected_steps)
       super("Currently `#{step}` the first step. Available steps are: `#{expected_steps.join('`, `')}`.")
     end
@@ -85,6 +92,7 @@ module Onboardable
     #
     # @param status [Symbol] The invalid status that triggered the error.
     # @param expected_statuses [Array<Symbol>] The list of valid statuses expected.
+    # @return [void]
     def initialize(status, expected_statuses)
       super("Invalid status: `#{status}`. Must be one of: `#{expected_statuses.join('`, `')}`.")
     end
