@@ -5,7 +5,6 @@ plugins:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.3
 
 Gemspec/DevelopmentDependencies:
   EnforcedStyle: gemspec
