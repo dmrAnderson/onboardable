@@ -47,7 +47,7 @@
 
 ## 1.2.0
 
-- Added `#second_step?` method to check if the target step is the second step.
+- Added `#next_step?` method to check if the target step is the next step.
 - Added `#prev_step?` method to check if the target step is the previous step.
 - Added `#current_step?` method to check if the target step is the current step.
 
