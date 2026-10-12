@@ -12,6 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     name: Ruby ${{ matrix.ruby }}
     strategy:
       fail-fast: false
@@ -35,6 +36,7 @@ jobs:
 
   coveralls_finish:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: build
     if: always()
     steps:
