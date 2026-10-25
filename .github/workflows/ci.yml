@@ -20,16 +20,16 @@ jobs:
         ruby: ['3.3', '3.4', '4.0']
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: 'Set up Ruby'
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@7f797815d8adceb1c412e7abefdd1ab4abc47a5f # v1.335.0
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
       - name: 'Run the default task'
         run: bundle exec rake
       - name: 'Coveralls Parallel'
-        uses: coverallsapp/github-action@v2
+        uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329 # v2.3.8
         with:
           flag-name: ruby-${{ matrix.ruby }}
           parallel: true
@@ -41,6 +41,6 @@ jobs:
     if: always()
     steps:
       - name: 'Finalize Coveralls'
-        uses: coverallsapp/github-action@v2
+        uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329 # v2.3.8
         with:
           parallel-finished: true
