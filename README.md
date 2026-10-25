@@ -229,7 +229,8 @@ user-friendly onboarding process using the Onboardable gem.
 3. Also run `bin/console` for an interactive prompt that will allow you to experiment.
 4. To install this gem onto your local machine, run `bundle exec rake install`.
 5. To release a new version, update the version number in `lib/onboardable/version.rb`.
-6. Add the release notes to `CHANGELOG.md` and merge the changes into `main`.
+6. In `CHANGELOG.md`, rename the `## Unreleased` heading to the new version and release date
+   (e.g. `## 1.8.0 (2026-11-01)`), then merge the changes into `main`.
 7. Run the [Publish](https://github.com/dmrAnderson/onboardable/actions/workflows/publish.yml)
    workflow, which tags the version and pushes the gem to [rubygems.org](https://rubygems.org)
    via trusted publishing.
