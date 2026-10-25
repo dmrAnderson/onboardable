@@ -1,12 +1,13 @@
 # CHANGELOG
 
-## Unreleased
+## 1.7.1 (2026-10-25)
 
 - Fix RBS signatures and type-check `lib/` with Steep.
 - Package only `lib/`, `sig/`, `README.md`, `CHANGELOG.md` and `LICENSE.txt` in the gem.
 - Fix README examples: `#next_step?` usage and the custom progress formula.
 - Update README release steps for trusted publishing.
 - Run tests before publishing the gem.
+- Publish through the `release` environment and pin GitHub Actions to commit SHAs.
 - Enforce 100% line and branch coverage.
 - Update development dependencies to their latest versions.
 
